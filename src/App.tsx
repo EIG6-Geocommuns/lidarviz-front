@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="header">
+        <p>Home Page</p>
       </header>
+
+      <main className="body">
+        <h1>Géocommuns LiDAR HD</h1>
+        <img
+          id="itowns-img"
+          src={require("./assets/img/itowns_logo.png")}
+          alt="logo iTowns"
+        />
+        <div className="buttons">
+          <button className="button primary-button">
+            Nouvelle visualisation
+          </button>
+          <button className="button secondary-button">Ouvir...</button>
+        </div>
+      </main>
     </div>
   );
-}
+};
 
 export default App;
