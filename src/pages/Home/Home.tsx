@@ -1,18 +1,17 @@
 import React from "react";
-import "./App.css";
+import Header from "../../components/Header/Header";
+import "./Home.css";
 
-const App = () => {
+const Home = () => {
   return (
     <div className="app">
-      <header className="header">
-        <p>Home Page</p>
-      </header>
+      <Header title={"Home"} />
 
       <main className="body">
         <h1>Géocommuns LiDAR HD</h1>
         <img
           id="itowns-img"
-          src={require("./assets/img/itowns_logo.png")}
+          src={require("../../assets/img/itowns_logo.png")}
           alt="logo iTowns"
         />
         <div className="buttons">
@@ -26,4 +25,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
