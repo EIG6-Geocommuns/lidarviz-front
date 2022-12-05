@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./Home.css";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="app">
       <Header title={"Home"} />
@@ -15,7 +18,10 @@ const Home = () => {
           alt="logo iTowns"
         />
         <div className="buttons">
-          <button className="button primary-button">
+          <button
+            className="button primary-button"
+            onClick={() => navigate(ROUTES.MapExtentSelector)}
+          >
             Nouvelle visualisation
           </button>
           <button className="button secondary-button">Ouvir...</button>

@@ -5,9 +5,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import MapExtentSelector from "./pages/MapExtentSelector/MapExtentSelector";
 
+export enum ROUTES {
+  Home = "/",
+  MapExtentSelector = "/definition-emprise",
+}
+
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/definition-emprise", element: <MapExtentSelector /> },
+  { path: ROUTES.Home, element: <Home /> },
+  { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
 ]);
 
 const root = ReactDOM.createRoot(
