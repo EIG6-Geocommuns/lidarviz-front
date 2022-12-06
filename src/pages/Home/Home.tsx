@@ -7,7 +7,7 @@ import "./Home.css";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="app">
+    <div className="container">
       <Header title={"Home"} />
 
       <main className="body">
@@ -19,12 +19,12 @@ const Home = () => {
         />
         <div className="buttons">
           <button
-            className="button primary-button"
+            className="btn btn-primary"
             onClick={() => navigate(ROUTES.MapExtentSelector)}
           >
             Nouvelle visualisation
           </button>
-          <button className="button secondary-button">Ouvir...</button>
+          <button className="btn btn-secondary">Ouvir...</button>
         </div>
       </main>
     </div>

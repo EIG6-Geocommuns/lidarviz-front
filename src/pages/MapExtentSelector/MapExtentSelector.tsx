@@ -1,6 +1,8 @@
 import React from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
+import Header from "../../components/Header/Header";
+import "./MapExtentSelector.css";
 
 const MapExtentSelector = () => {
   const navigate = useNavigate();
@@ -12,11 +14,16 @@ const MapExtentSelector = () => {
   });
 
   return (
-    <div>
-      <p>MapExtentSelector</p>
-      <button onClick={() => navigate(ROUTES.MapViewer + "?" + mapParams)}>
-        Visualiser
-      </button>
+    <div className="container">
+      <Header title={"Téléchargement des données et définition de l’emprise"} />
+      <main className="body body__map-extent-selector">
+        <button
+          className="btn btn-outline btn-large"
+          onClick={() => navigate(ROUTES.MapViewer + "?" + mapParams)}
+        >
+          Extraire
+        </button>
+      </main>
     </div>
   );
 };
