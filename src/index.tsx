@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import MapExtentSelector from "./pages/MapExtentSelector/MapExtentSelector";
 import MapViewer from "./pages/MapViewer/MapViewer";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export enum ROUTES {
   Home = "/",
@@ -18,11 +19,25 @@ const router = createBrowserRouter([
   { path: ROUTES.MapViewer, element: <MapViewer /> },
 ]);
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#282c34",
+    },
+    secondary: {
+      main: "#707080",
+    },
+    contrastThreshold: 4.5,
+  },
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );

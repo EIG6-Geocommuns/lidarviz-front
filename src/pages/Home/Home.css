@@ -1,12 +1,3 @@
-.buttons {
-  margin-bottom: 150px; /* hack to center the body into page */
-}
-
-.buttons > .btn {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 #itowns-img {
   height: 74px;
   object-fit: contain;

@@ -1,4 +1,5 @@
 import React from "react";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
@@ -17,15 +18,18 @@ const Home = () => {
           src={require("../../assets/img/itowns_logo.png")}
           alt="logo iTowns"
         />
-        <div className="buttons">
-          <button
-            className="btn btn-primary"
+        <Box sx={{ mb: 12 }}>
+          <Button
+            variant="contained"
+            sx={{ mr: 1 }}
             onClick={() => navigate(ROUTES.MapExtentSelector)}
           >
             Nouvelle visualisation
-          </button>
-          <button className="btn btn-secondary">Ouvir...</button>
-        </div>
+          </Button>
+          <Button variant="contained" color="secondary" sx={{ ml: 1 }}>
+            Ouvir...
+          </Button>
+        </Box>
       </main>
     </div>
   );

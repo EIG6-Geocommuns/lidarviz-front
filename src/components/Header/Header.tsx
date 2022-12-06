@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import "./Header.css";
 
@@ -7,8 +8,10 @@ type Props = {
 
 const Header = ({ title }: Props) => {
   return (
-    <header className="header">
-      <p>{title}</p>
+    <header>
+      <Box sx={{ p: 2 }}>
+        <Typography>{title}</Typography>
+      </Box>
     </header>
   );
 };
