@@ -4,7 +4,13 @@ import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./MapExtentSelector.css";
 import { Button, TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
+import TextFieldWithOptions, {
+  Address,
+} from "../../components/TextFieldWithOptions/TextFieldWithOptions";
+import TextFieldWithOptions2 from "../../components/TextFieldWithOptions/TextFieldWithOptions2";
 
 const axiosInstance = axios.create({
   baseURL: "https://wxs.ign.fr/calcul/geoportail/geocodage/rest/0.1/",
@@ -32,32 +38,67 @@ const MapExtentSelector = () => {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState<string>("");
-  const [addressPropositions, setAddressPropositions] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [addressPropositions, setAddressPropositions] = useState<Address[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onChange = (
-    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ): void => {
-    const text = e.target.value;
-    setInputText(text);
+  const onChange = (newValue: Address | null): void => {
+    setSelectedAddress(newValue);
   };
 
   useEffect(() => {
-    if (inputText.length <= 3) return;
+    if (inputText.length <= 3 || selectedAddress !== null) return;
+
+    setIsLoading(true);
     getStreetAddressAndPositionOfInterest(inputText)
-      .then((res) => setAddressPropositions(res.data.results))
-      .catch((e) => console.log("error " + e));
-  }, [inputText]);
+      .then((res) => {
+        console.log(res.data.results);
+        const results = res.data.results;
+        const addresses = results.map(
+          (r: { fulltext: string; x: number; y: number }) => {
+            return { name: r.fulltext, x: r.x, y: r.y };
+          }
+        );
+        setAddressPropositions(addresses);
+        console.log(addresses);
+      })
+      .catch((e) => console.log("error " + e))
+      .finally(() => setIsLoading(false));
+  }, [inputText, selectedAddress]);
 
   return (
     <div className="container">
       <Header title={"Téléchargement des données et définition de l’emprise"} />
       <main className="body body__map-extent-selector">
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Adresse"
           variant="outlined"
           value={inputText}
           onChange={onChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        /> */}
+        {/* <TextFieldWithOptions
+          label="Adresse"
+          selectedAddress={selectedAddress}
+          onChange={onChange}
+          options={addressPropositions}
+          isLoading={isLoading}
+          inputText={inputText}
+          setInputText={setInputText}
+        /> */}
+        <TextFieldWithOptions2
+          value={selectedAddress}
+          setValue={setSelectedAddress}
+          inputValue={inputText}
+          setInputValue={setInputText}
+          options={addressPropositions}
         />
         <Button
           variant="outlined"
