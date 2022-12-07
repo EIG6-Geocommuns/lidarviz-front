@@ -84,21 +84,13 @@ const MapExtentSelector = () => {
             ),
           }}
         /> */}
-        {/* <TextFieldWithOptions
-          label="Adresse"
-          selectedAddress={selectedAddress}
-          onChange={onChange}
-          options={addressPropositions}
-          isLoading={isLoading}
-          inputText={inputText}
-          setInputText={setInputText}
-        /> */}
         <TextFieldWithOptions2
           value={selectedAddress}
           setValue={setSelectedAddress}
           inputValue={inputText}
           setInputValue={setInputText}
           options={addressPropositions}
+          isLoading={isLoading}
         />
         <Button
           variant="outlined"

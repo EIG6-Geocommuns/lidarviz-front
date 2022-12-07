@@ -1,6 +1,8 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
+import SearchIcon from "@mui/icons-material/Search";
 
 export type Address = {
   name: string;
@@ -14,6 +16,7 @@ type Props = {
   inputValue: string;
   setInputValue(newValue: string): void;
   options: Address[];
+  isLoading: boolean;
 };
 
 const TextFieldWithOptions2 = ({
@@ -22,6 +25,7 @@ const TextFieldWithOptions2 = ({
   inputValue,
   setInputValue,
   options,
+  isLoading,
 }: Props) => {
   return (
     <div>
@@ -39,7 +43,24 @@ const TextFieldWithOptions2 = ({
           setInputValue(newInputValue);
         }}
         options={options}
-        renderInput={(params) => <TextField {...params} label="Adresse" />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Adresse"
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {isLoading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : (
+                    <SearchIcon />
+                  )}
+                </>
+              ),
+            }}
+          />
+        )}
       />
     </div>
   );
