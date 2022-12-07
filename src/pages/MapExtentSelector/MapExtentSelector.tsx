@@ -59,6 +59,7 @@ const MapExtentSelector = () => {
           variant="outlined"
           sx={{ mt: 1 }}
           onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
+          disabled={selectedAddress === null}
         >
           Extraire
         </Button>
