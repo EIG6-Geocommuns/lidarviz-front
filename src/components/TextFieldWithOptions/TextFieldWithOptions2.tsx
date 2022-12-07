@@ -43,6 +43,7 @@ const TextFieldWithOptions2 = ({
           setInputValue(newInputValue);
         }}
         options={options}
+        filterOptions={(options, inputValue) => options}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -56,6 +57,7 @@ const TextFieldWithOptions2 = ({
                   ) : (
                     <SearchIcon />
                   )}
+                  {params.InputProps.endAdornment}
                 </>
               ),
             }}

@@ -1,16 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./MapExtentSelector.css";
-import { Button, TextField } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/material";
 import axios from "axios";
-import TextFieldWithOptions, {
+import TextFieldWithOptions2, {
   Address,
-} from "../../components/TextFieldWithOptions/TextFieldWithOptions";
-import TextFieldWithOptions2 from "../../components/TextFieldWithOptions/TextFieldWithOptions2";
+} from "../../components/TextFieldWithOptions/TextFieldWithOptions2";
 
 const axiosInstance = axios.create({
   baseURL: "https://wxs.ign.fr/calcul/geoportail/geocodage/rest/0.1/",
@@ -34,6 +31,8 @@ const getStreetAddressAndPositionOfInterest = (searchedText: string) => {
   });
 };
 
+// TODO : debounce à mettre en place
+
 const MapExtentSelector = () => {
   const navigate = useNavigate();
 
@@ -42,17 +41,12 @@ const MapExtentSelector = () => {
   const [addressPropositions, setAddressPropositions] = useState<Address[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onChange = (newValue: Address | null): void => {
-    setSelectedAddress(newValue);
-  };
-
   useEffect(() => {
     if (inputText.length <= 3 || selectedAddress !== null) return;
 
     setIsLoading(true);
     getStreetAddressAndPositionOfInterest(inputText)
       .then((res) => {
-        console.log(res.data.results);
         const results = res.data.results;
         const addresses = results.map(
           (r: { fulltext: string; x: number; y: number }) => {
@@ -60,7 +54,6 @@ const MapExtentSelector = () => {
           }
         );
         setAddressPropositions(addresses);
-        console.log(addresses);
       })
       .catch((e) => console.log("error " + e))
       .finally(() => setIsLoading(false));
@@ -70,20 +63,6 @@ const MapExtentSelector = () => {
     <div className="container">
       <Header title={"Téléchargement des données et définition de l’emprise"} />
       <main className="body body__map-extent-selector">
-        {/* <TextField
-          id="outlined-basic"
-          label="Adresse"
-          variant="outlined"
-          value={inputText}
-          onChange={onChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        /> */}
         <TextFieldWithOptions2
           value={selectedAddress}
           setValue={setSelectedAddress}
