@@ -3,7 +3,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./MapExtentSelector.css";
-import { Box, Button, makeStyles, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import TextFieldWithOptions from "../../components/TextFieldWithOptions/TextFieldWithOptions";
 import {
   Address,
@@ -73,40 +73,50 @@ const MapExtentSelector = () => {
       }}
     >
       <Header title={"Téléchargement des données et définition de l’emprise"} />
-      <Box sx={{ width: "100%", maxWidth: 600, mt: 2 }}>
-        <TextField
-          label="Titre"
-          placeholder="visualisation-sans-titre-1"
-          fullWidth
-          sx={{ mb: 2 }}
-        />
-        <TextFieldWithOptions
-          value={selectedAddress}
-          setValue={setSelectedAddress}
-          inputValue={inputText}
-          setInputValue={setInputText}
-          options={addressPropositions}
-          isLoading={isLoading}
-        />
-        <Box
-          id="map"
-          sx={{
-            width: "100%",
-            height: 500,
-            mt: 2,
-            mb: 2,
-          }}
-        />
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{ mt: 1, p: 2 }}
-          onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
-          disabled={selectedAddress === null}
-        >
-          Extraire
-        </Button>
-      </Box>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          mt: 2,
+          mb: 2,
+          maxWidth: 1200,
+        }}
+      >
+        <Grid item xs={12} md={8}>
+          {
+            <Box
+              id="map"
+              sx={{ height: "100%", minHeight: 800, maxHeight: 1000 }}
+            ></Box>
+          }
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <TextField
+            label="Titre"
+            placeholder="visualisation-sans-titre-1"
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextFieldWithOptions
+            value={selectedAddress}
+            setValue={setSelectedAddress}
+            inputValue={inputText}
+            setInputValue={setInputText}
+            options={addressPropositions}
+            isLoading={isLoading}
+          />
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ mt: 1, p: 2 }}
+            onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
+            disabled={selectedAddress === null}
+          >
+            Extraire
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
