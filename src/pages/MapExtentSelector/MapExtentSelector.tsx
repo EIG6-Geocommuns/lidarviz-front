@@ -3,7 +3,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./MapExtentSelector.css";
-import { Box, Button } from "@mui/material";
+import { Box, Button, makeStyles, TextField } from "@mui/material";
 import TextFieldWithOptions from "../../components/TextFieldWithOptions/TextFieldWithOptions";
 import {
   Address,
@@ -65,9 +65,21 @@ const MapExtentSelector = () => {
   }, [selectedAddress]);
 
   return (
-    <div className="container">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Header title={"Téléchargement des données et définition de l’emprise"} />
-      <main className="body body__map-extent-selector">
+      <Box sx={{ width: "100%", maxWidth: 600, mt: 2 }}>
+        <TextField
+          label="Titre"
+          placeholder="visualisation-sans-titre-1"
+          fullWidth
+          sx={{ mb: 2 }}
+        />
         <TextFieldWithOptions
           value={selectedAddress}
           setValue={setSelectedAddress}
@@ -87,14 +99,15 @@ const MapExtentSelector = () => {
         />
         <Button
           variant="contained"
-          sx={{ mt: 1 }}
+          fullWidth
+          sx={{ mt: 1, p: 2 }}
           onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
           disabled={selectedAddress === null}
         >
           Extraire
         </Button>
-      </main>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
