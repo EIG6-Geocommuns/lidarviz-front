@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Map, View } from "ol";
 import { fromLonLat } from "ol/proj";
 import { getIgnTileLayer } from "../map/ignTileLayer";
+import { zoomController } from "../map/controllers";
 
 const useMap = (target: string, center: [number, number], zoom: number) => {
   const [view, setView] = useState<View | undefined>(undefined);
@@ -18,7 +19,7 @@ const useMap = (target: string, center: [number, number], zoom: number) => {
       target,
       layers: [ignTileLayer],
       view: initialView,
-      controls: [],
+      controls: [zoomController],
     });
     setView(initialView);
 
