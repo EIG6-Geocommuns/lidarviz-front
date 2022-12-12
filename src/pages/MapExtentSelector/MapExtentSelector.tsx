@@ -92,13 +92,12 @@ const MapExtentSelector = () => {
           maxWidth: 1200,
         }}
       >
-        <Grid
-          item
-          xs={12}
-          md={8}
-          id="map"
-          sx={{ height: "100%", minHeight: 800, maxHeight: 1000 }}
-        />
+        <Grid item xs={12} md={8}>
+          <Box
+            id="map"
+            sx={{ height: "100%", minHeight: 800, maxHeight: 1000 }}
+          />
+        </Grid>
 
         <Grid item xs={12} md={4}>
           <TextField
