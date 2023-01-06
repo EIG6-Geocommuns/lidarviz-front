@@ -13,6 +13,7 @@ import {
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import {
   Address,
+  getCities,
   getStreetAddressAndPositionOfInterest,
 } from "../api/ignGeoportail";
 import useMap from "../hooks/useMap";
@@ -49,16 +50,20 @@ const MapExtentSelector = () => {
     if (inputText.length <= 3 || selectedAddress !== null) return;
 
     setIsLoading(true);
-    getStreetAddressAndPositionOfInterest(inputText)
-      .then((res) => {
-        const results = res.data.results;
-        const addresses = results.map((r) => {
-          return { name: r.fulltext, x: r.x, y: r.y };
-        });
-        setAddressPropositions(addresses);
-      })
-      .catch((e) => console.log("error " + e))
-      .finally(() => setIsLoading(false));
+    getCities(inputText).then((res) => {
+      console.log(res);
+      const restults;
+    });
+    // getStreetAddressAndPositionOfInterest(inputText)
+    //   .then((res) => {
+    //     const results = res.data.results;
+    //     const addresses = results.map((r) => {
+    //       return { name: r.fulltext, x: r.x, y: r.y };
+    //     });
+    //     setAddressPropositions(addresses);
+    //   })
+    //   .catch((e) => console.log("error " + e))
+    //   .finally(() => setIsLoading(false));
   }, [inputText, selectedAddress]);
 
   useEffect(() => {

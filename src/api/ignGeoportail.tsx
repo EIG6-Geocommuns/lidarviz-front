@@ -32,3 +32,29 @@ export const getStreetAddressAndPositionOfInterest = (
     },
   });
 };
+
+type City = {
+  nom: string;
+  code: string;
+  codesPostaux: string[];
+  codeEpci: string[];
+  codeDepartement: string;
+  codeRegion: string;
+};
+
+//TODO adapt return type
+export const getCities = (searchedText: string): Promise<City[]> => {
+  const geoApiAxiosInstance = axios.create({
+    baseURL: "https://geo.api.gouv.fr/",
+    timeout: 1500,
+  });
+
+  return geoApiAxiosInstance.get("communes", {
+    params: {
+      nom: searchedText,
+      fields: "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion",
+      format: "json",
+      geometry: "contour",
+    },
+  });
+};
