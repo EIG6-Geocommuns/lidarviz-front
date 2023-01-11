@@ -125,9 +125,12 @@ const MapExtentSelector = () => {
             setInputValue={setInputText}
             options={cityPropositions}
             isLoading={isLoading}
-            getOptionLabel={(option: City) =>
-              option.nom + ", " + option.codesPostaux[0]
-            }
+            getOptionLabel={(option: City) => {
+              let label = option.nom;
+              if (option.codesPostaux.length === 1)
+                return label + ", " + option.codesPostaux[0];
+              return label;
+            }}
           />
 
           <Button

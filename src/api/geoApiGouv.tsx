@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Coordinate } from "ol/coordinate";
-import { SimpleGeometry } from "ol/geom";
 
 // TODO move type into own file
 export type City = {
