@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Map, View } from "ol";
-import { fromLonLat } from "ol/proj";
 import { getIgnWMTSTileLayer, aiPredictionLayer } from "../map/ignTileLayer";
-import { zoomController } from "../map/controllers";
+import { fromLonLat, Projection } from "ol/proj";
+import { zoomController, positionCurseurController } from "../map/controllers";
+import { Polygon } from "ol/geom";
+import { Coordinate } from "ol/coordinate";
 
 const useMap = (target: string, center: [number, number], zoom: number) => {
   const [view, setView] = useState<View | undefined>(undefined);
@@ -22,7 +24,7 @@ const useMap = (target: string, center: [number, number], zoom: number) => {
       target,
       layers: [orthoLayer, adminLayer, aiPredictionLayer],
       view: initialView,
-      controls: [zoomController],
+      controls: [zoomController, positionCurseurController],
     });
     setView(initialView);
 
@@ -36,7 +38,19 @@ const useMap = (target: string, center: [number, number], zoom: number) => {
     view?.setCenter(fromLonLat(coordinates));
     view?.setZoom(zoom);
   };
-  return setNewCenterAndNewZoom;
+
+  const fitViewToPolygon = (coordinates: Coordinate[][]) => {
+    const epsg4326 = new Projection({ code: "EPSG:4326" });
+    const epsg3857 = new Projection({ code: "EPSG:3857" });
+    const polygon = new Polygon(coordinates).transform(
+      epsg4326,
+      epsg3857
+    ) as Polygon;
+
+    view?.fit(polygon);
+  };
+
+  return { setNewCenterAndNewZoom, fitViewToPolygon };
 };
 
 export default useMap;
