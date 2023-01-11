@@ -5,30 +5,32 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SearchIcon from "@mui/icons-material/Search";
 import { Address } from "../api/ignGeoportail";
 
-type Props = {
-  value: Address | null;
-  setValue(newValue: Address | null): void;
+type Props<T> = {
+  value: T | null;
+  setValue(newValue: T | null): void;
   inputValue: string;
   setInputValue(newValue: string): void;
-  options: Address[];
+  options: T[];
   isLoading: boolean;
+  getOptionLabel(value: T): string;
 };
 
-const TextFieldWithOptions = ({
+const TextFieldWithOptions = <T extends { nom: string; code: string }>({
   value,
   setValue,
   inputValue,
   setInputValue,
   options,
   isLoading,
-}: Props) => {
+  getOptionLabel,
+}: Props<T>) => {
   return (
     <Autocomplete
       value={value}
-      onChange={(event: any, newValue: Address | null) => {
+      onChange={(event: any, newValue: T | null) => {
         setValue(newValue);
       }}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={getOptionLabel}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
