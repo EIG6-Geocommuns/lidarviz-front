@@ -1,19 +1,38 @@
-import { Box, Typography } from "@mui/material";
 import React from "react";
-import "./Header.css";
+import { Header } from "@codegouvfr/react-dsfr/Header";
 
 type Props = {
   title: string;
 };
 
-const Header = ({ title }: Props) => {
+const CustomHeader = ({ title }: Props) => {
   return (
-    <header>
-      <Box sx={{ p: 2 }}>
-        <Typography>{title}</Typography>
-      </Box>
-    </header>
+    <Header
+      brandTop={<>GOUVERNEMENT</>}
+      homeLinkProps={{
+        href: "/",
+        title: "Accueil - IGN",
+      }}
+      quickAccessItems={[
+        {
+          iconId: "fr-icon-lock-line",
+          linkProps: {
+            href: "#",
+          },
+          text: "Se connecter",
+        },
+        {
+          iconId: "fr-icon-feedback-fill",
+          linkProps: {
+            href: "#",
+          },
+          text: "Soumettre ses retours",
+        },
+      ]}
+      serviceTagline="Prototype - Version1 - 2023"
+      serviceTitle="Geodata"
+    />
   );
 };
 
-export default Header;
+export default CustomHeader;
