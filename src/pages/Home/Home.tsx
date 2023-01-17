@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
 import "./Home.css";
+import { Footer } from "@codegouvfr/react-dsfr/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,6 +32,27 @@ const Home = () => {
           </Button>
         </Box>
       </main>
+
+      <Footer
+        accessibility="fully compliant"
+        brandTop={<>GOUVERNEMENT</>}
+        cookiesManagementLinkProps={{
+          href: "#",
+        }}
+        homeLinkProps={{
+          href: "/",
+          title: "Accueil - IGN",
+        }}
+        personalDataLinkProps={{
+          href: "#",
+        }}
+        termsLinkProps={{
+          href: "#",
+        }}
+        websiteMapLinkProps={{
+          href: "#",
+        }}
+      />
     </div>
   );
 };

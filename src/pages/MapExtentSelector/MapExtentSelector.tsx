@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
-import "./MapExtentSelector.css";
 import {
   Box,
   Button,
@@ -18,6 +17,7 @@ import {
   getStreetAddressAndPositionOfInterest,
 } from "../../api/ignGeoportail";
 import useMap from "../../hooks/useMap";
+import { Footer } from "@codegouvfr/react-dsfr/Footer";
 
 const MAP_PARAMS = createSearchParams({
   WIDTH: "256",
@@ -144,6 +144,26 @@ const MapExtentSelector = () => {
           </Button>
         </Grid>
       </Grid>
+      <Footer
+        accessibility="fully compliant"
+        brandTop={<>GOUVERNEMENT</>}
+        cookiesManagementLinkProps={{
+          href: "#",
+        }}
+        homeLinkProps={{
+          href: "/",
+          title: "Accueil - IGN",
+        }}
+        personalDataLinkProps={{
+          href: "#",
+        }}
+        termsLinkProps={{
+          href: "#",
+        }}
+        websiteMapLinkProps={{
+          href: "#",
+        }}
+      />
     </Box>
   );
 };
