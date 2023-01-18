@@ -1,18 +1,18 @@
-# Getting Started with Create React App
+# Visualisateur LiDAR HD
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Contribution
 
-## Available Scripts
+Installer nvm pour utiliser la version de node définit dans .nvmrc
 
-In the project directory, you can run:
+Installer les paquets : `npm install`
+Lancer l'app : `npm start`
 
-### `npm start`
+### Pour lancer le projet avec docker
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Construire l'image : `docker build . -t ign/lidarviz-front`
+Lancer le projet : `docker run -p 3000:3000 ign/lidarviz-front`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Autres scripts (par défaut avec create-react-app)
 
 ### `npm test`
 
