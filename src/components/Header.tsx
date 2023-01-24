@@ -1,13 +1,13 @@
 import React from "react";
-import { Header } from "@codegouvfr/react-dsfr/Header";
+import { Header as DSFRHeader } from "@codegouvfr/react-dsfr/Header";
 
 type Props = {
   title: string;
 };
 
-const CustomHeader = ({ title }: Props) => {
+export const Header = ({ title }: Props) => {
   return (
-    <Header
+    <DSFRHeader
       brandTop={<>GOUVERNEMENT</>}
       homeLinkProps={{
         href: "/",
@@ -34,5 +34,3 @@ const CustomHeader = ({ title }: Props) => {
     />
   );
 };
-
-export default CustomHeader;

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
-import Header from "../../components/Header/Header";
+import { Header } from "../../components/Header";
 import "./Home.css";
 import { Footer } from "@codegouvfr/react-dsfr/Footer";
 

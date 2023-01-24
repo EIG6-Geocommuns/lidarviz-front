@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
-import Header from "../../components/Header/Header";
+import { Header } from "../../components/Header";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import TextFieldWithOptions from "../../components/TextFieldWithOptions/TextFieldWithOptions";
+import { TextFieldWithOptions } from "../../components/TextFieldWithOptions";
 import {
   Address,
   getStreetAddressAndPositionOfInterest,
@@ -33,7 +33,7 @@ const UNITS = ["km", "miles"] as const;
 
 // TODO : debounce à mettre en place
 
-const MapExtentSelector = () => {
+export const MapExtentSelector = () => {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState<string>("");
@@ -167,5 +167,3 @@ const MapExtentSelector = () => {
     </Box>
   );
 };
-
-export default MapExtentSelector;

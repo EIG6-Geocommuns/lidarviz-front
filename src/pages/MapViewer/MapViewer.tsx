@@ -1,6 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import Header from "../../components/Header";
 
 const MapViewer = () => {
   const [searchParams, _setSearchParams] = useSearchParams();
