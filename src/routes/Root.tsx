@@ -13,43 +13,37 @@ import { fr } from "@codegouvfr/react-dsfr";
 export const Root = (): JSX.Element => {
   const location = useLocation();
 
-  const brandTop = (
-    <>
-      INTITULE
-      <br />
-      OFFICIEL
-    </>
-  );
+  const brandTop = <>GOUVERNEMENT</>;
 
   const homeLinkProps = {
     to: "/",
-    title:
-      "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
+    title: "Accueil - IGN",
   };
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <Header
         brandTop={brandTop}
-        serviceTitle="Nom du site / service"
+        serviceTitle="Geodata"
         homeLinkProps={homeLinkProps}
-        quickAccessItems={[headerFooterDisplayItem]}
-        navigation={[
+        quickAccessItems={[
           {
-            text: "Home",
+            iconId: "fr-icon-lock-line",
             linkProps: {
-              to: "/",
+              to: "#",
             },
-            isActive: location.pathname === "/",
+            text: "Se connecter",
           },
           {
-            text: "Mui playground",
+            iconId: "fr-icon-feedback-fill",
             linkProps: {
-              to: "/mui",
+              to: "#",
             },
-            isActive: location.pathname === "/mui",
+            text: "Soumettre ses retours",
           },
+          headerFooterDisplayItem,
         ]}
+        serviceTagline="Prototype - Version1 - 2023"
       />
 
       <div
@@ -67,14 +61,11 @@ export const Root = (): JSX.Element => {
         accessibility="fully compliant"
         brandTop={brandTop}
         homeLinkProps={homeLinkProps}
-        contentDescription="
-    Ce message est à remplacer par les informations de votre site.
-
-    Comme exemple de contenu, vous pouvez indiquer les informations 
-    suivantes : Le site officiel d’information administrative pour les entreprises.
-    Retrouvez toutes les informations et démarches administratives nécessaires à la création, 
-    à la gestion et au développement de votre entreprise.
-    "
+        contentDescription="Ce message est à remplacer par les informations de votre site.
+          Comme exemple de contenu, vous pouvez indiquer les informations 
+          suivantes : Le site officiel d’information administrative pour les entreprises.
+          Retrouvez toutes les informations et démarches administratives nécessaires à la création, 
+          à la gestion et au développement de votre entreprise."
       />
       <Display />
     </div>

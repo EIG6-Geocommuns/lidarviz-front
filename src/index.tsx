@@ -25,9 +25,15 @@ declare module "@codegouvfr/react-dsfr/spa" {
 }
 
 const router = createBrowserRouter([
-  { path: ROUTES.Home, element: <Root />, errorElement: <ErrorPage /> },
-  { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
-  { path: ROUTES.MapViewer, element: <MapViewer /> },
+  {
+    path: ROUTES.Home,
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
+      { path: ROUTES.MapViewer, element: <MapViewer /> },
+    ],
+  },
 ]);
 
 const root = ReactDOM.createRoot(
