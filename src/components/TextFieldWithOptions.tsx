@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchIcon from "@mui/icons-material/Search";
-import { Address } from "../../api/ignGeoportail";
+import { Address } from "../api/ignGeoportail";
 
 type Props = {
   value: Address | null;

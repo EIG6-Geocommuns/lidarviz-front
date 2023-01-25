@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
-import Header from "../../components/Header/Header";
 //import "./MapExtentSelector.css";
 import {
   Box,
@@ -12,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import TextFieldWithOptions from "../../components/TextFieldWithOptions/TextFieldWithOptions";
+import TextFieldWithOptions from "../../components/TextFieldWithOptions";
 import {
   Address,
   getStreetAddressAndPositionOfInterest,
@@ -81,7 +80,6 @@ const MapExtentSelector = () => {
         alignItems: "center",
       }}
     >
-      <Header title={"Téléchargement des données et définition de l’emprise"} />
       <Grid
         container
         spacing={2}

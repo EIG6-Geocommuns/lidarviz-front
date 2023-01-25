@@ -1,14 +1,11 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import Header from "../../components/Header/Header";
 
 const MapViewer = () => {
   const [searchParams, _setSearchParams] = useSearchParams();
 
   return (
     <div className="container">
-      <Header title={"Visualisation 3D"} />
-
       <main className="body">
         <h1>MapViewer, params :</h1>
         <ul>

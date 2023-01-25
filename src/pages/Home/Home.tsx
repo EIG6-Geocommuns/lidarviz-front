@@ -2,15 +2,12 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
-import Header from "../../components/Header/Header";
 //import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="container">
-      <Header title={"Home"} />
-
       <main className="body">
         <h1>Géocommuns LiDAR HD</h1>
         <img
