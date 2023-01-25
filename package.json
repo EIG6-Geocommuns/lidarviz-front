@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@codegouvfr/react-dsfr": "^0.27.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
@@ -20,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
+    "tss-react": "^4.5.2",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
   },
@@ -27,7 +29,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "copy-dsfr-to-public",
+    "prestart": "only-include-used-icons",
+    "prebuild": "only-include-used-icons"
   },
   "eslintConfig": {
     "extends": [

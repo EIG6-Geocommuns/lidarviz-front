@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "../..";
 import Header from "../../components/Header/Header";
-import "./MapExtentSelector.css";
+//import "./MapExtentSelector.css";
 import {
   Box,
   Button,
