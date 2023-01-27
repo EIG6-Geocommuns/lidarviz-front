@@ -46,16 +46,7 @@ export const Root = (): JSX.Element => {
         serviceTagline="Prototype - Version1 - 2023"
       />
 
-      <div
-        style={{
-          flex: 1,
-          margin: "auto",
-          maxWidth: 1000,
-          ...fr.spacing("padding", { topBottom: "10v" }),
-        }}
-      >
-        <Outlet />
-      </div>
+      <Outlet />
 
       <Footer
         accessibility="fully compliant"
@@ -66,6 +57,10 @@ export const Root = (): JSX.Element => {
           suivantes : Le site officiel d’information administrative pour les entreprises.
           Retrouvez toutes les informations et démarches administratives nécessaires à la création, 
           à la gestion et au développement de votre entreprise."
+        cookiesManagementLinkProps={{ to: "#" }}
+        personalDataLinkProps={{ to: "#" }}
+        termsLinkProps={{ to: "#" }}
+        websiteMapLinkProps={{ to: "#" }}
       />
       <Display />
     </div>

@@ -7,8 +7,9 @@ import MapViewer from "./pages/MapViewer/MapViewer";
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
 import { Link } from "react-router-dom";
 import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
-import { Root } from "./routes/Root";
-import { ErrorPage } from "./routes/ErrorPage";
+import { Home } from "./pages/Home";
+import { Root } from "./pages/Root";
+import { ErrorPage } from "./pages/ErrorPage";
 
 startReactDsfr({ defaultColorScheme: "system", Link });
 
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      { path: ROUTES.Home, element: <Home /> },
       { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
       { path: ROUTES.MapViewer, element: <MapViewer /> },
     ],
