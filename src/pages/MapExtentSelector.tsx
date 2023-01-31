@@ -11,11 +11,8 @@ import {
   TextField,
 } from "@mui/material";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
-import {
-  Address,
-  getStreetAddressAndPositionOfInterest,
-} from "../api/ignGeoportail";
 import useMap from "../hooks/useMap";
+import { City, getCities } from "../api/geoApiGouv";
 
 const MAP_PARAMS = createSearchParams({
   WIDTH: "256",
@@ -28,7 +25,6 @@ const ORIGINAL_CENTER: [number, number] = [
   2.5764414841767787, 46.51407673990174,
 ];
 const ORIGINAL_ZOOM = 5;
-const ZOOM_WHEN_SELECTED_ADDRESS = 10;
 const UNITS = ["km", "miles"] as const;
 
 // TODO : debounce à mettre en place
@@ -37,41 +33,38 @@ const MapExtentSelector = () => {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState<string>("");
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  const [addressPropositions, setAddressPropositions] = useState<Address[]>([]);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [cityPropositions, setCityPropositions] = useState<City[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedUnits, setSelectedUnits] =
     useState<typeof UNITS[number]>("km");
 
-  const setNewCenter = useMap("map", ORIGINAL_CENTER, ORIGINAL_ZOOM);
+  const { setNewCenterAndNewZoom, fitViewToPolygon } = useMap(
+    "map",
+    ORIGINAL_CENTER,
+    ORIGINAL_ZOOM
+  );
 
   useEffect(() => {
-    if (inputText.length <= 3 || selectedAddress !== null) return;
+    if (inputText.length <= 3 || selectedCity !== null) return;
 
     setIsLoading(true);
-    getStreetAddressAndPositionOfInterest(inputText)
+    getCities(inputText)
       .then((res) => {
-        const results = res.data.results;
-        const addresses = results.map((r) => {
-          return { name: r.fulltext, x: r.x, y: r.y };
-        });
-        setAddressPropositions(addresses);
+        setCityPropositions(res.data);
       })
-      .catch((e) => console.log("error " + e))
+      .catch((e) => console.warn("error " + e))
       .finally(() => setIsLoading(false));
-  }, [inputText, selectedAddress]);
+  }, [inputText, selectedCity]);
 
   useEffect(() => {
-    if (selectedAddress === null) {
-      setNewCenter(ORIGINAL_CENTER, ORIGINAL_ZOOM);
+    if (selectedCity === null) {
+      setNewCenterAndNewZoom(ORIGINAL_CENTER, ORIGINAL_ZOOM);
       return;
     }
 
-    setNewCenter(
-      [selectedAddress.x, selectedAddress.y],
-      ZOOM_WHEN_SELECTED_ADDRESS
-    );
-  }, [selectedAddress]);
+    fitViewToPolygon(selectedCity.contour.coordinates);
+  }, [selectedCity]);
 
   return (
     <Box
@@ -118,18 +111,26 @@ const MapExtentSelector = () => {
               sx={{ ml: 2, width: 100 }}
             >
               {UNITS.map((u) => (
-                <MenuItem value={u}>{u}</MenuItem>
+                <MenuItem key={u} value={u}>
+                  {u}
+                </MenuItem>
               ))}
             </Select>
           </Box>
 
-          <TextFieldWithOptions
-            value={selectedAddress}
-            setValue={setSelectedAddress}
+          <TextFieldWithOptions<City>
+            value={selectedCity}
+            setValue={setSelectedCity}
             inputValue={inputText}
             setInputValue={setInputText}
-            options={addressPropositions}
+            options={cityPropositions}
             isLoading={isLoading}
+            getOptionLabel={(option: City) => {
+              let label = option.nom;
+              if (option.codesPostaux.length === 1)
+                return label + ", " + option.codesPostaux[0];
+              return label;
+            }}
           />
 
           <Button
@@ -137,7 +138,7 @@ const MapExtentSelector = () => {
             fullWidth
             sx={{ mt: 1, p: 2 }}
             onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
-            disabled={selectedAddress === null}
+            disabled={selectedCity === null}
           >
             Extraire
           </Button>
