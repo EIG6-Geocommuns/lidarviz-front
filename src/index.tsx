@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MapExtentSelector from "./pages/MapExtentSelector/MapExtentSelector";
+import MapExtentSelector from "./pages/MapExtentSelector";
 import MapViewer from "./pages/MapViewer/MapViewer";
 
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";

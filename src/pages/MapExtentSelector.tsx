@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { ROUTES } from "../..";
-//import "./MapExtentSelector.css";
+import { ROUTES } from "..";
 import {
   Box,
   Button,
@@ -11,12 +10,12 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import TextFieldWithOptions from "../../components/TextFieldWithOptions";
+import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import {
   Address,
   getStreetAddressAndPositionOfInterest,
-} from "../../api/ignGeoportail";
-import useMap from "../../hooks/useMap";
+} from "../api/ignGeoportail";
+import useMap from "../hooks/useMap";
 
 const MAP_PARAMS = createSearchParams({
   WIDTH: "256",
