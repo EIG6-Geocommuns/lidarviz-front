@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import Button from "@codegouvfr/react-dsfr/Button";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "..";
 
 const useStyles = makeStyles()((theme) => ({
   titleBlock: {
@@ -53,6 +55,8 @@ const useStyles = makeStyles()((theme) => ({
 
 export const Home = () => {
   const { classes, cx } = useStyles();
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className={classes.titleBlock}>
@@ -102,7 +106,10 @@ export const Home = () => {
           </p>
         </div>
 
-        <Button onClick={() => console.log("click")} priority="secondary">
+        <Button
+          onClick={() => navigate(ROUTES.MapExtentSelector)}
+          priority="secondary"
+        >
           Accéder au prototype
           <span
             className={cx("fr-icon-arrow-right-line", classes.iconButton)}

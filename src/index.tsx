@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MapExtentSelector from "./pages/MapExtentSelector";
-import MapViewer from "./pages/MapViewer/MapViewer";
 
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
 import { Link } from "react-router-dom";
@@ -16,7 +15,6 @@ startReactDsfr({ defaultColorScheme: "system", Link });
 export enum ROUTES {
   Home = "/",
   MapExtentSelector = "/definition-emprise",
-  MapViewer = "/visualisation",
 }
 
 declare module "@codegouvfr/react-dsfr/spa" {
@@ -33,7 +31,6 @@ const router = createBrowserRouter([
     children: [
       { path: ROUTES.Home, element: <Home /> },
       { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
-      { path: ROUTES.MapViewer, element: <MapViewer /> },
     ],
   },
 ]);

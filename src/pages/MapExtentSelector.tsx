@@ -14,13 +14,6 @@ import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";
 import { City, getCities } from "../api/geoApiGouv";
 
-const MAP_PARAMS = createSearchParams({
-  WIDTH: "256",
-  HEIGHT: "256",
-  SRS: "EPSG:3857",
-  BBOX: "-13452.916978191584,6057481.617543647,-12229.924525628765,6058704.60999621",
-});
-
 const ORIGINAL_CENTER: [number, number] = [
   2.5764414841767787, 46.51407673990174,
 ];
@@ -137,7 +130,7 @@ const MapExtentSelector = () => {
             variant="contained"
             fullWidth
             sx={{ mt: 1, p: 2 }}
-            onClick={() => navigate(ROUTES.MapViewer + "?" + MAP_PARAMS)}
+            onClick={() => console.log("click")}
             disabled={selectedCity === null}
           >
             Extraire
