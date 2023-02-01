@@ -2,10 +2,15 @@
 
 ## Contribution
 
-Installer nvm pour utiliser la version de node définit dans .nvmrc
+### Installation des outils
 
-Installer les paquets : `npm install`
-Lancer l'app : `npm start`
+1. Installer nvm pour utiliser la version de node définie dans `.nvmrc` => (`nvm install && vmv use`)
+2. Installer yarn globalement à votre version npm : `npm install --global yarn`
+
+### Installer les paquets et lancer l'app
+
+1. Installer les paquets : `yarn install`
+2. Lancer l'app : `npm start`
 
 ### Pour lancer le projet avec docker
 
