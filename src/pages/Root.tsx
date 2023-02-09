@@ -4,10 +4,7 @@ import { Header } from "@codegouvfr/react-dsfr/Header";
 import { Footer } from "@codegouvfr/react-dsfr/Footer";
 
 import { useLocation } from "react-router-dom";
-import {
-  Display,
-  headerFooterDisplayItem,
-} from "@codegouvfr/react-dsfr/Display";
+import { Display, headerFooterDisplayItem } from "@codegouvfr/react-dsfr/Display";
 import { fr } from "@codegouvfr/react-dsfr";
 
 export const Root = (): JSX.Element => {

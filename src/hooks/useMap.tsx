@@ -13,9 +13,7 @@ const useMap = (target: string, center: [number, number], zoom: number) => {
   const [map, setMap] = useState<Map | undefined>(undefined);
 
   const orthoLayer = getIgnWMTSTileLayer("ORTHOIMAGERY.ORTHOPHOTOS");
-  const adminLayer = getIgnWMTSTileLayer(
-    "LIMITES_ADMINISTRATIVES_EXPRESS.LATEST"
-  );
+  const adminLayer = getIgnWMTSTileLayer("LIMITES_ADMINISTRATIVES_EXPRESS.LATEST");
 
   const initialView = new View({
     zoom,
@@ -35,10 +33,7 @@ const useMap = (target: string, center: [number, number], zoom: number) => {
     return () => map.setTarget(undefined);
   }, []);
 
-  const setNewCenterAndNewZoom = (
-    coordinates: [number, number],
-    zoom: number
-  ) => {
+  const setNewCenterAndNewZoom = (coordinates: [number, number], zoom: number) => {
     view?.setCenter(fromLonLat(coordinates));
     view?.setZoom(zoom);
   };

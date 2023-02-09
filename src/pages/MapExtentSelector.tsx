@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ROUTES } from "..";
-import {
-  Box,
-  Button,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";
 import { City, getCities } from "../api/geoApiGouv";
 
-const ORIGINAL_CENTER: [number, number] = [
-  2.5764414841767787, 46.51407673990174,
-];
+const ORIGINAL_CENTER: [number, number] = [2.5764414841767787, 46.51407673990174];
 const ORIGINAL_ZOOM = 5;
 const UNITS = ["km", "miles"] as const;
 
@@ -29,8 +19,7 @@ const MapExtentSelector = () => {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [cityPropositions, setCityPropositions] = useState<City[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedUnits, setSelectedUnits] =
-    useState<typeof UNITS[number]>("km");
+  const [selectedUnits, setSelectedUnits] = useState<typeof UNITS[number]>("km");
 
   const { setNewCenterAndNewZoom, fitViewToPolygon } = useMap(
     "map",
@@ -78,10 +67,7 @@ const MapExtentSelector = () => {
         }}
       >
         <Grid item xs={12} md={8}>
-          <Box
-            id="map"
-            sx={{ height: "100%", minHeight: 800, maxHeight: 1000 }}
-          />
+          <Box id="map" sx={{ height: "100%", minHeight: 800, maxHeight: 1000 }} />
         </Grid>
 
         <Grid item xs={12} md={4}>
@@ -98,9 +84,7 @@ const MapExtentSelector = () => {
               labelId="units"
               value={selectedUnits}
               displayEmpty
-              onChange={(e) =>
-                setSelectedUnits(e.target.value as typeof UNITS[number])
-              }
+              onChange={(e) => setSelectedUnits(e.target.value as typeof UNITS[number])}
               sx={{ ml: 2, width: 100 }}
             >
               {UNITS.map((u) => (
@@ -120,8 +104,7 @@ const MapExtentSelector = () => {
             isLoading={isLoading}
             getOptionLabel={(option: City) => {
               let label = option.nom;
-              if (option.codesPostaux.length === 1)
-                return label + ", " + option.codesPostaux[0];
+              if (option.codesPostaux.length === 1) return label + ", " + option.codesPostaux[0];
               return label;
             }}
           />

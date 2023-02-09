@@ -24,8 +24,7 @@ export const getCities = (searchedText: string): Promise<{ data: City[] }> => {
   return geoApiAxiosInstance.get("communes", {
     params: {
       nom: searchedText,
-      fields:
-        "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion,contour",
+      fields: "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion,contour",
       format: "json",
     },
   });

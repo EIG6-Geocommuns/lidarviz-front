@@ -44,11 +44,7 @@ const TextFieldWithOptions = <T extends { nom: string; code: string }>({
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : (
-                  <SearchIcon />
-                )}
+                {isLoading ? <CircularProgress color="inherit" size={20} /> : <SearchIcon />}
                 {params.InputProps.endAdornment}
               </>
             ),
