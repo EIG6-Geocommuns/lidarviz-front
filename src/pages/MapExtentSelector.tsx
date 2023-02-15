@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
-import { ROUTES } from "..";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";

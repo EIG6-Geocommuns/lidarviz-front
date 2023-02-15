@@ -34,12 +34,6 @@
     "prestart": "only-include-used-icons",
     "prebuild": "only-include-used-icons"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
