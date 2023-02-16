@@ -1,10 +1,15 @@
 {
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
     "semi": ["warn", "always"]
