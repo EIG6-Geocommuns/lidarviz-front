@@ -32,7 +32,9 @@ jobs:
           node-version: "19.2"
 
       - name: Install ESLint
-        run: npm install --global yarn
+        run: |
+          npm install --global yarn
+          npm install @microsoft/eslint-formatter-sarif
 
       - name: Install ESLint
         run: yarn install
@@ -40,3 +42,9 @@ jobs:
       - name: Run ESLint
         run: yarn lint
         continue-on-error: true
+
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
