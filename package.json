@@ -11,7 +11,8 @@
     "prestart": "only-include-used-icons",
     "prebuild": "only-include-used-icons",
     "lint": "eslint 'src/**/*.tsx'",
-    "lint-fix": "eslint 'src/**/*.tsx' --fix"
+    "lint-fix": "eslint 'src/**/*.tsx' --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^0.27.2",
@@ -42,7 +43,8 @@
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3"
   },
   "eslintConfig": {
     "settings": {
@@ -60,10 +62,6 @@
       "@typescript-eslint"
     ],
     "rules": {
-      "semi": [
-        "warn",
-        "always"
-      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
