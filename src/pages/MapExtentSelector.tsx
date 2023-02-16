@@ -3,6 +3,7 @@ import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";
 import { City, getCities } from "../api/geoApiGouv";
+import { Legend } from "../components/Legend";
 
 const ORIGINAL_CENTER: [number, number] = [2.5764414841767787, 46.51407673990174];
 const ORIGINAL_ZOOM = 5;
@@ -114,6 +115,8 @@ const MapExtentSelector = () => {
           >
             Extraire
           </Button>
+
+          <Legend />
         </Grid>
       </Grid>
     </Box>
