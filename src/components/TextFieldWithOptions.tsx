@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -26,7 +26,7 @@ const TextFieldWithOptions = <T extends { nom: string; code: string }>({
   return (
     <Autocomplete
       value={value}
-      onChange={(event: any, newValue: T | null) => {
+      onChange={(event: SyntheticEvent, newValue: T | null) => {
         setValue(newValue);
       }}
       getOptionLabel={getOptionLabel}
@@ -35,7 +35,7 @@ const TextFieldWithOptions = <T extends { nom: string; code: string }>({
         setInputValue(newInputValue);
       }}
       options={options}
-      filterOptions={(options, inputValue) => options}
+      filterOptions={(options, _inputValue) => options}
       renderInput={(params) => (
         <TextField
           {...params}

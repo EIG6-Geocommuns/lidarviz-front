@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
-import Button from "@codegouvfr/react-dsfr/Button";
+import { Button } from "@codegouvfr/react-dsfr/Button";
 import { ROUTES } from "..";
 
 const useStyles = makeStyles()((theme) => ({

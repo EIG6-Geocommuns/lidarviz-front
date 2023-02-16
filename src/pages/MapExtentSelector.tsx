@@ -99,7 +99,7 @@ const MapExtentSelector = () => {
             options={cityPropositions}
             isLoading={isLoading}
             getOptionLabel={(option: City) => {
-              let label = option.nom;
+              const label = option.nom;
               if (option.codesPostaux.length === 1) return label + ", " + option.codesPostaux[0];
               return label;
             }}

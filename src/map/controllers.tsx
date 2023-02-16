@@ -11,7 +11,7 @@ export const zoomController = new Zoom({
   zoomOutClassName: "map_controllers_zoom_button",
 });
 
-export var positionCurseurController = new MousePosition({
+export const positionCurseurController = new MousePosition({
   coordinateFormat: function (coordinate: Coordinate | undefined) {
     return format(
       coordinate === undefined ? [0, 0] : coordinate,

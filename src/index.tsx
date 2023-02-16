@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider , Link } from "react-router-dom";
 import MapExtentSelector from "./pages/MapExtentSelector";
 
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
-import { Link } from "react-router-dom";
 import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
 import { Home } from "./pages/Home";
 import { Root } from "./pages/Root";

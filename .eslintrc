@@ -12,8 +12,9 @@
   ],
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "semi": ["warn", "always"]
+    "semi": ["warn", "always"],
     // "quotes": ["warn", "single"]
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   },
   "ignorePatterns": ["src/pages/test/**"]
 }
