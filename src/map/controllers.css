@@ -1,6 +1,6 @@
 .map_controllers_zoom {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   height: 100%;
   position: absolute;
   bottom: 0;

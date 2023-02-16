@@ -44,6 +44,37 @@
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5"
   },
+  "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "typescript": {}
+      }
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:import/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "semi": [
+        "warn",
+        "always"
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    },
+    "ignorePatterns": [
+      "src/pages/test/**"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",

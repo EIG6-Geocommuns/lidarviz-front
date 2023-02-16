@@ -1,4 +1,3 @@
-import React from "react";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
@@ -62,7 +61,7 @@ const useStyles = makeStyles()((theme) => ({
 
 type Project = "Predictia" | "Inondata";
 
-const PROJECT_COVER: { [key in Project]: any } = {
+const PROJECT_COVER: { [key in Project]: string } = {
   Inondata: require("../assets/img/lidar_hd_marseille.png"),
   Predictia: require("../assets/img/carte_de_predictions.png"),
 };
