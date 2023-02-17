@@ -126,7 +126,7 @@ const PROJECT_TEXT: { [key in Project]: JSX.Element[] } = {
 
 export const Home = () => {
   const project: Project = "Predictia";
-  var { classes, cx } = useStyles({ project });
+  const { classes, cx } = useStyles({ project });
 
   const PROJECT_CTA: { [key in Project]: JSX.Element } = {
     Predictia: (
