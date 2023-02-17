@@ -1,10 +1,11 @@
-import React from "react";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
-import Button from "@codegouvfr/react-dsfr/Button";
+import { Button } from "@codegouvfr/react-dsfr/Button";
 import { ROUTES } from "..";
 
-const useStyles = makeStyles()((theme) => ({
+type Project = "Predictia" | "Inondata";
+
+const useStyles = makeStyles<{ project: Project }>()((theme, { project }) => ({
   titleBlock: {
     height: 520,
     display: "flex",
@@ -14,6 +15,12 @@ const useStyles = makeStyles()((theme) => ({
   },
   titleTexts: {
     position: "absolute",
+    backgroundColor: project === "Inondata" ? "rgba(35, 63, 123, 0.67)" : "transparent", //TODO: set other color if darkMode
+    textAlign: "center",
+    padding: fr.spacing("2w"),
+    [fr.breakpoints.down("md")]: { width: "90%" },
+    [fr.breakpoints.up("md")]: { width: "70%" },
+    [fr.breakpoints.up("lg")]: { width: "50%" },
   },
   title: {
     color: theme.decisions.text.inverted.grey.default,
@@ -50,19 +57,9 @@ const useStyles = makeStyles()((theme) => ({
   iconButton: {
     marginLeft: fr.spacing("1w"),
   },
-  inondataTitleBackground: {
-    backgroundColor: "rgba(35, 63, 123, 0.67)", //TODO: set other color if darkMode
-    textAlign: "center",
-    padding: fr.spacing("2w"),
-    [fr.breakpoints.down("md")]: { width: "90%" },
-    [fr.breakpoints.up("md")]: { width: "70%" },
-    [fr.breakpoints.up("lg")]: { width: "50%" },
-  },
 }));
 
-type Project = "Predictia" | "Inondata";
-
-const PROJECT_COVER: { [key in Project]: any } = {
+const PROJECT_COVER: { [key in Project]: string } = {
   Inondata: require("../assets/img/lidar_hd_marseille.png"),
   Predictia: require("../assets/img/carte_de_predictions.png"),
 };
@@ -128,8 +125,8 @@ const PROJECT_TEXT: { [key in Project]: JSX.Element[] } = {
 };
 
 export const Home = () => {
-  const { classes, cx } = useStyles();
-  const project: Project = "Inondata";
+  const project: Project = "Predictia";
+  const { classes, cx } = useStyles({ project });
 
   const PROJECT_CTA: { [key in Project]: JSX.Element } = {
     Predictia: (
@@ -156,7 +153,7 @@ export const Home = () => {
     <div>
       <div className={classes.titleBlock}>
         <img className={classes.cover} src={PROJECT_COVER[project]} alt="" />
-        <div className={cx(classes.titleTexts, classes.inondataTitleBackground)}>
+        <div className={classes.titleTexts}>
           <h1 className={classes.title}>{PROJECT_TITLE[project]}</h1>
           <p className={classes.description}>{PROJECT_DESCRIPTION[project]}</p>
         </div>

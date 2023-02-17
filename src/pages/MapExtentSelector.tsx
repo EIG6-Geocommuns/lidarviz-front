@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
-import { ROUTES } from "..";
+import { useEffect, useState } from "react";
 import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";
@@ -13,8 +11,6 @@ const UNITS = ["km", "miles"] as const;
 // TODO : debounce à mettre en place
 
 const MapExtentSelector = () => {
-  const navigate = useNavigate();
-
   const [inputText, setInputText] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [cityPropositions, setCityPropositions] = useState<City[]>([]);
@@ -103,7 +99,7 @@ const MapExtentSelector = () => {
             options={cityPropositions}
             isLoading={isLoading}
             getOptionLabel={(option: City) => {
-              let label = option.nom;
+              const label = option.nom;
               if (option.codesPostaux.length === 1) return label + ", " + option.codesPostaux[0];
               return label;
             }}

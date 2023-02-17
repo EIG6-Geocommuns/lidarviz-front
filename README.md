@@ -10,7 +10,7 @@
 ### Installer les paquets et lancer l'app
 
 1. Installer les paquets : `yarn install`
-2. Lancer l'app : `npm start`
+2. Lancer l'app : `yarn start`
 
 ### Pour lancer le projet avec docker
 
@@ -19,12 +19,12 @@ Lancer le projet : `docker run -p 3000:3000 ign/lidarviz-front`
 
 ## Autres scripts (par défaut avec create-react-app)
 
-### `npm test`
+### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `yarn run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -34,7 +34,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `yarn run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
