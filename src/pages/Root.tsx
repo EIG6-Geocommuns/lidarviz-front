@@ -15,7 +15,7 @@ export const Root = (): JSX.Element => {
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <Header
         brandTop={brandTop}
-        serviceTitle="Geodata"
+        serviceTitle="Inondata"
         homeLinkProps={homeLinkProps}
         quickAccessItems={[
           {
