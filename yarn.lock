@@ -5054,6 +5054,11 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
+geocommuns-core@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.0.2.tgz#b2640ea19438bc7b1dff1b43cf1741670bdd94cf"
+  integrity sha512-L5CYhpdYqlmaoQHIMiHvtL14f+phy0TMYXfrxhFAlY/9TaCkG0RCKzR2OkyTMy2dp0W2JhchGu2qO4cHTgP4Jg==
+
 geotiff@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/geotiff/-/geotiff-2.0.7.tgz#358e578233af70bfb0b4dee62d599ad78fc5cfca"
@@ -9489,11 +9494,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   integrity sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==
   dependencies:
     minimalistic-assert "^1.0.0"
-
-web-vitals@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-2.1.4.tgz#76563175a475a5e835264d373704f9dde718290c"
-  integrity sha512-sVWcwhU5mX6crfI5Vd2dC4qchyTqxV8URinzt25XqVh+bHEPGH4C3NPrNionCP7Obx59wrYEbNlw4Z8sjALzZg==
 
 web-worker@^1.2.0:
   version "1.2.0"
