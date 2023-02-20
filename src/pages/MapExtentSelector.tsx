@@ -1,12 +1,12 @@
+import { Box, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { City, getCities } from "../api/geoApiGouv";
+import { Legend } from "../components/Legend";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 import useMap from "../hooks/useMap";
-import { City, getCities } from "../api/geoApiGouv";
 
 const ORIGINAL_CENTER: [number, number] = [2.5764414841767787, 46.51407673990174];
 const ORIGINAL_ZOOM = 5;
-const UNITS = ["km", "miles"] as const;
 
 // TODO : debounce à mettre en place
 
@@ -15,7 +15,6 @@ const MapExtentSelector = () => {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [cityPropositions, setCityPropositions] = useState<City[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedUnits, setSelectedUnits] = useState<typeof UNITS[number]>("km");
 
   const { setNewCenterAndNewZoom, fitViewToPolygon } = useMap(
     "map",
@@ -67,30 +66,6 @@ const MapExtentSelector = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <TextField
-            label="Titre"
-            placeholder="visualisation-sans-titre-1"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-
-          <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
-            <InputLabel id="units">Unité</InputLabel>
-            <Select
-              labelId="units"
-              value={selectedUnits}
-              displayEmpty
-              onChange={(e) => setSelectedUnits(e.target.value as typeof UNITS[number])}
-              sx={{ ml: 2, width: 100 }}
-            >
-              {UNITS.map((u) => (
-                <MenuItem key={u} value={u}>
-                  {u}
-                </MenuItem>
-              ))}
-            </Select>
-          </Box>
-
           <TextFieldWithOptions<City>
             value={selectedCity}
             setValue={setSelectedCity}
@@ -108,12 +83,14 @@ const MapExtentSelector = () => {
           <Button
             variant="contained"
             fullWidth
-            sx={{ mt: 1, p: 2 }}
+            sx={{ mt: 1, p: 2, mb: 3 }}
             onClick={() => console.log("click")}
             disabled={selectedCity === null}
           >
             Extraire
           </Button>
+
+          <Legend />
         </Grid>
       </Grid>
     </Box>
