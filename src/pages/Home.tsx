@@ -2,10 +2,11 @@ import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import { ROUTES } from "..";
+import { Home as CommonHome } from "geocommuns-core";
 
 type Project = "Predictia" | "Inondata";
 
-const useStyles = makeStyles<{ project: Project }>()((theme, { project }) => ({
+const useStyles = makeStyles()((theme) => ({
   titleBlock: {
     height: 520,
     display: "flex",
@@ -15,12 +16,14 @@ const useStyles = makeStyles<{ project: Project }>()((theme, { project }) => ({
   },
   titleTexts: {
     position: "absolute",
-    backgroundColor: project === "Inondata" ? "rgba(35, 63, 123, 0.67)" : "transparent", //TODO: set other color if darkMode
     textAlign: "center",
     padding: fr.spacing("2w"),
     [fr.breakpoints.down("md")]: { width: "90%" },
     [fr.breakpoints.up("md")]: { width: "70%" },
     [fr.breakpoints.up("lg")]: { width: "50%" },
+  },
+  inondataTitleBlock: {
+    backgroundColor: "rgba(35, 63, 123, 0.67)", //TODO: set other color if darkMode
   },
   title: {
     color: theme.decisions.text.inverted.grey.default,
@@ -65,7 +68,7 @@ const PROJECT_COVER: { [key in Project]: string } = {
 };
 
 const PROJECT_TITLE: { [key in Project]: string } = {
-  Predictia: "Cartes de prédictions",
+  Predictia: "COSIA",
   Inondata: "Inondata",
 };
 
@@ -77,27 +80,27 @@ const PROJECT_DESCRIPTION: { [key in Project]: string } = {
 const PROJECT_TEXT: { [key in Project]: JSX.Element[] } = {
   Predictia: [
     <p>
-      Ce prototype est un outil de travail pour aider à la conception du Catalogue Géodata qui
-      remplacera prochainement les Géoservices. Nous testons grâce à plusieurs prototypes les accès
-      et les usages liés aux différentes bases de données de l’IGN.
-      <br />
-      <b>Ici, seul les [Cartes de prédictions] feront l’objet d’un test.</b>
+      Ce prototype est à destination de tous les utilisateurs des services IGN pour qu’ils
+      découvrent COSIA,
+      <b> les cartes de couvertures du sol directement obtenues par intelligence artificielle</b>,
+      et qui interviennent par exemple dans la fabrication de l’OCS-GE.
     </p>,
     <p>
-      En tant que testeur, nous vous invitons à naviguer dans cette première version et à nous faire
-      parvenir vos retours sur l’interface et ses fonctionnalités. Notez que le prototype ne reflète
-      pas l’identité finale du catalogue Geodata. Les styles ne sont pas déterminés et les
-      terminologies et fonctionnalités ne sont pas figées.
+      Ces données ne sont pas encore publiées sur les sites de l’IGN (à l’exception du Gers). Ce
+      prototype fonctionne comme un outil de co-construction pour tester et valider les besoins et
+      les usages possibles autour de ces cartes avant leur publication.
+      <b>
+        {" "}
+        Les fonctionnalités et terminologies ne sont pas figés et peuvent faire l’objet de retours.
+      </b>
     </p>,
     <p>
-      En tant que testeur, nous vous invitons à naviguer dans cette première version et à nous faire
-      parvenir vos retours sur l’interface et ses fonctionnalités. Notez que le prototype ne reflète
-      pas l’identité finale du catalogue Geodata. Les styles ne sont pas déterminés et les
-      terminologies et fonctionnalités ne sont pas figées.
+      En tant que testeur, nous vous invitons à naviguer dans cette première version et{" "}
+      <b>à nous faire parvenir vos retours</b> sur les données et les interfaces.
     </p>,
     <p>
       Vous pouvez partager ce prototype à votre entourage professionnelle mais nous vous demandons
-      de ne pas communiquer dessus publiquement.
+      de ne pas communiquer publiquement dessus.
     </p>,
   ],
   Inondata: [
@@ -126,7 +129,7 @@ const PROJECT_TEXT: { [key in Project]: JSX.Element[] } = {
 
 export const Home = () => {
   const project: Project = "Predictia";
-  const { classes, cx } = useStyles({ project });
+  const { classes, cx } = useStyles();
 
   const PROJECT_CTA: { [key in Project]: JSX.Element } = {
     Predictia: (
@@ -150,21 +153,30 @@ export const Home = () => {
   };
 
   return (
-    <div>
-      <div className={classes.titleBlock}>
-        <img className={classes.cover} src={PROJECT_COVER[project]} alt="" />
-        <div className={classes.titleTexts}>
-          <h1 className={classes.title}>{PROJECT_TITLE[project]}</h1>
-          <p className={classes.description}>{PROJECT_DESCRIPTION[project]}</p>
-        </div>
-      </div>
+    <CommonHome
+      title={PROJECT_TITLE[project]}
+      subtitle="Les cartes de COuverture du Sol par Intelligence Artificielle"
+      titleInfo={PROJECT_DESCRIPTION[project]}
+      // titleClass={classes.inondataTitleBlock}
+      cover={PROJECT_COVER[project]}
+      description={PROJECT_TEXT[project]}
+      cta={PROJECT_CTA[project]}
+    />
+    // <div>
+    //   <div className={classes.titleBlock}>
+    //     <img className={classes.cover} src={PROJECT_COVER[project]} alt="" />
+    //     <div className={classes.titleTexts}>
+    //       <h1 className={classes.title}>{PROJECT_TITLE[project]}</h1>
+    //       <p className={classes.description}>{PROJECT_DESCRIPTION[project]}</p>
+    //     </div>
+    //   </div>
 
-      <main className={classes.main}>
-        <h2 className={classes.subtitle}>Bienvenue</h2>
-        <div className={classes.texts}>{PROJECT_TEXT[project]}</div>
+    //   <main className={classes.main}>
+    //     <h2 className={classes.subtitle}>Bienvenue</h2>
+    //     <div className={classes.texts}>{PROJECT_TEXT[project]}</div>
 
-        {PROJECT_CTA[project]}
-      </main>
-    </div>
+    //     {PROJECT_CTA[project]}
+    //   </main>
+    // </div>
   );
 };
