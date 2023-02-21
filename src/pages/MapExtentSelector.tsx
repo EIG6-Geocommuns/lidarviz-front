@@ -20,7 +20,8 @@ const MapExtentSelector = () => {
   const { setNewCenterAndNewZoom, fitViewToPolygon } = useMap(
     "map",
     ORIGINAL_CENTER,
-    ORIGINAL_ZOOM
+    ORIGINAL_ZOOM,
+    ["planIGN"]
   );
 
   useEffect(() => {
