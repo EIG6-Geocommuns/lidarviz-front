@@ -1,9 +1,10 @@
-import { Box, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Box, Button, Grid } from "@mui/material";
+import { useMap } from "geocommuns-core";
+
 import { City, getCities } from "../api/geoApiGouv";
 import { Legend } from "../components/Legend";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
-import useMap from "../hooks/useMap";
 
 const ORIGINAL_CENTER: [number, number] = [2.5764414841767787, 46.51407673990174];
 const ORIGINAL_ZOOM = 5;
