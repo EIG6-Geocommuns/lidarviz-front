@@ -6,8 +6,7 @@ import MapExtentSelector from "./pages/MapExtentSelector";
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
 import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
 import { Home } from "./pages/Home";
-import { Root } from "./pages/Root";
-import { ErrorPage } from "./pages/ErrorPage";
+import { Root, ErrorPage } from "geocommuns-core";
 
 startReactDsfr({ defaultColorScheme: "system", Link });
 
@@ -25,7 +24,7 @@ declare module "@codegouvfr/react-dsfr/spa" {
 const router = createBrowserRouter([
   {
     path: ROUTES.Home,
-    element: <Root />,
+    element: <Root title="Inondata" />,
     errorElement: <ErrorPage />,
     children: [
       { path: ROUTES.Home, element: <Home /> },
