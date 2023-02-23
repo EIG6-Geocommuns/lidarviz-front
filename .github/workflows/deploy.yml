@@ -2,7 +2,7 @@ name: Push repo and deploy
 
 on:
   push:
-    branches: [master]
+    branches: [master, ma/github-actions-deploy]
 
 jobs:
   build_and_push:
