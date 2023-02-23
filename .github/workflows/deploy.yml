@@ -30,4 +30,4 @@ jobs:
             cd lidarviz-front
             docker build . -t lidarviz-front:latest
             docker ps -aqf "ancestor=lidarviz-front" | xargs docker stop
-            docker run -p 80:8080 -d lidarviz-front:latest
+            docker run -p 3000:3000 -d lidarviz-front:latest
