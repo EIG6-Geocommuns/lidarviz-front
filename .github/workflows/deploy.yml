@@ -28,6 +28,6 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd lidarviz-front
-            docker build -t lidarviz-front:lastest .
+            docker build . -t lidarviz-front:latest
             docker ps -aq | xargs docker stop # TODO: stop only playground's id
-            docker run -p 80:8080 -d lidarviz-front:lastest
+            docker run -p 80:8080 -d lidarviz-front:latest
