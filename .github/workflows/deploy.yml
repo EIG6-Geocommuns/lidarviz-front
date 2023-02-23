@@ -29,5 +29,5 @@ jobs:
           script: |
             cd lidarviz-front
             docker build . -t lidarviz-front:latest
-            docker ps -aq | xargs docker stop # TODO: stop only playground's id
+            docker ps -aqf "ancestor=lidarviz-front" | xargs docker stop
             docker run -p 80:8080 -d lidarviz-front:latest
