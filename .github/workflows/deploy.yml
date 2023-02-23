@@ -1,0 +1,33 @@
+name: Push repo and deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Sync to remote
+        uses: Burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avr
+          remote_path: "lidarviz-front"
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          remote_port: ${{ secrets.REMOTE_PORT }}
+          remote_user: ${{ secrets.REMOTE_USER }}
+          remote_key: ${{ secrets.REMOTE_KEY }}
+      - name: Test ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd lidarviz-front
+            docker build -t lidarviz-front:lastest .
+            docker ps -aq | xargs docker stop # TODO: stop only playground's id
+            docker run -p 80:8080 -d lidarviz-front:lastest
