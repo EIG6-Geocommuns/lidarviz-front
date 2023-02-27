@@ -5054,10 +5054,10 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geocommuns-core@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.0.2.tgz#b2640ea19438bc7b1dff1b43cf1741670bdd94cf"
-  integrity sha512-L5CYhpdYqlmaoQHIMiHvtL14f+phy0TMYXfrxhFAlY/9TaCkG0RCKzR2OkyTMy2dp0W2JhchGu2qO4cHTgP4Jg==
+geocommuns-core@~0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.0.5.tgz#b1da178f6e063053b9c635d36748fc62d72718f9"
+  integrity sha512-EAEV7I8wn4hdMHyheXc2mHZrZXFcmL5QAjuS/X+TGEcNAmcsXP93TCIFbyU6yBXQHYJfmamSb62KDtPtuV2GiA==
 
 geotiff@^2.0.7:
   version "2.0.7"
