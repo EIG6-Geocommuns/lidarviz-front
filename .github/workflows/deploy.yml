@@ -1,0 +1,37 @@
+name: Push repo and deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+      - name: Sync to remote
+        uses: Burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avr
+          remote_path: "lidarviz-front"
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          remote_port: ${{ secrets.REMOTE_PORT }}
+          remote_user: ${{ secrets.REMOTE_USER }}
+          remote_key: ${{ secrets.REMOTE_KEY }}
+      - name: Build and run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd lidarviz-front
+            docker build . -t lidarviz-front:latest
+            docker ps -aqf "publish=443" | xargs docker stop
+            docker run -p 443:3000 -d lidarviz-front:latest
