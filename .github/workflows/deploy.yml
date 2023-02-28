@@ -34,4 +34,4 @@ jobs:
             cd lidarviz-front
             docker build . -t lidarviz-front:latest
             docker ps -aqf "ancestor=lidarviz-front" | xargs docker stop || echo 'no lidarviz-front process'
-            docker run -p 4430:3000 -d lidarviz-front:latest
+            docker run -p 443:3000 -d lidarviz-front:latest
