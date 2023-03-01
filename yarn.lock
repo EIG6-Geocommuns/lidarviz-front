@@ -5054,10 +5054,12 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geocommuns-core@~0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.0.5.tgz#b1da178f6e063053b9c635d36748fc62d72718f9"
-  integrity sha512-EAEV7I8wn4hdMHyheXc2mHZrZXFcmL5QAjuS/X+TGEcNAmcsXP93TCIFbyU6yBXQHYJfmamSb62KDtPtuV2GiA==
+geocommuns-core@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.1.0.tgz#523502d1943324d5d5712046a839e3f66bcb66f3"
+  integrity sha512-8wm98egqxpvOOUv9VPBQ/zhxu6Ig7H2EqW7p1cHYJ/ylC+vyFMn23WqP8foAyZeldvuFvG8kWNz/8ZqI+I0YXg==
+  dependencies:
+    tsafe "^1.4.3"
 
 geotiff@^2.0.7:
   version "2.0.7"
@@ -9222,6 +9224,11 @@ tsafe@^1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/tsafe/-/tsafe-1.4.1.tgz#59cdad8ac41babf88e56dcd1a683ae2fb145d059"
   integrity sha512-3IDBalvf6SyvHFS14UiwCWzqdSdo+Q0k2J7DZyJYaHW/iraW9DJpaBKDJpry3yQs3o/t/A+oGaRW3iVt2lKxzA==
+
+tsafe@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/tsafe/-/tsafe-1.4.3.tgz#a98ce83616f0d9c01e3c6167a2ead45ba455b2ae"
+  integrity sha512-KjCdgjIqsbKW9oeJGSMVC23jhWm/VXJwkaZ7jffo/WaTioLGTHJqliHe9dECEVzIACNVNs/fwtKwU8wWK4jY4g==
 
 tsconfig-paths@^3.14.1:
   version "3.14.1"
