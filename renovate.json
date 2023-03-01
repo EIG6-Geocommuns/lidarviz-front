@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": ["master"],
+  "extends": ["config:base"],
+  "dependencyDashboard": false,
+  "bumpVersion": "patch",
+  "rangeStrategy": "bump",
+  "ignorePaths": [".github/**", "Dockerfile"],
+  "branchPrefix": "renovate_",
+  "vulnerabilityAlerts": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "packagePatterns": ["*"],
+      "excludePackagePatterns": ["geocommuns-core"],
+      "enabled": false
+    },
+    {
+      "packagePatterns": ["geocommuns-core"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true,
+      "groupName": "geocommuns-core"
+    }
+  ]
+}
