@@ -13,7 +13,7 @@ const CLASS_TO_COLOR = {
   Vigne: "#7F2996",
   "Herbacés/Cultures": "#FFF52F",
   "Terre labourée": "#E8E491",
-  "Piscine 2": "#3DE6EB",
+  Piscine: "#3DE6EB",
   Coupe: "#8AB3A0",
   Autre: "#FFFFFF",
 };
