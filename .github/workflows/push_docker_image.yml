@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "master"
-      - "ma/ci-publish-new-docker-image"
 
 jobs:
   docker:
