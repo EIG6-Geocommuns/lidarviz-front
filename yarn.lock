@@ -5122,10 +5122,10 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geocommuns-core@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.2.0.tgz#37dbe4b0411c26a3de94e3f31d6fee850d123bb1"
-  integrity sha512-VIG4ojay6MsEqOCI/z9QIoyGvJqz/SckuYolHEbCdAL/GWljGpwEbbFlzWVyrDDVQEarzCcp1ekcgJsIy7qeUg==
+geocommuns-core@~0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.2.1.tgz#d32c3c38153c674c58f5ab4377d7c709995e4375"
+  integrity sha512-ewWqW0upUrEHKRaa/lMLCM3J13b8YX7htQwqIeYhTUPHxRQpq5rl+dqbYTvNSStRBwiUHKgC9dalNMFfrSGtDg==
   dependencies:
     powerhooks "^0.26.2"
     tsafe "^1.4.3"
