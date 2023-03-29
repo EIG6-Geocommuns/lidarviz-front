@@ -24,7 +24,13 @@ declare module "@codegouvfr/react-dsfr/spa" {
 const router = createBrowserRouter([
   {
     path: ROUTES.Home,
-    element: <Root title="Inondata" />,
+    element: (
+      <Root
+        title="Inondata"
+        contactMail="line.gallen@ign.fr"
+        contentDescription="Inondata est un visualisateur 3D disponible en ligne qui offre la possibilité d’importer puis de visualiser les hauteurs et vitesses d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par les données LiDAR HD."
+      />
+    ),
     errorElement: <ErrorPage />,
     children: [
       { path: ROUTES.Home, element: <Home /> },
