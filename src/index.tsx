@@ -24,7 +24,7 @@ declare module "@codegouvfr/react-dsfr/spa" {
 const router = createBrowserRouter([
   {
     path: ROUTES.Home,
-    element: <Root title="Inondata" />,
+    element: <Root title="Inondata" contactMail="" />,
     errorElement: <ErrorPage />,
     children: [
       { path: ROUTES.Home, element: <Home /> },

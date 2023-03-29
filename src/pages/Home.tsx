@@ -2,6 +2,10 @@ import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Home as CommonHome } from "geocommuns-core";
 
+import * as itowns from 'itowns';
+
+const view = new itowns.Coordinates('EPSG:4326');
+
 const useStyles = makeStyles()({
   inondataTitleBlock: {
     backgroundColor: "rgba(35, 63, 123, 0.67)", //TODO: set other color if darkMode
