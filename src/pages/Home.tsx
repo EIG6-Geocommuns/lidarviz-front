@@ -1,4 +1,4 @@
-import { makeStyles } from "tss-react/dsfr";
+import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Home as CommonHome } from "geocommuns-core";
 
@@ -41,7 +41,7 @@ export const Home = () => {
     <a className={fr.cx("fr-btn")} href="http://116.203.195.247/">
       Accéder au Prototype
       <span
-        className={cx("fr-icon-arrow-right-line", classes.iconButton)}
+        className={cx(fr.cx("fr-icon-arrow-right-line"), classes.iconButton)}
         aria-hidden="true"
       ></span>
     </a>

@@ -1,6 +1,6 @@
 import { fr } from "@codegouvfr/react-dsfr";
 import { List, ListItem } from "@mui/material";
-import { makeStyles } from "tss-react/dsfr";
+import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 
 const CLASS_TO_COLOR = {
   Batiment: "#DB0E9A",
