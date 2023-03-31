@@ -1,4 +1,13 @@
-import { CAMERA_TYPE, Coordinates, Extent, GlobeView, Layer } from "itowns";
+import {
+  CAMERA_TYPE,
+  Coordinates,
+  Extent,
+  GlobeView,
+  Layer,
+  ColorLayer,
+  ElevationLayer,
+  FeatureGeometryLayer,
+} from "itowns";
 import React, { HTMLAttributes, useEffect, useRef } from 'react';
 
 type Placement = {
@@ -10,8 +19,8 @@ type Placement = {
 
 export type ViewProps = {
   placement: Placement | Extent,
-  layers?: Layer[],
-  // TODO: controls at init/as prop
+  layers?: (ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer)[],
+  // TODO: controls at init
   camera?: "perspective" | "orthographic" | THREE.Camera,
   renderer?: {
     antialias?: boolean,
@@ -54,6 +63,37 @@ export const View = (props: ViewProps) => {
       domEltRef.current?.replaceChildren();
     };
   }, []);
+
+  // Layers add/remove effect
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    const newLayers = new Set(props.layers);
+    const oldLayers = new Set(view.getLayers((l, a) => {
+      // Don't remove root layers (GlobeLayer, PointCloudLayer, ...)
+      if (a === undefined) return false;
+      // Don't remove layers initialized by GlobeLayer
+      if (l.id === "atmosphere") return false;
+      return true;
+    }));
+
+    // Remove old layers from the view
+    oldLayers.forEach(l => {
+        if (!newLayers.has(l)) {
+          view.removeLayer(l.id);
+        }
+    });
+
+    // Add new layers to the view
+    newLayers.forEach(l => {
+        if (!oldLayers.has(l)) {
+          view.addLayer(l);
+        }
+    });
+
+    // TODO: Move imagery layers position (à la geoportail)
+  }, [props.layers]);
 
   return (
     <div ref={domEltRef} style={style} />
