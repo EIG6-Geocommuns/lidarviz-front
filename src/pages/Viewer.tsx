@@ -1,4 +1,5 @@
 import * as itowns from "itowns";
+import { WaterLayer } from "inondata-itowns";
 import * as THREE from 'three';
 import { View } from "../components/View";
 
@@ -48,12 +49,21 @@ const orthoSource = new itowns.WMTSSource({
 });
 
 const buildingSource = new itowns.WFSSource({
-  url: 'https://wxs.ign.fr/essentiels/geoportail/wfs?', //
-  protocol: 'wfs',
-  version: '2.0.0',
-  typeName: 'BDTOPO_V3:batiment',
-  crs: 'EPSG:4326', //
+  url: "https://wxs.ign.fr/essentiels/geoportail/wfs?", //
+  protocol: "wfs",
+  version: "2.0.0",
+  typeName: "BDTOPO_V3:batiment",
+  crs: "EPSG:4326", //
   zoom: { min: 14, max: 14 },
+});
+
+const waterSource = new itowns.FileSource({
+  url: "https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/geoid/localcolors/jpg/1/localcolors_0_0.jpg", // TODO: Change hardcoded elevation data
+  crs: "EPSG:4326",
+  fetcher: itowns.Fetcher.texture,
+  parser: (height: THREE.Texture) => {
+    return Promise.resolve({ height });
+  },
 });
 
 const buildingStyle = new itowns.Style({
@@ -62,6 +72,7 @@ const buildingStyle = new itowns.Style({
       return color.set(0xDCD646);
     },
     base_altitude: (p: { altitude_minimale_sol: number }) => {
+      // TODO: Type BD Ortho
       return p.altitude_minimale_sol;
     },
     extrusion_height: (p: { hauteur: number }) => p.hauteur,
@@ -89,6 +100,10 @@ export const Viewer = () => {
   const srtm3Layer = new itowns.ElevationLayer('SRTM3', {
     source: srtm3Source,
   });
+  const waterLayer = new WaterLayer('water', {
+    source: waterSource,
+    zoom: { min: 11, max: 19 },
+  });
   const buildingLayer = new itowns.FeatureGeometryLayer('Bati BD Topo', config);
   const layers = [
     orthoLayer,
@@ -96,6 +111,7 @@ export const Viewer = () => {
     altiLayer,
     srtm3Layer,
     buildingLayer,
+    waterLayer
   ];
 
   return (
