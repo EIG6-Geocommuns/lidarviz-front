@@ -8,11 +8,14 @@ import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
 import { Home } from "./pages/Home";
 import { Root, ErrorPage } from "geocommuns-core";
 
+import { Viewer } from './pages/Viewer';
+
 startReactDsfr({ defaultColorScheme: "system", Link });
 
 export enum ROUTES {
   Home = "/",
   MapExtentSelector = "/definition-emprise",
+  Viewer = "/viewer",
 }
 
 declare module "@codegouvfr/react-dsfr/spa" {
@@ -35,6 +38,7 @@ const router = createBrowserRouter([
     children: [
       { path: ROUTES.Home, element: <Home /> },
       { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
+      { path: ROUTES.Viewer, element: <Viewer /> },
     ],
   },
 ]);
