@@ -1,3 +1,5 @@
+import { useEffect, useRef, MutableRefObject } from "react";
+import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import {
   CAMERA_TYPE,
   Coordinates,
@@ -8,38 +10,41 @@ import {
   ElevationLayer,
   FeatureGeometryLayer,
 } from "itowns";
-import React, { HTMLAttributes, useEffect, useRef } from 'react';
 
 type Placement = {
-  coord: Coordinates,
-  tilt: number,
-  heading: number,
-  range: number
-}
+  coord: Coordinates;
+  tilt: number;
+  heading: number;
+  range: number;
+};
 
-export type ViewProps = {
-  placement: Placement | Extent,
-  layers?: (ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer)[],
+type ViewProps = {
+  id: string;
+  viewRef: MutableRefObject<GlobeView | null>;
+  placement: Placement | Extent;
+  layers?: (ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer)[];
   // TODO: controls at init
-  camera?: "perspective" | "orthographic" | THREE.Camera,
+  camera?: "perspective" | "orthographic" | THREE.Camera;
   renderer?: {
-    antialias?: boolean,
-    alpha?: boolean,
-    logarithmicDepthBuffer?: boolean,
-    isWebGL2?: boolean
-  },
-  enableFocusOnStart?: boolean
-} & HTMLAttributes<HTMLDivElement>
+    antialias?: boolean;
+    alpha?: boolean;
+    logarithmicDepthBuffer?: boolean;
+    isWebGL2?: boolean;
+  };
+  enableFocusOnStart?: boolean;
+};
 
-const style: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-}
+const useStyles = makeStyles()(() => ({
+  view: {
+    width: "100%",
+    height: "100%",
+  },
+}));
 
 export const View = (props: ViewProps) => {
+  const { viewRef, camera, renderer, enableFocusOnStart, placement, layers } = props;
+  const { classes } = useStyles();
   const domEltRef = useRef<HTMLDivElement>(null);
-  const viewRef = useRef<GlobeView | null>(null);
 
   // View lifecycle effect
   useEffect(() => {
@@ -48,13 +53,15 @@ export const View = (props: ViewProps) => {
 
     const options = {
       camera:
-        props.camera === "perspective" ? { type: CAMERA_TYPE.PERSPECTIVE } :
-        props.camera === "orthographic" ? { type: CAMERA_TYPE.ORTHOGRAPHIC } :
-        { cameraThree: props.camera },
-      renderer: props.renderer,
-      enableFocusOnStart: props.enableFocusOnStart,
+        camera === "perspective"
+          ? { type: CAMERA_TYPE.PERSPECTIVE }
+          : camera === "orthographic"
+          ? { type: CAMERA_TYPE.ORTHOGRAPHIC }
+          : { cameraThree: camera },
+      renderer: renderer,
+      enableFocusOnStart: enableFocusOnStart,
     };
-    viewRef.current = new GlobeView(domElt, props.placement, options);
+    viewRef.current = new GlobeView(domElt, placement, options);
 
     // Dispose our current view and DOM elements created by itowns
     return () => {
@@ -69,33 +76,33 @@ export const View = (props: ViewProps) => {
     const view = viewRef.current;
     if (!view) return;
 
-    const newLayers = new Set(props.layers);
-    const oldLayers = new Set(view.getLayers((l, a) => {
-      // Don't remove root layers (GlobeLayer, PointCloudLayer, ...)
-      if (a === undefined) return false;
-      // Don't remove layers initialized by GlobeLayer
-      if (l.id === "atmosphere") return false;
-      return true;
-    }));
+    const newLayers = new Set(layers);
+    const oldLayers = new Set(
+      view.getLayers((l, a) => {
+        // Don't remove root layers (GlobeLayer, PointCloudLayer, ...)
+        if (a === undefined) return false;
+        // Don't remove layers initialized by GlobeLayer
+        if (l.id === "atmosphere") return false;
+        return true;
+      })
+    );
 
     // Remove old layers from the view
-    oldLayers.forEach(l => {
-        if (!newLayers.has(l)) {
-          view.removeLayer(l.id);
-        }
+    oldLayers.forEach((l) => {
+      if (!newLayers.has(l)) {
+        view.removeLayer(l.id);
+      }
     });
 
     // Add new layers to the view
-    newLayers.forEach(l => {
-        if (!oldLayers.has(l)) {
-          view.addLayer(l);
-        }
+    newLayers.forEach((l) => {
+      if (!oldLayers.has(l)) {
+        view.addLayer(l);
+      }
     });
 
     // TODO: Move imagery layers position (à la geoportail)
-  }, [props.layers]);
+  }, [layers]);
 
-  return (
-    <div ref={domEltRef} style={style} />
-  )
-}
+  return <div ref={domEltRef} className={classes.view} />;
+};
