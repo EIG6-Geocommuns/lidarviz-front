@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useConstCallback } from "powerhooks";
 import { ColorLayer, Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
@@ -12,7 +12,7 @@ import {
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
-import { Checkbox } from "@codegouvfr/react-dsfr/Checkbox";
+import { LayerVisibilityCheckbox } from "../components/LayerVisibilityCheckbox";
 
 const placement = {
   coord: new Coordinates("EPSG:4326", 5.395317, 43.460333),
@@ -38,22 +38,13 @@ const LAYERS = [orthoLayer, planIGNLayer, altiLayer, srtm3Layer, buildingLayer, 
 export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
   const { classes } = useStyles();
-  const [isPlanIGNVisible, setIsPlanIGNVisible] = useState(true);
 
-  const updatePlanIGNVisibility = useConstCallback((isPlanIGNVisible: boolean) => {
+  const updateLayerVisibility = useConstCallback((layerId: string, isPlanIGNVisible: boolean) => {
     const view = viewRef.current;
     if (view === null) return;
-    const planIGNLayer: ColorLayer & { visible: boolean } = view.getLayerById("Plan IGN");
+    const planIGNLayer: ColorLayer & { visible: boolean } = view.getLayerById(layerId);
     planIGNLayer.visible = isPlanIGNVisible;
     view.notifyChange();
-  });
-
-  useEffect(() => {
-    updatePlanIGNVisibility(isPlanIGNVisible);
-  }, [isPlanIGNVisible, updatePlanIGNVisibility]);
-
-  const handleVisibilityUpdate = useConstCallback(() => {
-    setIsPlanIGNVisible(!isPlanIGNVisible);
   });
 
   return (
@@ -61,17 +52,9 @@ export const Viewer = () => {
       <View id="viewer" placement={placement} layers={LAYERS} viewRef={viewRef} />
       <div id="controllers" className={classes.controllers}>
         <h6>Couches</h6>
-        <Checkbox
-          options={[
-            {
-              label: "Plan IGN",
-              nativeInputProps: {
-                checked: isPlanIGNVisible,
-                onChange: handleVisibilityUpdate,
-              },
-            },
-          ]}
-        />
+        <LayerVisibilityCheckbox layerId="Plan IGN" setLayerVisibility={updateLayerVisibility} />
+        <LayerVisibilityCheckbox layerId="Ortho IGN" setLayerVisibility={updateLayerVisibility} />
+        <LayerVisibilityCheckbox layerId="Bâtiments" setLayerVisibility={updateLayerVisibility} />
       </div>
     </div>
   );

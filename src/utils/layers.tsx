@@ -62,15 +62,6 @@ const buildingStyle = new itowns.Style({
   },
 });
 
-// TODO: Missing some type definitions in itowns, cast for now
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: any = {
-  crs: "EPSG:4326",
-  source: buildingSource,
-  style: buildingStyle,
-  zoom: { min: 16 },
-};
-
 const waterSource = new itowns.FileSource({
   url: "https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/geoid/localcolors/jpg/1/localcolors_0_0.jpg", // TODO: Change hardcoded elevation data
   crs: "EPSG:4326",
@@ -96,7 +87,16 @@ export const srtm3Layer = new itowns.ElevationLayer("SRTM3", {
   source: srtm3Source,
 });
 
-export const buildingLayer = new itowns.FeatureGeometryLayer("Bati BD Topo", config);
+// TODO: Missing some type definitions in itowns, cast for now
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const config: any = {
+  crs: "EPSG:4326",
+  source: buildingSource,
+  style: buildingStyle,
+  zoom: { min: 16 },
+};
+
+export const buildingLayer = new itowns.FeatureGeometryLayer("Bâtiments", config);
 
 export const waterLayer = new WaterLayer("water", {
   source: waterSource,
