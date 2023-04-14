@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useConstCallback } from "powerhooks";
-import { ColorLayer, Coordinates, GlobeView } from "itowns";
+import { Layer, Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
 import {
   orthoLayer,
@@ -39,11 +39,12 @@ export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
   const { classes } = useStyles();
 
-  const updateLayerVisibility = useConstCallback((layerId: string, isPlanIGNVisible: boolean) => {
+  const updateLayerVisibility = useConstCallback((layerId: string, isLayerVisible: boolean) => {
     const view = viewRef.current;
     if (view === null) return;
-    const planIGNLayer: ColorLayer & { visible: boolean } = view.getLayerById(layerId);
-    planIGNLayer.visible = isPlanIGNVisible;
+    const layer: Layer = view.getLayerById(layerId);
+    if (!('visible' in layer)) return;
+    layer.visible = isLayerVisible;
     view.notifyChange();
   });
 
