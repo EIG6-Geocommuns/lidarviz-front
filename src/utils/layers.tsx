@@ -1,4 +1,13 @@
-import * as itowns from "itowns";
+import {
+  WMTSSource,
+  ElevationLayer,
+  WFSSource,
+  Style,
+  FileSource,
+  Fetcher,
+  ColorLayer,
+  FeatureGeometryLayer,
+} from "itowns";
 import * as THREE from "three";
 import { WaterLayer } from "inondata-itowns";
 
@@ -25,7 +34,7 @@ export const WaterLayerToLabel: { [layer in AvailableWaterLayer]: string } = {
   WATER: "Inondation",
 };
 
-const srtm3Source = new itowns.WMTSSource({
+const srtm3Source = new WMTSSource({
   format: "image/x-bil;bits=32",
   crs: "EPSG:4326",
   url: "https://wxs.ign.fr/altimetrie/geoportail/wmts",
@@ -34,7 +43,7 @@ const srtm3Source = new itowns.WMTSSource({
   zoom: { min: 3, max: 10 },
 });
 
-const altiSource = new itowns.WMTSSource({
+const altiSource = new WMTSSource({
   url: "https://wxs.ign.fr/altimetrie/geoportail/wmts",
   crs: "EPSG:4326",
   format: "image/x-bil;bits=32",
@@ -43,7 +52,7 @@ const altiSource = new itowns.WMTSSource({
   zoom: { min: 11, max: 14 },
 });
 
-const planIGNSource = new itowns.WMTSSource({
+const planIGNSource = new WMTSSource({
   url: "https://wxs.ign.fr/essentiels/geoportail/wmts",
   crs: "EPSG:3857",
   format: "image/png",
@@ -52,7 +61,7 @@ const planIGNSource = new itowns.WMTSSource({
   zoom: { min: 0, max: 19 },
 });
 
-const orthoSource = new itowns.WMTSSource({
+const orthoSource = new WMTSSource({
   url: "https://wxs.ign.fr/decouverte/geoportail/wmts",
   crs: "EPSG:3857",
   format: "image/jpeg",
@@ -61,7 +70,7 @@ const orthoSource = new itowns.WMTSSource({
   zoom: { min: 2, max: 21 },
 });
 
-const buildingSource = new itowns.WFSSource({
+const buildingSource = new WFSSource({
   url: "https://wxs.ign.fr/essentiels/geoportail/wfs?", //
   protocol: "wfs",
   version: "2.0.0",
@@ -72,7 +81,7 @@ const buildingSource = new itowns.WFSSource({
 
 const color = new THREE.Color();
 
-const buildingStyle = new itowns.Style({
+const buildingStyle = new Style({
   fill: {
     color: (_: object) => {
       return color.set(0xdcd646);
@@ -85,28 +94,28 @@ const buildingStyle = new itowns.Style({
   },
 });
 
-const waterSource = new itowns.FileSource({
+const waterSource = new FileSource({
   url: "https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/geoid/localcolors/jpg/1/localcolors_0_0.jpg", // TODO: Change hardcoded elevation data
   crs: "EPSG:4326",
-  fetcher: itowns.Fetcher.texture,
+  fetcher: Fetcher.texture,
   parser: (height: THREE.Texture) => {
     return Promise.resolve({ height });
   },
 });
 
-const planIGNLayer = new itowns.ColorLayer(ColorLayerToLabel.PLAN_IGN, {
+const planIGNLayer = new ColorLayer(ColorLayerToLabel.PLAN_IGN, {
   source: planIGNSource,
 });
 
-const orthoLayer = new itowns.ColorLayer(ColorLayerToLabel.ORTHO, {
+const orthoLayer = new ColorLayer(ColorLayerToLabel.ORTHO, {
   source: orthoSource,
 });
 
-const altiLayer = new itowns.ElevationLayer(ElevationLayerToLabel.BD_ALTI, {
+const altiLayer = new ElevationLayer(ElevationLayerToLabel.BD_ALTI, {
   source: altiSource,
 });
 
-const srtm3Layer = new itowns.ElevationLayer(ElevationLayerToLabel.WORLD, {
+const srtm3Layer = new ElevationLayer(ElevationLayerToLabel.WORLD, {
   source: srtm3Source,
 });
 
@@ -119,27 +128,27 @@ const config: any = {
   zoom: { min: 16 },
 };
 
-const buildingLayer = new itowns.FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
+const buildingLayer = new FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
 
 const waterLayer = new WaterLayer(WaterLayerToLabel.WATER, {
   source: waterSource,
   zoom: { min: 11, max: 19 },
 });
 
-export const ColorLayerToItownsLayer: { [layer in AvailableColorLayer]: itowns.ColorLayer } = {
+export const ColorLayerToItownsLayer: { [layer in AvailableColorLayer]: ColorLayer } = {
   PLAN_IGN: planIGNLayer,
   ORTHO: orthoLayer,
 };
 
 export const ElevationLayerToItownsLayer: {
-  [layer in AvailableElevationLayer]: itowns.ElevationLayer;
+  [layer in AvailableElevationLayer]: ElevationLayer;
 } = {
   BD_ALTI: altiLayer,
   WORLD: srtm3Layer,
 };
 
 export const FeatureLayerToItownsLayer: {
-  [layer in AvailableFeatureLayer]: itowns.FeatureGeometryLayer;
+  [layer in AvailableFeatureLayer]: FeatureGeometryLayer;
 } = {
   BUILDING: buildingLayer,
 };

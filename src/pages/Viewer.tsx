@@ -14,6 +14,7 @@ import {
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { OpacitySlider } from "geocommuns-core";
+import { Search } from "../components/Search";
 
 const PLACEMENT = {
   coord: new Coordinates("EPSG:4326", 5.395317, 43.460333),
@@ -83,10 +84,19 @@ export const Viewer = () => {
     );
   });
 
+  const moveToLocalisation = (x: number, y: number) => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    const quimperCood = new Coordinates("EPSG:4326", x, y);
+    view.controls?.lookAtCoordinate({ coord: quimperCood });
+  };
+
   return (
     <div className={classes.container}>
       <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
       <div id="controllers" className={classes.controllers}>
+        <Search moveToLocalisation={moveToLocalisation} />
         <h6>Couches</h6>
         {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
       </div>
