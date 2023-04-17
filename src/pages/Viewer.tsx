@@ -3,18 +3,19 @@ import { useConstCallback } from "powerhooks";
 import { Layer, Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
 import {
-  orthoLayer,
-  altiLayer,
-  srtm3Layer,
-  buildingLayer,
-  waterLayer,
-  planIGNLayer,
+  ColorLayerToItownsLayer,
+  ColorLayerToLabel,
+  ElevationLayerToItownsLayer,
+  FeatureLayerToItownsLayer,
+  FeatureLayerToLabel,
+  WaterLayerToItownsLayer,
+  WaterLayerToLabel,
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
-import { LayerVisibilityCheckbox } from "../components/LayerVisibilityCheckbox";
+import { OpacitySlider } from "geocommuns-core";
 
-const placement = {
+const PLACEMENT = {
   coord: new Coordinates("EPSG:4326", 5.395317, 43.460333),
   range: 15000,
   tilt: 0,
@@ -30,10 +31,24 @@ const useStyles = makeStyles()((theme) => ({
     backgroundColor: theme.decisions.background.default.grey.default,
     margin: fr.spacing("2w"),
     padding: fr.spacing("2w"),
+    width: 250,
   },
 }));
 
-const LAYERS = [orthoLayer, planIGNLayer, altiLayer, srtm3Layer, buildingLayer, waterLayer];
+const LAYERS = [
+  ColorLayerToItownsLayer.ORTHO,
+  ColorLayerToItownsLayer.PLAN_IGN,
+  ElevationLayerToItownsLayer.BD_ALTI,
+  ElevationLayerToItownsLayer.WORLD,
+  FeatureLayerToItownsLayer.BUILDING,
+  WaterLayerToItownsLayer.WATER,
+];
+const LAYER_SETTERS = [
+  ColorLayerToLabel.ORTHO,
+  ColorLayerToLabel.PLAN_IGN,
+  FeatureLayerToLabel.BUILDING,
+  WaterLayerToLabel.WATER,
+];
 
 export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
@@ -43,19 +58,36 @@ export const Viewer = () => {
     const view = viewRef.current;
     if (view === null) return;
     const layer: Layer = view.getLayerById(layerId);
-    if (!('visible' in layer)) return;
+    if (!("visible" in layer)) return;
     layer.visible = isLayerVisible;
     view.notifyChange();
+  });
+  const updateLayerOpacity = useConstCallback((layerId: string, opacity: number) => {
+    const view = viewRef.current;
+    if (view === null) return;
+
+    const layer = view.getLayerById(layerId);
+    if (!("opacity" in layer)) return;
+
+    layer.opacity = opacity;
+    view.notifyChange();
+  });
+  const generateOpacitySlider = useConstCallback((layerId: string) => {
+    return (
+      <OpacitySlider
+        label={layerId}
+        setLayerOpacity={(opacity: number) => updateLayerOpacity(layerId, opacity)}
+        setLayerVisibility={(visible: boolean) => updateLayerVisibility(layerId, visible)}
+      />
+    );
   });
 
   return (
     <div className={classes.container}>
-      <View id="viewer" placement={placement} layers={LAYERS} viewRef={viewRef} />
+      <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
       <div id="controllers" className={classes.controllers}>
         <h6>Couches</h6>
-        <LayerVisibilityCheckbox layerId="Plan IGN" setLayerVisibility={updateLayerVisibility} />
-        <LayerVisibilityCheckbox layerId="Ortho IGN" setLayerVisibility={updateLayerVisibility} />
-        <LayerVisibilityCheckbox layerId="Bâtiments" setLayerVisibility={updateLayerVisibility} />
+        {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
       </div>
     </div>
   );
