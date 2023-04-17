@@ -2,6 +2,29 @@ import * as itowns from "itowns";
 import * as THREE from "three";
 import { WaterLayer } from "inondata-itowns";
 
+export type AvailableColorLayer = "PLAN_IGN" | "ORTHO";
+export type AvailableElevationLayer = "BD_ALTI" | "WORLD";
+export type AvailableFeatureLayer = "BUILDING";
+export type AvailableWaterLayer = "WATER";
+
+export const ColorLayerToLabel: { [layer in AvailableColorLayer]: string } = {
+  PLAN_IGN: "Plan IGN",
+  ORTHO: "Ortho IGN",
+};
+
+export const ElevationLayerToLabel: { [layer in AvailableElevationLayer]: string } = {
+  BD_ALTI: "BD Alti",
+  WORLD: "SRTM3",
+};
+
+export const FeatureLayerToLabel: { [layer in AvailableFeatureLayer]: string } = {
+  BUILDING: "Bâtiments",
+};
+
+export const WaterLayerToLabel: { [layer in AvailableWaterLayer]: string } = {
+  WATER: "Inondation",
+};
+
 const srtm3Source = new itowns.WMTSSource({
   format: "image/x-bil;bits=32",
   crs: "EPSG:4326",
@@ -20,7 +43,7 @@ const altiSource = new itowns.WMTSSource({
   zoom: { min: 11, max: 14 },
 });
 
-export const planIGNSource = new itowns.WMTSSource({
+const planIGNSource = new itowns.WMTSSource({
   url: "https://wxs.ign.fr/essentiels/geoportail/wmts",
   crs: "EPSG:3857",
   format: "image/png",
@@ -71,19 +94,19 @@ const waterSource = new itowns.FileSource({
   },
 });
 
-export const planIGNLayer = new itowns.ColorLayer("Plan IGN", {
+const planIGNLayer = new itowns.ColorLayer(ColorLayerToLabel.PLAN_IGN, {
   source: planIGNSource,
 });
 
-export const orthoLayer = new itowns.ColorLayer("Ortho IGN", {
+const orthoLayer = new itowns.ColorLayer(ColorLayerToLabel.ORTHO, {
   source: orthoSource,
 });
 
-export const altiLayer = new itowns.ElevationLayer("BD Alti", {
+const altiLayer = new itowns.ElevationLayer(ElevationLayerToLabel.BD_ALTI, {
   source: altiSource,
 });
 
-export const srtm3Layer = new itowns.ElevationLayer("SRTM3", {
+const srtm3Layer = new itowns.ElevationLayer(ElevationLayerToLabel.WORLD, {
   source: srtm3Source,
 });
 
@@ -96,9 +119,31 @@ const config: any = {
   zoom: { min: 16 },
 };
 
-export const buildingLayer = new itowns.FeatureGeometryLayer("Bâtiments", config);
+const buildingLayer = new itowns.FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
 
-export const waterLayer = new WaterLayer("water", {
+const waterLayer = new WaterLayer(WaterLayerToLabel.WATER, {
   source: waterSource,
   zoom: { min: 11, max: 19 },
 });
+
+export const ColorLayerToItownsLayer: { [layer in AvailableColorLayer]: itowns.ColorLayer } = {
+  PLAN_IGN: planIGNLayer,
+  ORTHO: orthoLayer,
+};
+
+export const ElevationLayerToItownsLayer: {
+  [layer in AvailableElevationLayer]: itowns.ElevationLayer;
+} = {
+  BD_ALTI: altiLayer,
+  WORLD: srtm3Layer,
+};
+
+export const FeatureLayerToItownsLayer: {
+  [layer in AvailableFeatureLayer]: itowns.FeatureGeometryLayer;
+} = {
+  BUILDING: buildingLayer,
+};
+
+export const WaterLayerToItownsLayer: { [layer in AvailableWaterLayer]: WaterLayer } = {
+  WATER: waterLayer,
+};
