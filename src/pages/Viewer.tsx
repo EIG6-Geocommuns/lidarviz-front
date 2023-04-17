@@ -75,6 +75,7 @@ export const Viewer = () => {
   const generateOpacitySlider = useConstCallback((layerId: string) => {
     return (
       <OpacitySlider
+        key={layerId}
         label={layerId}
         setLayerOpacity={(opacity: number) => updateLayerOpacity(layerId, opacity)}
         setLayerVisibility={(visible: boolean) => updateLayerVisibility(layerId, visible)}
