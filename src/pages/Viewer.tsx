@@ -60,6 +60,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
 const LAYERS = [
   ColorLayerToItownsLayer.ORTHO,
   ColorLayerToItownsLayer.PLAN_IGN,
+  ColorLayerToItownsLayer.WATER2D,
   ElevationLayerToItownsLayer.BD_ALTI,
   ElevationLayerToItownsLayer.WORLD,
   FeatureLayerToItownsLayer.BUILDING,
@@ -68,6 +69,7 @@ const LAYERS = [
 const LAYER_SETTERS = [
   ColorLayerToLabel.ORTHO,
   ColorLayerToLabel.PLAN_IGN,
+  ColorLayerToLabel.WATER2D,
   FeatureLayerToLabel.BUILDING,
   WaterLayerToLabel.WATER,
 ];
