@@ -24,11 +24,12 @@ const PLACEMENT = {
   heading: 0,
 };
 
-const useStyles = makeStyles()((theme) => ({
+const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight }) => ({
   container: {
-    width: "100%",
-    height: "100%",
-    overflow: "hidden",
+    minHeight: windowHeight,
+  },
+  layersTitle: {
+    marginTop: fr.spacing("3w"),
   },
   sideBar: {
     position: "absolute",
@@ -73,7 +74,7 @@ const LAYER_SETTERS = [
 
 export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
-  const { classes } = useStyles();
+  const { classes } = useStyles({ windowHeight: window.innerHeight });
 
   const updateLayerVisibility = useConstCallback((layerId: string, isLayerVisible: boolean) => {
     const view = viewRef.current;
@@ -116,12 +117,15 @@ export const Viewer = () => {
   return (
     <div className={classes.container}>
       <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
+
       <div className={classes.sideBar}>
         <div className={classes.controllers}>
           <Search moveToLocalisation={moveToLocalisation} />
-          <h6>Couches</h6>
+
+          <h6 className={classes.layersTitle}>Couches</h6>
           {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
         </div>
+
         <div className={classes.legend}>
           <h6 className={classes.legendTitle}>Légende</h6>
           <Legend />
