@@ -40,7 +40,7 @@ const useStyles = makeStyles()((theme) => ({
     margin: fr.spacing("2w"),
     padding: fr.spacing("2w"),
     paddingBottom: fr.spacing("1w"),
-    width: 250,
+    width: 280,
   },
   opacitySlider: {
     marginBottom: fr.spacing("2w"),
@@ -49,7 +49,7 @@ const useStyles = makeStyles()((theme) => ({
     backgroundColor: theme.decisions.background.default.grey.default,
     margin: fr.spacing("2w"),
     padding: fr.spacing("2w"),
-    width: 250,
+    width: 280,
   },
   legendTitle: {
     marginBottom: fr.spacing("1w"),
@@ -116,13 +116,9 @@ export const Viewer = () => {
   return (
     <div className={classes.container}>
       <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
-      <div id="controllers" className={classes.controllers}>
-        <Search moveToLocalisation={moveToLocalisation} />
-        <h6>Couches</h6>
-        {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
-      </div>
       <div className={classes.sideBar}>
         <div className={classes.controllers}>
+          <Search moveToLocalisation={moveToLocalisation} />
           <h6>Couches</h6>
           {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
         </div>
