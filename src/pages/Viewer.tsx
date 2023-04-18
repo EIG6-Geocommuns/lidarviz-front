@@ -88,8 +88,8 @@ export const Viewer = () => {
     const view = viewRef.current;
     if (!view) return;
 
-    const quimperCood = new Coordinates("EPSG:4326", x, y);
-    view.controls?.lookAtCoordinate({ coord: quimperCood });
+    const coord = new Coordinates("EPSG:4326", x, y);
+    view.controls?.lookAtCoordinate({ coord: coord });
   };
 
   return (
