@@ -18,7 +18,7 @@ type Placement = {
   range: number;
 };
 
-type ViewProps = {
+type Props = {
   id: string;
   viewRef: MutableRefObject<GlobeView | null>;
   placement: Placement | Extent;
@@ -41,7 +41,7 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const View = (props: ViewProps) => {
+export const View = (props: Props) => {
   const { viewRef, camera, renderer, enableFocusOnStart, placement, layers } = props;
   const { classes } = useStyles();
   const domEltRef = useRef<HTMLDivElement>(null);

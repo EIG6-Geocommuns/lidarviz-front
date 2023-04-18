@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Coordinate } from "ol/coordinate";
 
-// TODO move type into own file
 export type City = {
   nom: string;
   code: string;
@@ -13,6 +12,10 @@ export type City = {
     type: "Polygon";
     coordinates: Coordinate[][];
   };
+  centre: {
+    type: "Point";
+    coordinates: [number, number];
+  };
 };
 
 const geoApiAxiosInstance = axios.create({
@@ -20,11 +23,17 @@ const geoApiAxiosInstance = axios.create({
   timeout: 1500,
 });
 
-export const getCities = (searchedText: string): Promise<{ data: City[] }> => {
+export const getCities = (
+  searchedText: string,
+  centerInsteadOfBoudaries?: boolean
+): Promise<{ data: City[] }> => {
+  let fields = "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion,";
+  fields = centerInsteadOfBoudaries ? fields + "centre" : fields + "contour";
+
   return geoApiAxiosInstance.get("communes", {
     params: {
       nom: searchedText,
-      fields: "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion,contour",
+      fields,
       format: "json",
     },
   });
