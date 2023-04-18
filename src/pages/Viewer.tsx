@@ -15,6 +15,7 @@ import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { OpacitySlider } from "geocommuns-core";
 import { Search } from "../components/Search";
+import { Legend } from "../components/Legend";
 
 const PLACEMENT = {
   coord: new Coordinates("EPSG:4326", 5.395317, 43.460333),
@@ -24,15 +25,34 @@ const PLACEMENT = {
 };
 
 const useStyles = makeStyles()((theme) => ({
-  container: { width: "100%", height: "100%", overflow: "hidden" },
-  controllers: {
+  container: {
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+  },
+  sideBar: {
     position: "absolute",
     top: fr.spacing("29v"),
     zIndex: 2,
+  },
+  controllers: {
+    backgroundColor: theme.decisions.background.default.grey.default,
+    margin: fr.spacing("2w"),
+    padding: fr.spacing("2w"),
+    paddingBottom: fr.spacing("1w"),
+    width: 250,
+  },
+  opacitySlider: {
+    marginBottom: fr.spacing("2w"),
+  },
+  legend: {
     backgroundColor: theme.decisions.background.default.grey.default,
     margin: fr.spacing("2w"),
     padding: fr.spacing("2w"),
     width: 250,
+  },
+  legendTitle: {
+    marginBottom: fr.spacing("1w"),
   },
 }));
 
@@ -78,6 +98,7 @@ export const Viewer = () => {
       <OpacitySlider
         key={layerId}
         label={layerId}
+        className={classes.opacitySlider}
         setLayerOpacity={(opacity: number) => updateLayerOpacity(layerId, opacity)}
         setLayerVisibility={(visible: boolean) => updateLayerVisibility(layerId, visible)}
       />
@@ -99,6 +120,16 @@ export const Viewer = () => {
         <Search moveToLocalisation={moveToLocalisation} />
         <h6>Couches</h6>
         {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
+      </div>
+      <div className={classes.sideBar}>
+        <div className={classes.controllers}>
+          <h6>Couches</h6>
+          {LAYER_SETTERS.map((ls: string) => generateOpacitySlider(ls))}
+        </div>
+        <div className={classes.legend}>
+          <h6 className={classes.legendTitle}>Légende</h6>
+          <Legend />
+        </div>
       </div>
     </div>
   );
