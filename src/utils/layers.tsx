@@ -88,7 +88,6 @@ const water2DSource = new WMTSSource({
   style: "inondata:risk_v1",
   tileMatrixSet: "EPSG:4326",
   tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
-  // TODO: Non-standard TileMatrix
 });
 
 const color = new THREE.Color();
