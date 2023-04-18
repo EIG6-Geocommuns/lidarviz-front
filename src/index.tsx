@@ -8,7 +8,7 @@ import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
 import { Home } from "./pages/Home";
 import { Root, ErrorPage } from "geocommuns-core";
 
-import { Viewer } from './pages/Viewer';
+import { Viewer } from "./pages/Viewer";
 
 startReactDsfr({ defaultColorScheme: "system", Link });
 
@@ -30,7 +30,8 @@ const router = createBrowserRouter([
     element: (
       <Root
         title="Inondata"
-        contactMail="line.gallen@ign.fr"
+        feedbackLink="https://framaforms.org/inondata-test-utilisateurice-1681734006"
+        contactMail="inondata@ign.fr"
         contentDescription="Inondata est un visualisateur 3D disponible en ligne qui offre la possibilité d’importer puis de visualiser les hauteurs et vitesses d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par les données LiDAR HD."
       />
     ),
