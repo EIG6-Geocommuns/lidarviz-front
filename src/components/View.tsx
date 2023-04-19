@@ -9,7 +9,6 @@ import {
   ColorLayer,
   ElevationLayer,
   FeatureGeometryLayer,
-  GlobeControls,
 } from "itowns";
 
 type Placement = {
@@ -22,7 +21,6 @@ type Placement = {
 type Props = {
   id: string;
   viewRef: MutableRefObject<GlobeView | null>;
-  globeControlsRef: MutableRefObject<GlobeControls | null>;
   placement: Placement | Extent;
   layers?: (ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer)[];
   // TODO: controls at init
@@ -43,8 +41,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const View = (props: Props) => {
-  const { viewRef, globeControlsRef, camera, renderer, enableFocusOnStart, placement, layers } =
-    props;
+  const { viewRef, camera, renderer, enableFocusOnStart, placement, layers } = props;
   const { classes } = useStyles();
   const domEltRef = useRef<HTMLDivElement>(null);
 
@@ -64,15 +61,11 @@ export const View = (props: Props) => {
       enableFocusOnStart: enableFocusOnStart,
     };
     viewRef.current = new GlobeView(domElt, placement, options);
-    if (viewRef.current)
-      globeControlsRef.current = new GlobeControls(viewRef.current, placement, options);
 
     // Dispose our current view and DOM elements created by itowns
     return () => {
       viewRef.current?.dispose();
       viewRef.current = null;
-      globeControlsRef.current?.dispose();
-      globeControlsRef.current = null;
       domEltRef.current?.replaceChildren();
     };
   }, []);

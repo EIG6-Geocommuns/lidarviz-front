@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useConstCallback } from "powerhooks";
-import { Coordinates, GlobeView, GlobeControls } from "itowns";
+import { Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
 import {
   ColorLayerToItownsLayer,
@@ -12,9 +12,9 @@ import {
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 
+import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import { MemoSearch as Search } from "../components/Search";
 import { Legend } from "../components/Legend";
-import { ZoomControllers } from "../components/ZoomControllers";
 import { LayerSetters } from "../components/LayerSetters";
 
 const PLACEMENT = {
@@ -82,7 +82,6 @@ const LAYER_SETTERS = [
 
 export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
-  const globeControlsRef = useRef<GlobeControls | null>(null);
   const { classes } = useStyles({ windowHeight: window.innerHeight });
 
   const moveToLocalisation = useConstCallback((x: number, y: number) => {
@@ -97,13 +96,7 @@ export const Viewer = () => {
 
   return (
     <div className={classes.container}>
-      <View
-        id="viewer"
-        placement={PLACEMENT}
-        layers={LAYERS}
-        viewRef={viewRef}
-        globeControlsRef={globeControlsRef}
-      />
+      <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
 
       <div className={classes.sideBar}>
         <div className={classes.controllers}>
@@ -119,7 +112,7 @@ export const Viewer = () => {
         </div>
       </div>
 
-      <ZoomControllers viewRef={viewRef} containerClassName={classes.zoom} />
+      <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
     </div>
   );
 };
