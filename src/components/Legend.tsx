@@ -3,11 +3,9 @@ import { List, ListItem } from "@mui/material";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 
 const CLASS_TO_COLOR = {
-  "H < 0.20": "#C7DAEB",
-  "0.20 < H < 0.50": "#71AAF9",
-  "0.50 < H < 1": "#809BD2",
-  "1 < H < 2": "#182F99",
-  "H > 2": "#0C004C",
+  Faible: "#C7DAEB",
+  Moyen: "#71AAF9",
+  Fort: "#182F99",
 };
 
 const useStyles = makeStyles()(() => ({
@@ -48,7 +46,7 @@ export const Legend = () => {
 
   return (
     <div>
-      <b>Hauteurs d'eau (en mètres)</b>
+      <b>Aléas</b>
       <List className={classes.list}>{listItems}</List>
     </div>
   );
