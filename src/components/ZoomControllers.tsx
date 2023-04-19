@@ -1,5 +1,5 @@
 import { useConstCallback } from "powerhooks";
-import { GlobeControls } from "itowns";
+import { GlobeView } from "itowns";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
@@ -26,20 +26,20 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 type Props = {
-  globeControlsRef: MutableRefObject<GlobeControls | null>;
+  viewRef: MutableRefObject<GlobeView | null>;
   containerClassName?: string;
 };
 
-export const ZoomControllers = ({ globeControlsRef, containerClassName }: Props) => {
+export const ZoomControllers = ({ viewRef, containerClassName }: Props) => {
   const { classes, cx } = useStyles();
 
   const zoom = useConstCallback((zoomIn: boolean) => {
-    const globeControls = globeControlsRef.current;
-    if (!globeControls) return;
+    const viewControls = viewRef.current?.controls;
+    if (!viewControls) return;
 
-    const actualZoom = globeControls.getZoom();
+    const actualZoom = viewControls.getZoom();
     const newZoom = zoomIn ? actualZoom + 1 : actualZoom - 1;
-    globeControls.setZoom(newZoom, false);
+    viewControls.setZoom(newZoom, false);
   });
 
   const zoomIn = useConstCallback(() => zoom(true));

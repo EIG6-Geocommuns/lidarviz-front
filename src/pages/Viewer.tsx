@@ -119,7 +119,7 @@ export const Viewer = () => {
         </div>
       </div>
 
-      <ZoomControllers globeControlsRef={globeControlsRef} containerClassName={classes.zoom} />
+      <ZoomControllers viewRef={viewRef} containerClassName={classes.zoom} />
     </div>
   );
 };
