@@ -8,8 +8,6 @@ import {
   ElevationLayerToItownsLayer,
   FeatureLayerToItownsLayer,
   FeatureLayerToLabel,
-  WaterLayerToItownsLayer,
-  WaterLayerToLabel,
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
@@ -64,14 +62,12 @@ const LAYERS = [
   ElevationLayerToItownsLayer.BD_ALTI,
   ElevationLayerToItownsLayer.WORLD,
   FeatureLayerToItownsLayer.BUILDING,
-  WaterLayerToItownsLayer.WATER,
 ];
 const LAYER_SETTERS = [
   ColorLayerToLabel.ORTHO,
   ColorLayerToLabel.PLAN_IGN,
   ColorLayerToLabel.WATER2D,
   FeatureLayerToLabel.BUILDING,
-  WaterLayerToLabel.WATER,
 ];
 
 export const Viewer = () => {
