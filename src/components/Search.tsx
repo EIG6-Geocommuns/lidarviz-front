@@ -20,7 +20,7 @@ export const Search = ({ moveToLocalisation }: Props) => {
     setIsLoading(true);
     getCities(inputText, true)
       .then((res) => {
-        setCityPropositions(res.data);
+        setCityPropositions(res.data.slice(0, 5));
       })
       .catch((e) => console.warn("error " + e))
       .finally(() => setIsLoading(false));
