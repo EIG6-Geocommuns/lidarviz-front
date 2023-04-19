@@ -3,13 +3,12 @@ import { GlobeView } from "itowns";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 
 const useStyles = makeStyles()((theme) => ({
-  zoomButton: {
+  controllerButton: {
     height: fr.spacing("5w"),
     width: fr.spacing("5w"),
-    fontSize: "x-large",
     color: theme.decisions.background.actionHigh.blueFrance.default,
     backgroundColor: theme.decisions.background.default.grey.default,
     display: "flex",
@@ -18,6 +17,13 @@ const useStyles = makeStyles()((theme) => ({
     "&&&:hover": {
       backgroundColor: theme.decisions.background.default.grey.hover,
     },
+  },
+  tiltButton: {
+    fontSize: "large",
+    marginBottom: fr.spacing("1w"),
+  },
+  zoomButton: {
+    fontSize: "x-large",
   },
   zoomInButton: {
     borderBottom: "1px solid",
@@ -30,8 +36,25 @@ type Props = {
   containerClassName?: string;
 };
 
+const THREE_D_TILT = 30;
+const TWO_D_TILT = 90;
+
 export const ZoomControllers = ({ viewRef, containerClassName }: Props) => {
   const { classes, cx } = useStyles();
+  const [is2D, setIs2D] = useState(true);
+
+  const toggleTilt = useConstCallback(() => setIs2D(!is2D));
+
+  const updateViewTilt = useConstCallback(() => {
+    const viewControls = viewRef.current?.controls;
+    if (!viewControls) return;
+    const newTilt = is2D ? TWO_D_TILT : THREE_D_TILT;
+    viewControls.setTilt(newTilt, false);
+  });
+
+  useEffect(() => {
+    updateViewTilt();
+  }, [updateViewTilt, is2D]);
 
   const zoom = useConstCallback((zoomIn: boolean) => {
     const viewControls = viewRef.current?.controls;
@@ -44,12 +67,19 @@ export const ZoomControllers = ({ viewRef, containerClassName }: Props) => {
 
   const zoomIn = useConstCallback(() => zoom(true));
   const zoomOut = useConstCallback(() => zoom(false));
+
   return (
     <div className={containerClassName}>
-      <Button className={cx(classes.zoomButton, classes.zoomInButton)} onClick={zoomIn}>
+      <Button className={cx(classes.controllerButton, classes.tiltButton)} onClick={toggleTilt}>
+        {is2D ? "3D" : "2D"}
+      </Button>
+      <Button
+        className={cx(classes.controllerButton, classes.zoomButton, classes.zoomInButton)}
+        onClick={zoomIn}
+      >
         +
       </Button>
-      <Button className={classes.zoomButton} onClick={zoomOut}>
+      <Button className={cx(classes.controllerButton, classes.zoomButton)} onClick={zoomOut}>
         -
       </Button>
     </div>
