@@ -10,6 +10,7 @@ import {
   ElevationLayer,
   FeatureGeometryLayer,
 } from "itowns";
+import { demoLidarOptions } from "../utils/controls";
 
 type Placement = {
   coord: Coordinates;
@@ -61,6 +62,7 @@ export const View = (props: Props) => {
       enableFocusOnStart: enableFocusOnStart,
     };
     viewRef.current = new GlobeView(domElt, placement, options);
+    viewRef.current?.controls?.states?.setFromOptions(demoLidarOptions);
 
     // Dispose our current view and DOM elements created by itowns
     return () => {
