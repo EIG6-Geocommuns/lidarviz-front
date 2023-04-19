@@ -39,7 +39,7 @@ type Props = {
 const THREE_D_TILT = 30;
 const TWO_D_TILT = 90;
 
-export const ZoomControllers = ({ viewRef, containerClassName }: Props) => {
+export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) => {
   const { classes, cx } = useStyles();
   const [is2D, setIs2D] = useState(true);
 
