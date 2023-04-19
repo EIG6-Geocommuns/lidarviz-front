@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { City, getCities } from "../api/geoApiGouv";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
@@ -50,3 +50,5 @@ export const Search = ({ moveToLocalisation }: Props) => {
     />
   );
 };
+
+export const MemoSearch = memo(Search);
