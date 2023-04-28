@@ -92,8 +92,6 @@ const MapExtentSelector = () => {
           >
             Extraire
           </Button>
-
-          <Legend />
         </Grid>
       </Grid>
     </Box>

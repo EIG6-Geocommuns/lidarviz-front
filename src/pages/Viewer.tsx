@@ -16,9 +16,10 @@ import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import { MemoSearch as Search } from "../components/Search";
 import { Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
+import { ddt83Layers, ddt83Setters, getLegend } from "../utils/waterLayers";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 5.395317, 43.460333),
+  coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
   range: 15000,
   tilt: 0,
   heading: 0,
@@ -30,6 +31,10 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   layersTitle: {
     marginTop: fr.spacing("3w"),
+    marginBottom: fr.spacing("1w"),
+  },
+  layersSubtitle: {
+    marginBottom: fr.spacing("2w"),
   },
   sideBar: {
     position: "absolute",
@@ -64,20 +69,19 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
 }));
 
-const LAYERS = [
+const BELOW_LAYERS = [
   ColorLayerToItownsLayer.ORTHO,
   ColorLayerToItownsLayer.PLAN_IGN,
-  ColorLayerToItownsLayer.WATER2D,
   ElevationLayerToItownsLayer.BD_ALTI,
   ElevationLayerToItownsLayer.WORLD,
-  FeatureLayerToItownsLayer.BUILDING,
 ];
 
+const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING];
+
 const LAYER_SETTERS = [
-  ColorLayerToLabel.ORTHO,
-  ColorLayerToLabel.PLAN_IGN,
-  ColorLayerToLabel.WATER2D,
-  FeatureLayerToLabel.BUILDING,
+  { label: ColorLayerToLabel.ORTHO, defaultVisibility: false },
+  { label: ColorLayerToLabel.PLAN_IGN, defaultVisibility: true },
+  { label: FeatureLayerToLabel.BUILDING, defaultVisibility: true },
 ];
 
 export const Viewer = () => {
@@ -96,19 +100,27 @@ export const Viewer = () => {
 
   return (
     <div className={classes.container}>
-      <View id="viewer" placement={PLACEMENT} layers={LAYERS} viewRef={viewRef} />
+      <View
+        id="viewer"
+        placement={PLACEMENT}
+        layers={[...BELOW_LAYERS, ...ddt83Layers, ...ABOVE_LAYERS]}
+        viewRef={viewRef}
+      />
 
       <div className={classes.sideBar}>
         <div className={classes.controllers}>
           <Search moveToLocalisation={moveToLocalisation} />
 
           <h6 className={classes.layersTitle}>Couches</h6>
+          <b>Territoire</b>
           <LayerSetters viewRef={viewRef} layerSetters={LAYER_SETTERS} />
+          <b>Inondation</b>
+          <LayerSetters viewRef={viewRef} layerSetters={ddt83Setters} />
         </div>
 
         <div className={classes.legend}>
           <h6 className={classes.legendTitle}>Légende</h6>
-          <Legend />
+          <Legend territory={"DDT83"} style={"inondata:vitesse_eau"} />
         </div>
       </div>
 
