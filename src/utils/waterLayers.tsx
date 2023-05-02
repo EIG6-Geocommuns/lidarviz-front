@@ -1,8 +1,8 @@
 import { WMTSSource, ColorLayer } from "itowns";
-import axios from "axios";
 
 export type AvailableTerritory = "DDT83";
-const TERRIRORY_TO_NAME: Record<AvailableTerritory, string> = {
+
+export const TERRIRORY_TO_NAME: Record<AvailableTerritory, string> = {
   DDT83: "inondata:DDT83_BESSE_SUR_ISSOLE",
 };
 
@@ -16,14 +16,13 @@ export const StyleToLegendLabel = {
   "inondata:aleas": "Aléas",
 };
 
-//TODO create a ts rule to check choosen style is available for this territory
 const get2DWaterSource = <T extends AvailableTerritory>(
   territory: T,
   style: TERRITORY_TO_STYLES[T]
 ) => {
   const name = TERRIRORY_TO_NAME[territory];
   return new WMTSSource({
-    url: "http://geoserver.bogato.fr/geoserver/inondata/gwc/service/wmts",
+    url: "https://geoserver.bogato.fr/geoserver/inondata/gwc/service/wmts",
     crs: "EPSG:4326",
     format: "image/png",
     name,
@@ -50,39 +49,3 @@ export const ddt83Setters = [
   { label: StyleToLegendLabel["inondata:vitesse_eau"], defaultVisibility: false },
   { label: StyleToLegendLabel["inondata:aleas"], defaultVisibility: false },
 ];
-
-//Isolate into own file
-type LegendRule = {
-  name: string;
-  color: string;
-};
-
-export type LegendInfo = LegendRule[];
-
-const gesoserverAxiosInstance = axios.create({
-  baseURL: "http://geoserver.bogato.fr/geoserver/inondata/ows",
-  timeout: 15000,
-});
-
-export const getLegend = <T extends AvailableTerritory>(
-  territory: T,
-  style: TERRITORY_TO_STYLES[T]
-): Promise<LegendInfo> => {
-  const params = {
-    service: "WMS",
-    request: "GetLegendGraphic",
-    format: "application/json",
-    layer: TERRIRORY_TO_NAME[territory],
-    style: style,
-  };
-
-  type RuleFromApi = { title: string; symbolizers: { Polygon: { fill: string } }[] };
-
-  return gesoserverAxiosInstance.get("", { params }).then((res) => {
-    const rules: RuleFromApi[] = res.data.Legend[0].rules;
-    const legendInfo: LegendInfo = rules.map((rule) => {
-      return { name: rule.title, color: rule.symbolizers[0].Polygon.fill };
-    });
-    return legendInfo;
-  });
-};
