@@ -13,7 +13,6 @@ import { fr } from "@codegouvfr/react-dsfr";
 import { Tabs } from "@codegouvfr/react-dsfr/Tabs";
 
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
-// import { MemoSearch as Search } from "../components/Search";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
 import {

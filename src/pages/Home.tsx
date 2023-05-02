@@ -38,7 +38,7 @@ export const Home = () => {
   const { classes, cx } = useStyles();
 
   const CTA = (
-    <a className={fr.cx("fr-btn")} href="./viewer">
+    <a className={fr.cx("fr-btn")} href="./viewer/1">
       Accéder au Prototype
       <span
         className={cx(fr.cx("fr-icon-arrow-right-line"), classes.iconButton)}
