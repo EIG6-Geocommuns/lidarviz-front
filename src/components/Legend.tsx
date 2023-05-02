@@ -11,6 +11,9 @@ import {
 import { useState, useEffect, useMemo, memo } from "react";
 
 const useStyles = makeStyles()(() => ({
+  container: {
+    marginBottom: fr.spacing("1w"),
+  },
   title: {
     display: "flex",
     alignItems: "center",
@@ -72,7 +75,7 @@ const Legend = <T extends AvailableTerritory>({ territory, style }: Props<T>) =>
   }, [legendInfo]);
 
   return (
-    <div>
+    <div className={classes.container}>
       <div className={classes.title}>
         <b>{StyleToLegendLabel[style]}</b>
         {isLoading && <CircularProgress size={20} />}

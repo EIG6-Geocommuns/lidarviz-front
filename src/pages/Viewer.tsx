@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { useConstCallback } from "powerhooks";
+import { useMemo, useRef } from "react";
+// import { useConstCallback } from "powerhooks";
 import { Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
 import {
@@ -11,9 +11,10 @@ import {
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
+import { Tabs } from "@codegouvfr/react-dsfr/Tabs";
 
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
-import { MemoSearch as Search } from "../components/Search";
+// import { MemoSearch as Search } from "../components/Search";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
 import { ddt83Layers, ddt83Setters } from "../utils/waterLayers";
@@ -30,7 +31,6 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     minHeight: windowHeight,
   },
   layersTitle: {
-    marginTop: fr.spacing("3w"),
     marginBottom: fr.spacing("1w"),
   },
   layersSubtitle: {
@@ -41,18 +41,13 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     top: fr.spacing("29v"),
     zIndex: 2,
     maxHeight: windowHeight,
-    overflowY: "scroll",
-    padding: fr.spacing("3w"),
+    paddingTop: fr.spacing("2w"),
     backgroundColor: theme.decisions.background.default.grey.default,
-  },
-  controllers: {
-    paddingBottom: fr.spacing("1w"),
     width: 300,
   },
-  opacitySlider: {
-    marginBottom: fr.spacing("2w"),
+  controllers: {
+    width: 300,
   },
-  legend: {},
   legendTitle: {
     marginBottom: fr.spacing("1w"),
   },
@@ -84,15 +79,38 @@ export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
   const { classes } = useStyles({ windowHeight: window.innerHeight });
 
-  const moveToLocalisation = useConstCallback((x: number, y: number) => {
-    const view = viewRef.current;
-    if (!view) return;
+  // const moveToLocalisation = useConstCallback((x: number, y: number) => {
+  //   const view = viewRef.current;
+  //   if (!view) return;
 
-    const coord = new Coordinates("EPSG:4326", x, y);
-    view.controls?.lookAtCoordinate({ coord: coord });
-  });
+  //   const coord = new Coordinates("EPSG:4326", x, y);
+  //   view.controls?.lookAtCoordinate({ coord: coord });
+  // });
 
   //TODO resize window with view.resize(heigth, width)
+
+  const layersSetters = useMemo(() => {
+    return (
+      <>
+        <h6 className={classes.layersTitle}>Couches</h6>
+        <b>Territoire</b>
+        <LayerSetters viewRef={viewRef} layerSetters={LAYER_SETTERS} />
+        <b>Inondation</b>
+        <LayerSetters viewRef={viewRef} layerSetters={ddt83Setters} />
+      </>
+    );
+  }, [viewRef]);
+
+  const legend = useMemo(() => {
+    return (
+      <div>
+        <h6 className={classes.legendTitle}>Légende</h6>
+        <Legend territory="DDT83" style="inondata:hauteur_eau" />
+        <Legend territory="DDT83" style="inondata:vitesse_eau" />
+        <Legend territory="DDT83" style="inondata:aleas" />
+      </div>
+    );
+  }, [viewRef]);
 
   return (
     <div className={classes.container}>
@@ -104,22 +122,12 @@ export const Viewer = () => {
       />
 
       <div className={classes.sideBar}>
-        <div className={classes.controllers}>
-          <Search moveToLocalisation={moveToLocalisation} />
-
-          <h6 className={classes.layersTitle}>Couches</h6>
-          <b>Territoire</b>
-          <LayerSetters viewRef={viewRef} layerSetters={LAYER_SETTERS} />
-          <b>Inondation</b>
-          <LayerSetters viewRef={viewRef} layerSetters={ddt83Setters} />
-        </div>
-
-        <div className={classes.legend}>
-          <h6 className={classes.legendTitle}>Légende</h6>
-          <Legend territory="DDT83" style="inondata:hauteur_eau" />
-          <Legend territory="DDT83" style="inondata:vitesse_eau" />
-          <Legend territory="DDT83" style="inondata:aleas" />
-        </div>
+        <Tabs
+          tabs={[
+            { label: "Couches", content: layersSetters },
+            { label: "Légende", content: legend },
+          ]}
+        />
       </div>
 
       <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
