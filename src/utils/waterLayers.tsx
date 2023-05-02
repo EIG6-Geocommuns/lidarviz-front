@@ -61,13 +61,12 @@ export type LegendInfo = LegendRule[];
 
 const gesoserverAxiosInstance = axios.create({
   baseURL: "http://geoserver.bogato.fr/geoserver/inondata/ows",
-  timeout: 1500,
+  timeout: 15000,
 });
 
 export const getLegend = <T extends AvailableTerritory>(
   territory: T,
   style: TERRITORY_TO_STYLES[T]
-  // ): Promise<any> => {
 ): Promise<LegendInfo> => {
   const params = {
     service: "WMS",
@@ -77,9 +76,13 @@ export const getLegend = <T extends AvailableTerritory>(
     style: style,
   };
 
+  type RuleFromApi = { title: string; symbolizers: { Polygon: { fill: string } }[] };
+
   return gesoserverAxiosInstance.get("", { params }).then((res) => {
-    return res.data.Legend[0].rules.map((rule: any) => {
+    const rules: RuleFromApi[] = res.data.Legend[0].rules;
+    const legendInfo: LegendInfo = rules.map((rule) => {
       return { name: rule.title, color: rule.symbolizers[0].Polygon.fill };
     });
+    return legendInfo;
   });
 };

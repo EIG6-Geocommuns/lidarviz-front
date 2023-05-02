@@ -8,7 +8,7 @@ import {
   StyleToLegendLabel,
   getLegend,
 } from "../utils/waterLayers";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 
 const useStyles = makeStyles()(() => ({
   title: {
@@ -42,7 +42,7 @@ type Props<T extends AvailableTerritory> = {
   style: TERRITORY_TO_STYLES[T];
 };
 
-export const Legend = <T extends AvailableTerritory>({ territory, style }: Props<T>) => {
+const Legend = <T extends AvailableTerritory>({ territory, style }: Props<T>) => {
   const { css, cx, classes } = useStyles();
   const [isLoading, setIsLoading] = useState(true);
   const [legendInfo, setLegendInfo] = useState<LegendInfo>([]);
@@ -82,3 +82,5 @@ export const Legend = <T extends AvailableTerritory>({ territory, style }: Props
     </div>
   );
 };
+
+export const MemoizedLegend = memo(Legend);

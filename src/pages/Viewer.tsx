@@ -14,9 +14,9 @@ import { fr } from "@codegouvfr/react-dsfr";
 
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import { MemoSearch as Search } from "../components/Search";
-import { Legend } from "../components/Legend";
+import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
-import { ddt83Layers, ddt83Setters, getLegend } from "../utils/waterLayers";
+import { ddt83Layers, ddt83Setters } from "../utils/waterLayers";
 
 const PLACEMENT = {
   coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
@@ -40,23 +40,19 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     position: "absolute",
     top: fr.spacing("29v"),
     zIndex: 2,
+    maxHeight: windowHeight,
+    overflowY: "scroll",
+    padding: fr.spacing("3w"),
+    backgroundColor: theme.decisions.background.default.grey.default,
   },
   controllers: {
-    backgroundColor: theme.decisions.background.default.grey.default,
-    margin: fr.spacing("2w"),
-    padding: fr.spacing("2w"),
     paddingBottom: fr.spacing("1w"),
-    width: 280,
+    width: 300,
   },
   opacitySlider: {
     marginBottom: fr.spacing("2w"),
   },
-  legend: {
-    backgroundColor: theme.decisions.background.default.grey.default,
-    margin: fr.spacing("2w"),
-    padding: fr.spacing("2w"),
-    width: 280,
-  },
+  legend: {},
   legendTitle: {
     marginBottom: fr.spacing("1w"),
   },
@@ -120,7 +116,9 @@ export const Viewer = () => {
 
         <div className={classes.legend}>
           <h6 className={classes.legendTitle}>Légende</h6>
-          <Legend territory={"DDT83"} style={"inondata:vitesse_eau"} />
+          <Legend territory="DDT83" style="inondata:hauteur_eau" />
+          <Legend territory="DDT83" style="inondata:vitesse_eau" />
+          <Legend territory="DDT83" style="inondata:aleas" />
         </div>
       </div>
 

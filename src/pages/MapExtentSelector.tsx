@@ -3,7 +3,6 @@ import { Box, Button, Grid } from "@mui/material";
 import { AvailableLayer, useMap } from "geocommuns-core";
 
 import { City, getCities } from "../api/geoApiGouv";
-import { Legend } from "../components/Legend";
 import TextFieldWithOptions from "../components/TextFieldWithOptions";
 
 const ORIGINAL_CENTER: [number, number] = [2.5764414841767787, 46.51407673990174];
