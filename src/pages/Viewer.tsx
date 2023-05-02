@@ -1,5 +1,4 @@
-import { useMemo, useRef } from "react";
-// import { useConstCallback } from "powerhooks";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Coordinates, GlobeView } from "itowns";
 import { View } from "../components/View";
 import {
@@ -17,7 +16,14 @@ import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 // import { MemoSearch as Search } from "../components/Search";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
-import { ddt83Layers, ddt83Setters } from "../utils/waterLayers";
+import {
+  TERRITORY_ID_TO_TERRITORY,
+  AvailableTerritory,
+  TERRITORY_TO_LAYERS,
+  TERRITORY_TO_LAYER_SETTERS,
+  TERRITORY_TO_LEGEND_ITEMS,
+} from "../utils/waterLayers";
+import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
   coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
@@ -29,6 +35,9 @@ const PLACEMENT = {
 const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight }) => ({
   container: {
     minHeight: windowHeight,
+  },
+  containerWithoutTabs: {
+    margin: fr.spacing("2w"),
   },
   layersTitle: {
     marginBottom: fr.spacing("1w"),
@@ -78,14 +87,24 @@ const LAYER_SETTERS = [
 export const Viewer = () => {
   const viewRef = useRef<GlobeView | null>(null);
   const { classes } = useStyles({ windowHeight: window.innerHeight });
+  const { territoryId } = useParams();
+  const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
 
-  // const moveToLocalisation = useConstCallback((x: number, y: number) => {
-  //   const view = viewRef.current;
-  //   if (!view) return;
+  useEffect(() => {
+    if (territoryId == "ddt83") {
+      setTerritory(TERRITORY_ID_TO_TERRITORY[territoryId]);
+    }
+  }, [territoryId]);
 
-  //   const coord = new Coordinates("EPSG:4326", x, y);
-  //   view.controls?.lookAtCoordinate({ coord: coord });
-  // });
+  const layers = useMemo(() => {
+    if (territory) return [...BELOW_LAYERS, ...TERRITORY_TO_LAYERS[territory], ...ABOVE_LAYERS];
+    return [...BELOW_LAYERS, ...ABOVE_LAYERS];
+  }, [territory]);
+
+  const territorySetters = useMemo(() => {
+    if (territory) return TERRITORY_TO_LAYER_SETTERS[territory];
+    return [];
+  }, [territory]);
 
   //TODO resize window with view.resize(heigth, width)
 
@@ -95,39 +114,47 @@ export const Viewer = () => {
         <h6 className={classes.layersTitle}>Couches</h6>
         <b>Territoire</b>
         <LayerSetters viewRef={viewRef} layerSetters={LAYER_SETTERS} />
-        <b>Inondation</b>
-        <LayerSetters viewRef={viewRef} layerSetters={ddt83Setters} />
+
+        {territorySetters.length !== 0 && (
+          <>
+            <b>Inondation</b>
+            <LayerSetters viewRef={viewRef} layerSetters={territorySetters} />
+          </>
+        )}
       </>
     );
-  }, [viewRef]);
+  }, [viewRef, territorySetters]);
 
   const legend = useMemo(() => {
+    if (!territory) return undefined;
+
+    const legendItems = TERRITORY_TO_LEGEND_ITEMS[territory];
+
     return (
       <div>
         <h6 className={classes.legendTitle}>Légende</h6>
-        <Legend territory="DDT83" style="inondata:hauteur_eau" />
-        <Legend territory="DDT83" style="inondata:vitesse_eau" />
-        <Legend territory="DDT83" style="inondata:aleas" />
+        {legendItems.map((item) => (
+          <Legend territory={territory} style={item} />
+        ))}
       </div>
     );
-  }, [viewRef]);
+  }, [viewRef, territory]);
 
   return (
     <div className={classes.container}>
-      <View
-        id="viewer"
-        placement={PLACEMENT}
-        layers={[...BELOW_LAYERS, ...ddt83Layers, ...ABOVE_LAYERS]}
-        viewRef={viewRef}
-      />
+      <View id="viewer" placement={PLACEMENT} layers={layers} viewRef={viewRef} />
 
       <div className={classes.sideBar}>
-        <Tabs
-          tabs={[
-            { label: "Couches", content: layersSetters },
-            { label: "Légende", content: legend },
-          ]}
-        />
+        {legend ? (
+          <Tabs
+            tabs={[
+              { label: "Couches", content: layersSetters },
+              { label: "Légende", content: legend },
+            ]}
+          />
+        ) : (
+          <div className={classes.containerWithoutTabs}>{layersSetters}</div>
+        )}
       </div>
 
       <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />

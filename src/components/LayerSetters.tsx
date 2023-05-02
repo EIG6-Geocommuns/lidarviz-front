@@ -4,6 +4,7 @@ import { Layer, GlobeView } from "itowns";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { OpacitySlider } from "geocommuns-core";
+import { LayerSetter } from "../utils/waterLayers";
 
 const useStyles = makeStyles()(() => ({
   opacitySlider: {
@@ -11,11 +12,6 @@ const useStyles = makeStyles()(() => ({
     marginBottom: fr.spacing("2w"),
   },
 }));
-
-type LayerSetter = {
-  label: string;
-  defaultVisibility: boolean;
-};
 
 type Props = {
   viewRef: MutableRefObject<GlobeView | null>;

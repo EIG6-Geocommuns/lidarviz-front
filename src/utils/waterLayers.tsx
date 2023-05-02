@@ -1,6 +1,11 @@
 import { WMTSSource, ColorLayer } from "itowns";
 
+export type AvailableTerritoryId = "ddt83";
 export type AvailableTerritory = "DDT83";
+
+export const TERRITORY_ID_TO_TERRITORY: Record<AvailableTerritoryId, AvailableTerritory> = {
+  ddt83: "DDT83",
+};
 
 export const TERRIRORY_TO_NAME: Record<AvailableTerritory, string> = {
   DDT83: "inondata:DDT83_BESSE_SUR_ISSOLE",
@@ -43,9 +48,28 @@ const ddt83HauteurEauLayer = get2DWaterLayer("DDT83", "inondata:hauteur_eau");
 const ddt83VitesseEauLayer = get2DWaterLayer("DDT83", "inondata:vitesse_eau");
 const ddt83AleasLayer = get2DWaterLayer("DDT83", "inondata:aleas");
 
-export const ddt83Layers = [ddt83HauteurEauLayer, ddt83VitesseEauLayer, ddt83AleasLayer];
-export const ddt83Setters = [
+const ddt83Layers = [ddt83HauteurEauLayer, ddt83VitesseEauLayer, ddt83AleasLayer];
+
+export type LayerSetter = { label: string; defaultVisibility: boolean };
+
+const ddt83Setters: LayerSetter[] = [
   { label: StyleToLegendLabel["inondata:hauteur_eau"], defaultVisibility: true },
   { label: StyleToLegendLabel["inondata:vitesse_eau"], defaultVisibility: false },
   { label: StyleToLegendLabel["inondata:aleas"], defaultVisibility: false },
 ];
+
+export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, ColorLayer[]> = {
+  DDT83: ddt83Layers,
+};
+
+export const TERRITORY_TO_LAYER_SETTERS: Record<AvailableTerritory, LayerSetter[]> = {
+  DDT83: ddt83Setters,
+};
+
+//TODO enhance with values from TERRITORY_TO_STYLES
+export const TERRITORY_TO_LEGEND_ITEMS: Record<
+  AvailableTerritory,
+  ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"]
+> = {
+  DDT83: ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"],
+};

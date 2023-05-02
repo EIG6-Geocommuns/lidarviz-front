@@ -15,7 +15,7 @@ startReactDsfr({ defaultColorScheme: "system", Link });
 export enum ROUTES {
   Home = "/",
   MapExtentSelector = "/definition-emprise",
-  Viewer = "/viewer",
+  Viewer = "/viewer/:territoryId",
 }
 
 declare module "@codegouvfr/react-dsfr/spa" {
