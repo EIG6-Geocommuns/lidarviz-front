@@ -13,16 +13,16 @@
   "packageRules": [
     {
       "packagePatterns": ["*"],
-      "excludePackagePatterns": ["geocommuns-core"],
+      "excludePackagePatterns": ["geocommuns-core", "inondata-itowns"],
       "enabled": false
     },
     {
-      "packagePatterns": ["geocommuns-core"],
+      "packagePatterns": ["geocommuns-core", "inondata-itowns"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "automergeType": "pr",
       "platformAutomerge": true,
-      "groupName": "geocommuns-core"
+      "groupName": "geocommuns-libs"
     }
   ]
 }
