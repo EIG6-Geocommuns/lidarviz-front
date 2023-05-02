@@ -140,7 +140,7 @@ const config: any = {
   crs: "EPSG:4326",
   source: buildingSource,
   style: buildingStyle,
-  zoom: { min: 16 },
+  zoom: { min: 15 },
 };
 
 const buildingLayer = new FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
