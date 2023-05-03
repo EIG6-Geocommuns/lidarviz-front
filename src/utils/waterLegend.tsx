@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AvailableTerritory, TERRIRORY_TO_NAME, TERRITORY_TO_STYLES } from "./waterLayers";
+import { AvailableLayer, LAYER_TO_STYLES } from "./waterLayers";
 
 type LegendRule = {
   name: string;
@@ -13,16 +13,16 @@ const gesoserverAxiosInstance = axios.create({
   timeout: 15000,
 });
 
-export const getLegend = <T extends AvailableTerritory>(
-  territory: T,
-  style: TERRITORY_TO_STYLES[T]
+export const getLegend = <T extends AvailableLayer>(
+  layer: T,
+  style: (typeof LAYER_TO_STYLES)[T][number]
 ): Promise<LegendInfo> => {
   const params = {
     service: "WMS",
     request: "GetLegendGraphic",
     format: "application/json",
-    layer: TERRIRORY_TO_NAME[territory],
-    style: style,
+    layer,
+    style,
   };
 
   type RuleFromApi = { title: string; symbolizers: { Polygon: { fill: string } }[] };

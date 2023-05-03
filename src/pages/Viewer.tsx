@@ -25,8 +25,8 @@ import {
 import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
-  range: 15000,
+  coord: new Coordinates("EPSG:4326", -0.50089, 43.3455),
+  range: 75000,
   tilt: 0,
   heading: 0,
 };
@@ -78,9 +78,17 @@ const BELOW_LAYERS = [
 const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING];
 
 const LAYER_SETTERS = [
-  { label: ColorLayerToLabel.ORTHO, defaultVisibility: false },
-  { label: ColorLayerToLabel.PLAN_IGN, defaultVisibility: true },
-  { label: FeatureLayerToLabel.BUILDING, defaultVisibility: true },
+  { layerName: ColorLayerToLabel.ORTHO, label: ColorLayerToLabel.ORTHO, defaultVisibility: false },
+  {
+    layerName: ColorLayerToLabel.PLAN_IGN,
+    label: ColorLayerToLabel.PLAN_IGN,
+    defaultVisibility: true,
+  },
+  {
+    layerName: FeatureLayerToLabel.BUILDING,
+    label: FeatureLayerToLabel.BUILDING,
+    defaultVisibility: true,
+  },
 ];
 
 export const Viewer = () => {
@@ -90,7 +98,7 @@ export const Viewer = () => {
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
 
   useEffect(() => {
-    if (territoryId == "ddt83") {
+    if ((territoryId && territoryId === "ddt83") || territoryId === "ddt64") {
       setTerritory(TERRITORY_ID_TO_TERRITORY[territoryId]);
     }
   }, [territoryId]);
@@ -132,9 +140,13 @@ export const Viewer = () => {
     return (
       <div>
         <h6 className={classes.legendTitle}>Légende</h6>
-        {legendItems.map((item) => (
-          <Legend territory={territory} style={item} />
-        ))}
+        {legendItems.map((item) => {
+          const layer =
+            territory === "DDT64"
+              ? "inondata:DDT64_Pau_isocote_probabilite_faible"
+              : "inondata:DDT83_BESSE_SUR_ISSOLE";
+          return <Legend layer={layer} style={item} />;
+        })}
       </div>
     );
   }, [viewRef, territory]);
