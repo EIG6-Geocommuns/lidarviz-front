@@ -11,7 +11,7 @@ import {
 import * as THREE from "three";
 import { WaterLayer } from "inondata-itowns";
 
-export type AvailableColorLayer = "PLAN_IGN" | "ORTHO" | "WATER2D";
+export type AvailableColorLayer = "PLAN_IGN" | "ORTHO";
 export type AvailableElevationLayer = "BD_ALTI" | "WORLD";
 export type AvailableFeatureLayer = "BUILDING";
 export type AvailableWaterLayer = "WATER";
@@ -19,7 +19,6 @@ export type AvailableWaterLayer = "WATER";
 export const ColorLayerToLabel: { [layer in AvailableColorLayer]: string } = {
   PLAN_IGN: "Plan IGN",
   ORTHO: "Ortho IGN",
-  WATER2D: "Inondation Sainte-Rose",
 };
 
 export const ElevationLayerToLabel: { [layer in AvailableElevationLayer]: string } = {
@@ -80,16 +79,6 @@ const buildingSource = new WFSSource({
   zoom: { min: 14, max: 14 },
 });
 
-const water2DSource = new WMTSSource({
-  url: "http://geoserver.bogato.fr/geoserver/inondata/gwc/service/wmts",
-  crs: "EPSG:4326",
-  format: "image/png",
-  name: "inondata:ALEA_INOND_SteRose_APPROBATION_2022",
-  style: "inondata:risk_v1",
-  tileMatrixSet: "EPSG:4326",
-  tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
-});
-
 const color = new THREE.Color();
 
 const buildingStyle = new Style({
@@ -122,10 +111,6 @@ const orthoLayer = new ColorLayer(ColorLayerToLabel.ORTHO, {
   source: orthoSource,
 });
 
-const water2DLayer = new ColorLayer(ColorLayerToLabel.WATER2D, {
-  source: water2DSource,
-});
-
 const altiLayer = new ElevationLayer(ElevationLayerToLabel.BD_ALTI, {
   source: altiSource,
 });
@@ -153,7 +138,6 @@ const waterLayer = new WaterLayer(WaterLayerToLabel.WATER, {
 export const ColorLayerToItownsLayer: { [layer in AvailableColorLayer]: ColorLayer } = {
   PLAN_IGN: planIGNLayer,
   ORTHO: orthoLayer,
-  WATER2D: water2DLayer,
 };
 
 export const ElevationLayerToItownsLayer: {

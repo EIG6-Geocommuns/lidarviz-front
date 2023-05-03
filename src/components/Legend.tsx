@@ -1,15 +1,18 @@
 import { fr } from "@codegouvfr/react-dsfr";
-import { List, ListItem } from "@mui/material";
+import { CircularProgress, List, ListItem } from "@mui/material";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
-
-const CLASS_TO_COLOR = {
-  Faible: "#C7DAEB",
-  Moyen: "#71AAF9",
-  Fort: "#182F99",
-};
+import { AvailableTerritory, TERRITORY_TO_STYLES, StyleToLegendLabel } from "../utils/waterLayers";
+import { getLegend, LegendInfo } from "../utils/waterLegend";
+import { useState, useEffect, useMemo, memo } from "react";
 
 const useStyles = makeStyles()(() => ({
+  container: {
+    marginBottom: fr.spacing("1w"),
+  },
   title: {
+    display: "flex",
+    alignItems: "center",
+    gap: fr.spacing("2w"),
     marginBottom: 0,
   },
   list: {
@@ -32,22 +35,50 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const Legend = () => {
+type Props<T extends AvailableTerritory> = {
+  territory: T;
+  style: TERRITORY_TO_STYLES[T];
+};
+
+const Legend = <T extends AvailableTerritory>({ territory, style }: Props<T>) => {
   const { css, cx, classes } = useStyles();
-  const listItems = Object.entries(CLASS_TO_COLOR).map(([key, value]) => {
-    return (
-      <ListItem key={key} className={classes.listItem}>
-        <span className={classes.item}>
-          <span className={cx(classes.cercle, css({ background: value }))} /> {key}
-        </span>
-      </ListItem>
-    );
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [legendInfo, setLegendInfo] = useState<LegendInfo>([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getLegend(territory, style)
+      .then((res) => {
+        const legendInfoWithoutOther = res.filter((legendRule) => legendRule.name !== "Autre");
+        setLegendInfo(legendInfoWithoutOther);
+      })
+      .catch((e) => console.warn("error " + e))
+      .finally(() => setIsLoading(false));
+  }, [territory, style]);
+
+  const listItems = useMemo(() => {
+    return legendInfo.map((legendRule) => {
+      return (
+        <ListItem key={legendRule.name} className={classes.listItem}>
+          <span className={classes.item}>
+            <span className={cx(classes.cercle, css({ background: legendRule.color }))} />{" "}
+            {legendRule.name}
+          </span>
+        </ListItem>
+      );
+    });
+  }, [legendInfo]);
 
   return (
-    <div>
-      <b>Aléas</b>
+    <div className={classes.container}>
+      <div className={classes.title}>
+        <b>{StyleToLegendLabel[style]}</b>
+        {isLoading && <CircularProgress size={20} />}
+      </div>
+
       <List className={classes.list}>{listItems}</List>
     </div>
   );
 };
+
+export const MemoizedLegend = memo(Legend);

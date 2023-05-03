@@ -4,16 +4,18 @@ import { Layer, GlobeView } from "itowns";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
 import { OpacitySlider } from "geocommuns-core";
+import { LayerSetter } from "../utils/waterLayers";
 
 const useStyles = makeStyles()(() => ({
   opacitySlider: {
+    marginTop: fr.spacing("2w"),
     marginBottom: fr.spacing("2w"),
   },
 }));
 
 type Props = {
   viewRef: MutableRefObject<GlobeView | null>;
-  layerSetters: string[];
+  layerSetters: LayerSetter[];
 };
 
 export const LayerSetters = ({ viewRef, layerSetters }: Props) => {
@@ -41,16 +43,17 @@ export const LayerSetters = ({ viewRef, layerSetters }: Props) => {
     view.notifyChange();
   });
 
-  const generateOpacitySlider = useConstCallback((layerId: string) => {
+  const generateOpacitySlider = useConstCallback((layerSetter: LayerSetter) => {
     return (
       <OpacitySlider
-        key={layerId}
-        label={layerId}
+        key={layerSetter.label}
+        label={layerSetter.label}
         className={classes.opacitySlider}
-        setLayerOpacity={(opacity: number) => updateLayerOpacity(layerId, opacity)}
-        setLayerVisibility={(visible: boolean) => updateLayerVisibility(layerId, visible)}
+        setLayerOpacity={(opacity: number) => updateLayerOpacity(layerSetter.label, opacity)}
+        setLayerVisibility={(visible: boolean) => updateLayerVisibility(layerSetter.label, visible)}
+        defaultVisibility={layerSetter.defaultVisibility}
       />
     );
   });
-  return <> {layerSetters.map((ls: string) => generateOpacitySlider(ls))}</>;
+  return <> {layerSetters.map((ls: LayerSetter) => generateOpacitySlider(ls))}</>;
 };
