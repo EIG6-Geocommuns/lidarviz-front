@@ -25,8 +25,8 @@ import {
 import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", -0.50089, 43.3455),
-  range: 75000,
+  coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
+  range: 15000,
   tilt: 0,
   heading: 0,
 };
