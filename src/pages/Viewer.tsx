@@ -25,7 +25,7 @@ import {
 import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 4.954455061392031, 44.037664109933104),
+  coord: new Coordinates("EPSG:4326", 7.75202, 48.58853),
   range: 150000,
   tilt: 0,
   heading: 0,
@@ -100,7 +100,7 @@ export const Viewer = () => {
   useEffect(() => {
     if (
       territoryId &&
-      (territoryId === "ddt83" || territoryId === "ddt64" || territoryId === "ddt84")
+      (territoryId === "ddt83" || territoryId === "ddt64" || territoryId === "ddt84" || territoryId === "ddt67")
     ) {
       setTerritory(TERRITORY_ID_TO_TERRITORY[territoryId]);
     }

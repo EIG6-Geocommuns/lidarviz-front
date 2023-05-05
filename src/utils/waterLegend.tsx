@@ -40,4 +40,5 @@ const LegendFetchLayer: Record<AvailableTerritory, AvailableLayer> = {
   DDT64: "inondata:DDT64_Pau_isocote_probabilite_faible",
   DDT83: "inondata:DDT83_BESSE_SUR_ISSOLE",
   DDT84: "inondata:DDT84_Orange_Aleas",
+  DDT67: "inondata:DDT67_Holtzheim",
 };
