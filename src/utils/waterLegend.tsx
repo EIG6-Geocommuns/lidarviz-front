@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AvailableLayer, LAYER_TO_STYLES } from "./waterLayers";
+import { AvailableLayer, AvailableTerritory, LAYER_TO_STYLES } from "./waterLayers";
 
 type LegendRule = {
   name: string;
@@ -14,14 +14,14 @@ const gesoserverAxiosInstance = axios.create({
 });
 
 export const getLegend = <T extends AvailableLayer>(
-  layer: T,
+  territory: AvailableTerritory,
   style: (typeof LAYER_TO_STYLES)[T][number]
 ): Promise<LegendInfo> => {
   const params = {
     service: "WMS",
     request: "GetLegendGraphic",
     format: "application/json",
-    layer,
+    layer: LegendFetchLayer[territory],
     style,
   };
 
@@ -34,4 +34,10 @@ export const getLegend = <T extends AvailableLayer>(
     });
     return legendInfo;
   });
+};
+
+const LegendFetchLayer: Record<AvailableTerritory, AvailableLayer> = {
+  DDT64: "inondata:DDT64_Pau_isocote_probabilite_faible",
+  DDT83: "inondata:DDT83_BESSE_SUR_ISSOLE",
+  DDT84: "inondata:DDT84_Orange_Aleas",
 };

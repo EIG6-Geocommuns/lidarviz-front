@@ -1,7 +1,7 @@
 import { fr } from "@codegouvfr/react-dsfr";
 import { CircularProgress, List, ListItem } from "@mui/material";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
-import { StyleToLegendLabel, AvailableLayer, LAYER_TO_STYLES } from "../utils/waterLayers";
+import { StyleToLegendLabel, AvailableTerritory, AvailableStyle } from "../utils/waterLayers";
 import { getLegend, LegendInfo } from "../utils/waterLegend";
 import { useState, useEffect, useMemo, memo } from "react";
 
@@ -35,26 +35,26 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-type Props<T extends AvailableLayer> = {
-  layer: T;
-  style: (typeof LAYER_TO_STYLES)[T][number];
+type Props = {
+  territory: AvailableTerritory;
+  style: AvailableStyle;
 };
 
-const Legend = <T extends AvailableLayer>({ layer, style }: Props<T>) => {
+const Legend = ({ territory, style }: Props) => {
   const { css, cx, classes } = useStyles();
   const [isLoading, setIsLoading] = useState(true);
   const [legendInfo, setLegendInfo] = useState<LegendInfo>([]);
 
   useEffect(() => {
     setIsLoading(true);
-    getLegend(layer, style)
+    getLegend(territory, style)
       .then((res) => {
         const legendInfoWithoutOther = res.filter((legendRule) => legendRule.name !== "Autre");
         setLegendInfo(legendInfoWithoutOther);
       })
       .catch((e) => console.warn("error " + e))
       .finally(() => setIsLoading(false));
-  }, [layer, style]);
+  }, [territory, style]);
 
   const listItems = useMemo(() => {
     return legendInfo.map((legendRule) => {

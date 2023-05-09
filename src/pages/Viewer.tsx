@@ -25,8 +25,8 @@ import {
 import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
-  range: 15000,
+  coord: new Coordinates("EPSG:4326", 4.954455061392031, 44.037664109933104),
+  range: 150000,
   tilt: 0,
   heading: 0,
 };
@@ -98,7 +98,10 @@ export const Viewer = () => {
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
 
   useEffect(() => {
-    if ((territoryId && territoryId === "ddt83") || territoryId === "ddt64") {
+    if (
+      territoryId &&
+      (territoryId === "ddt83" || territoryId === "ddt64" || territoryId === "ddt84")
+    ) {
       setTerritory(TERRITORY_ID_TO_TERRITORY[territoryId]);
     }
   }, [territoryId]);
@@ -141,11 +144,7 @@ export const Viewer = () => {
       <div>
         <h6 className={classes.legendTitle}>Légende</h6>
         {legendItems.map((item) => {
-          const layer =
-            territory === "DDT64"
-              ? "inondata:DDT64_Pau_isocote_probabilite_faible"
-              : "inondata:DDT83_BESSE_SUR_ISSOLE";
-          return <Legend layer={layer} style={item} />;
+          return <Legend territory={territory} style={item} />;
         })}
       </div>
     );
