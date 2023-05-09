@@ -3,7 +3,6 @@ import {
   ElevationLayer,
   WFSSource,
   Style,
-  FileSource,
   Fetcher,
   ColorLayer,
   FeatureGeometryLayer,
@@ -94,14 +93,47 @@ const buildingStyle = new Style({
   },
 });
 
-const waterSource = new FileSource({
-  url: "https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/geoid/localcolors/jpg/1/localcolors_0_0.jpg", // TODO: Change hardcoded elevation data
+const waterHeightSource = new WMTSSource({
+  url: "https://geoserver.bogato.fr/geoserver/test/gwc/service/wmts",
   crs: "EPSG:4326",
-  fetcher: Fetcher.texture,
-  parser: (height: THREE.Texture) => {
+  format: "image/png",
+  name: "test:Q1000_64",
+  style: "test:Raster hauteur TRI",
+  tileMatrixSet: "EPSG:4326",
+  tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
+  fetcher: (url: string, networkOptions?: RequestInit) => {
+    return Fetcher.textureFloat(url, networkOptions);
+  },
+  parser: (height: THREE.DataTexture) => {
     return Promise.resolve({ height });
   },
 });
+
+const baseWaterSource : any = new WMTSSource({
+  url: "https://wxs.ign.fr/altimetrie/geoportail/wmts",
+  crs: "EPSG:4326",
+  format: "image/x-bil;bits=32",
+  name: "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
+  tileMatrixSet: "WGS84G",
+  zoom: { min: 11, max: 14 },
+  parser: (height: THREE.DataTexture) => Promise.resolve({ height }),
+});
+// const baseWaterSource: any = new WMTSSource({
+//   url: "https://geoserver.bogato.fr/geoserver/test/gwc/service/wmts",
+//   crs: "EPSG:4326",
+//   format: "image/jpeg",
+//   name: "test:EMS_q100_cote_raster",
+//   style: "raster",
+//   tileMatrixSet: "EPSG:4326",
+//   tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
+//   fetcher: (url: string, networkOptions: any) => {
+//     return Fetcher.texture(url, networkOptions);
+//   },
+//   parser: (height: THREE.DataTexture) => {
+//     console.warn('Parser');
+//     return Promise.resolve({ height });
+//   },
+// });
 
 const planIGNLayer = new ColorLayer(ColorLayerToLabel.PLAN_IGN, {
   source: planIGNSource,
@@ -131,7 +163,7 @@ const config: any = {
 const buildingLayer = new FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
 
 const waterLayer = new WaterLayer(WaterLayerToLabel.WATER, {
-  source: waterSource,
+  source: baseWaterSource,
   zoom: { min: 11, max: 19 },
 });
 

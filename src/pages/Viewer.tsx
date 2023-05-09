@@ -7,6 +7,7 @@ import {
   ElevationLayerToItownsLayer,
   FeatureLayerToItownsLayer,
   FeatureLayerToLabel,
+  WaterLayerToItownsLayer,
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
@@ -25,7 +26,7 @@ import {
 import { useParams } from "react-router-dom";
 
 const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
+  coord: new Coordinates("EPSG:4326", 7.7595, 48.5859),
   range: 15000,
   tilt: 0,
   heading: 0,
@@ -73,6 +74,7 @@ const BELOW_LAYERS = [
   ColorLayerToItownsLayer.PLAN_IGN,
   ElevationLayerToItownsLayer.BD_ALTI,
   ElevationLayerToItownsLayer.WORLD,
+  WaterLayerToItownsLayer.WATER,
 ];
 
 const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING];
