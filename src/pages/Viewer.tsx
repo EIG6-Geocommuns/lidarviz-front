@@ -98,7 +98,7 @@ const LAYER_SETTERS = [
   {
     layerName: WaterLayerToLabel.WATER,
     label: WaterLayerToLabel.WATER,
-    defaultVisibility: true,
+    defaultVisibility: false,
   },
 ];
 
