@@ -3,13 +3,12 @@ import {
   ElevationLayer,
   WFSSource,
   Style,
-  FileSource,
   Fetcher,
   ColorLayer,
   FeatureGeometryLayer,
 } from "itowns";
 import * as THREE from "three";
-import { WaterLayer } from "inondata-itowns";
+import { AggregateSource, WaterLayer } from "inondata-itowns";
 
 export type AvailableColorLayer = "PLAN_IGN" | "ORTHO";
 export type AvailableElevationLayer = "BD_ALTI" | "WORLD";
@@ -31,7 +30,7 @@ export const FeatureLayerToLabel: { [layer in AvailableFeatureLayer]: string } =
 };
 
 export const WaterLayerToLabel: { [layer in AvailableWaterLayer]: string } = {
-  WATER: "Inondation",
+  WATER: "Inondation 3D",
 };
 
 const srtm3Source = new WMTSSource({
@@ -94,14 +93,40 @@ const buildingStyle = new Style({
   },
 });
 
-const waterSource = new FileSource({
-  url: "https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/geoid/localcolors/jpg/1/localcolors_0_0.jpg", // TODO: Change hardcoded elevation data
+// TODO: Change unsound WMTSSource type in itowns.
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+const waterDisplacementSource : any = new WMTSSource({
+  url: "https://wxs.ign.fr/altimetrie/geoportail/wmts",
   crs: "EPSG:4326",
+  format: "image/x-bil;bits=32",
+  name: "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
+  tileMatrixSet: "WGS84G",
+  zoom: { min: 11, max: 14 },
+  parser: (height: THREE.DataTexture) => Promise.resolve(height),
+});
+
+// TODO: Change unsound WMTSSource type in itowns.
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+const waterHeigtMapSource: any = new WMTSSource({
+  url: "https://geoserver.bogato.fr/geoserver/test/gwc/service/wmts",
+  crs: "EPSG:4326",
+  format: "image/png",
+  name: "test:EMS_q100_hauteur_raster",
+  style: "test:raster_greyscale",
+  tileMatrixSet: "EPSG:4326",
+  tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
   fetcher: Fetcher.texture,
-  parser: (height: THREE.Texture) => {
-    return Promise.resolve({ height });
+  parser: (height: THREE.DataTexture) => {
+    return Promise.resolve(height);
   },
 });
+
+// TODO: Create a Source interface or inherit Source class.
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+const water3DSource: any = new AggregateSource('EPSG:4326', [
+    waterDisplacementSource,
+    waterHeigtMapSource,
+]);
 
 const planIGNLayer = new ColorLayer(ColorLayerToLabel.PLAN_IGN, {
   source: planIGNSource,
@@ -131,8 +156,9 @@ const config: any = {
 const buildingLayer = new FeatureGeometryLayer(FeatureLayerToLabel.BUILDING, config);
 
 const waterLayer = new WaterLayer(WaterLayerToLabel.WATER, {
-  source: waterSource,
+  source: water3DSource,
   zoom: { min: 11, max: 19 },
+  heightScale: 10,
 });
 
 export const ColorLayerToItownsLayer: { [layer in AvailableColorLayer]: ColorLayer } = {
