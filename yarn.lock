@@ -1084,10 +1084,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@codegouvfr/react-dsfr@^0.51.0":
-  version "0.51.0"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.51.0.tgz#ac26ebaf2726209550ec477022d3d722fd4bc171"
-  integrity sha512-V3KJhXlWhLxRAzvXtBA4P7aP5+EYLQDqywXW0NNXUDlI5EwEywKQZ/C5PcKfLXh1NiHFE90ItQDW4eF1lhUBeg==
+"@codegouvfr/react-dsfr@^0.54.0":
+  version "0.54.0"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.54.0.tgz#f8e8f81c4b14f3e0fa910d0decd19bc9ce405b3b"
+  integrity sha512-v97OWcHwpx1ngCbn6FdCuoAMjnC5bIfEa3Pp3jiYAh8gCfTC+AxH/zbqzhiexUsTWhwRpe4DhEMoq4fVHS1t/w==
   dependencies:
     tsafe "^1.6.0"
 
