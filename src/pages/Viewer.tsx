@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Coordinates, GlobeView } from "itowns";
-import { View } from "../components/View";
+import { GlobeView, Coordinates } from "itowns";
+import { Placement, View } from "../components/View";
 import {
   ColorLayerToItownsLayer,
   ColorLayerToLabel,
@@ -19,6 +19,7 @@ import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
 import {
   TERRITORY_ID_TO_TERRITORY,
+  TERRITORY_ID_TO_PLACEMENT,
   AvailableTerritory,
   TERRITORY_TO_LAYERS,
   TERRITORY_TO_LAYER_SETTERS,
@@ -26,9 +27,9 @@ import {
 } from "../utils/waterLayers";
 import { useParams } from "react-router-dom";
 
-const PLACEMENT = {
-  coord: new Coordinates("EPSG:4326", 7.75202, 48.58853),
-  range: 150000,
+const DEFAULT_PLACEMENT: Placement = {
+  coord: new Coordinates("EPSG:4326", 1.50089, 45.3455),
+  range: 3000000,
   tilt: 0,
   heading: 0,
 };
@@ -77,10 +78,7 @@ const BELOW_LAYERS = [
   ElevationLayerToItownsLayer.WORLD,
 ];
 
-const ABOVE_LAYERS = [
-  FeatureLayerToItownsLayer.BUILDING,
-  WaterLayerToItownsLayer.WATER,
-];
+const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING, WaterLayerToItownsLayer.WATER];
 
 const LAYER_SETTERS = [
   { layerName: ColorLayerToLabel.ORTHO, label: ColorLayerToLabel.ORTHO, defaultVisibility: false },
@@ -107,13 +105,19 @@ export const Viewer = () => {
   const { classes } = useStyles({ windowHeight: window.innerHeight });
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
+  const [placement, setPlacement] = useState<Placement | undefined>(DEFAULT_PLACEMENT);
 
   useEffect(() => {
     if (
       territoryId &&
-      (territoryId === "ddt83" || territoryId === "ddt64" || territoryId === "ddt84" || territoryId === "ddt67")
+      (territoryId === "ddt83" ||
+        territoryId === "ddt64" ||
+        territoryId === "ddt84" ||
+        territoryId === "ddt67")
     ) {
-      setTerritory(TERRITORY_ID_TO_TERRITORY[territoryId]);
+      const newTerritory = TERRITORY_ID_TO_TERRITORY[territoryId];
+      setTerritory(newTerritory);
+      setPlacement(TERRITORY_ID_TO_PLACEMENT[newTerritory]);
     }
   }, [territoryId]);
 
@@ -163,7 +167,7 @@ export const Viewer = () => {
 
   return (
     <div className={classes.container}>
-      <View id="viewer" placement={PLACEMENT} layers={layers} viewRef={viewRef} />
+      {placement && <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />}
 
       <div className={classes.sideBar}>
         {legend ? (

@@ -1,4 +1,5 @@
-import { WMTSSource, ColorLayer } from "itowns";
+import { WMTSSource, ColorLayer, Coordinates } from "itowns";
+import { Placement } from "../components/View";
 
 export type AvailableTerritoryId = "ddt64" | "ddt67" | "ddt83" | "ddt84";
 export type AvailableTerritory = "DDT64" | "DDT67" | "DDT83" | "DDT84";
@@ -267,4 +268,25 @@ export const TERRITORY_TO_LEGEND_ITEMS: Record<AvailableTerritory, AvailableStyl
   DDT67: ["inondata:ZIP_hauteur"],
   DDT83: ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"],
   DDT84: ["inondata:aleas_ddt84"],
+};
+
+export const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Placement> = {
+  DDT64: {
+    coord: new Coordinates("EPSG:4326", -0.50089, 43.3455),
+    range: 75000,
+    heading: 0,
+    tilt: 0,
+  },
+  DDT83: {
+    coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
+    range: 150000,
+    tilt: 0,
+    heading: 0,
+  },
+  DDT84: {
+    coord: new Coordinates("EPSG:4326", 4.954455061392031, 44.037664109933104),
+    range: 150000,
+    tilt: 0,
+    heading: 0,
+  },
 };

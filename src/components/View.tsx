@@ -12,7 +12,7 @@ import {
 } from "itowns";
 import { demoLidarOptions } from "../utils/controls";
 
-type Placement = {
+export type Placement = {
   coord: Coordinates;
   tilt: number;
   heading: number;
