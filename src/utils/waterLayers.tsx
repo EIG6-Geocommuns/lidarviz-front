@@ -1,16 +1,15 @@
 import { WMTSSource, ColorLayer, Coordinates } from "itowns";
 import { Placement } from "../components/View";
 
-export type AvailableTerritoryId = "ddt64" | "ddt67" | "ddt83" | "ddt84";
-export type AvailableTerritory = "DDT64" | "DDT67" | "DDT83" | "DDT84";
+export type AvailableTerritoryId = "ddtm64" | "ddt67" | "ddtm83" | "ddt84";
+export type AvailableTerritory = "DDTM64" | "DDT67" | "DDTM83" | "DDT84";
 export type AvailableLayer =
   | "inondata:DDT64_Pau_isocote_probabilite_faible"
   | "inondata:DDT64_Pau_isocote_probabilite_moyenne"
   | "inondata:DDT64_Pau_isocote_probabilite_forte"
   | "inondata:DDT67_Holtzheim"
   | "inondata:DDT83_BESSE_SUR_ISSOLE"
-  | "inondata:DDT84_Orange_Aleas"
-  ;
+  | "inondata:DDT84_Orange_Aleas";
 
 export type AvailableStyle =
   | "inondata:hauteur_eau"
@@ -18,26 +17,23 @@ export type AvailableStyle =
   | "inondata:vitesse_eau"
   | "inondata:hauteur_eau_4_classes"
   | "inondata:aleas_ddt84"
-  | "inondata:ZIP_hauteur" // TODO: Seems to be ZIP data, we should generalize later
-  ;
+  | "inondata:ZIP_hauteur"; // TODO: Seems to be ZIP data, we should generalize later
 
 export const TERRITORY_ID_TO_TERRITORY: Record<AvailableTerritoryId, AvailableTerritory> = {
-  ddt64: "DDT64",
+  ddtm64: "DDTM64",
   ddt67: "DDT67",
-  ddt83: "DDT83",
+  ddtm83: "DDTM83",
   ddt84: "DDT84",
 };
 
 export const TERRIRORY_TO_LAYERS: Record<AvailableTerritory, AvailableLayer[]> = {
-  DDT64: [
+  DDTM64: [
     "inondata:DDT64_Pau_isocote_probabilite_faible",
     "inondata:DDT64_Pau_isocote_probabilite_moyenne",
     "inondata:DDT64_Pau_isocote_probabilite_forte",
   ],
-  DDT67: [
-    "inondata:DDT67_Holtzheim",
-  ],
-  DDT83: ["inondata:DDT83_BESSE_SUR_ISSOLE"],
+  DDT67: ["inondata:DDT67_Holtzheim"],
+  DDTM83: ["inondata:DDT83_BESSE_SUR_ISSOLE"],
   DDT84: ["inondata:DDT84_Orange_Aleas"],
 };
 
@@ -107,23 +103,23 @@ const get2DWaterLayer = <T extends AvailableLayer>(
   return new ColorLayer(layerName, { source: get2DWaterSource(layer, style) });
 };
 
-// DDT 64
+// DDTM 64
 
-const ddt64HauteurEauProbaFaibleLayer = get2DWaterLayer(
+const ddtm64HauteurEauProbaFaibleLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_faible"][
     "inondata:hauteur_eau_4_classes"
   ],
   "inondata:DDT64_Pau_isocote_probabilite_faible",
   "inondata:hauteur_eau_4_classes"
 );
-const ddt64HauteurEauProbaMoyenneLayer = get2DWaterLayer(
+const ddtm64HauteurEauProbaMoyenneLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_moyenne"][
     "inondata:hauteur_eau_4_classes"
   ],
   "inondata:DDT64_Pau_isocote_probabilite_moyenne",
   "inondata:hauteur_eau_4_classes"
 );
-const ddt64HauteurEauProbaForteLayer = get2DWaterLayer(
+const ddtm64HauteurEauProbaForteLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_forte"][
     "inondata:hauteur_eau_4_classes"
   ],
@@ -131,31 +127,31 @@ const ddt64HauteurEauProbaForteLayer = get2DWaterLayer(
   "inondata:hauteur_eau_4_classes"
 );
 
-const ddt64Layers = [
-  ddt64HauteurEauProbaFaibleLayer,
-  ddt64HauteurEauProbaMoyenneLayer,
-  ddt64HauteurEauProbaForteLayer,
+const ddtm64Layers = [
+  ddtm64HauteurEauProbaFaibleLayer,
+  ddtm64HauteurEauProbaMoyenneLayer,
+  ddtm64HauteurEauProbaForteLayer,
 ];
 
-// DDT 83
+// DDTM 83
 
-const ddt83HauteurEauLayer = get2DWaterLayer(
+const ddtm83HauteurEauLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:hauteur_eau"],
   "inondata:DDT83_BESSE_SUR_ISSOLE",
   "inondata:hauteur_eau"
 );
-const ddt83VitesseEauLayer = get2DWaterLayer(
+const ddtm83VitesseEauLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:vitesse_eau"],
   "inondata:DDT83_BESSE_SUR_ISSOLE",
   "inondata:vitesse_eau"
 );
-const ddt83AleasLayer = get2DWaterLayer(
+const ddtm83AleasLayer = get2DWaterLayer(
   LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:aleas"],
   "inondata:DDT83_BESSE_SUR_ISSOLE",
   "inondata:aleas"
 );
 
-const ddt83Layers = [ddt83HauteurEauLayer, ddt83VitesseEauLayer, ddt83AleasLayer];
+const ddtm83Layers = [ddtm83HauteurEauLayer, ddtm83VitesseEauLayer, ddtm83AleasLayer];
 
 // DDT 84
 
@@ -168,20 +164,16 @@ const ddt84HauteurEauLayer = get2DWaterLayer(
 const ddt84Layers = [ddt84HauteurEauLayer];
 
 const ddt67HoltzheimLayer = get2DWaterLayer(
-  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"][
-    "inondata:ZIP_hauteur"
-  ],
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"]["inondata:ZIP_hauteur"],
   "inondata:DDT67_Holtzheim",
-  "inondata:ZIP_hauteur",
+  "inondata:ZIP_hauteur"
 );
 
-const ddt67Layers= [
-  ddt67HoltzheimLayer,
-];
+const ddt67Layers = [ddt67HoltzheimLayer];
 
 export type LayerSetter = { layerName: string; label: string; defaultVisibility: boolean };
 
-const ddt64Setters: LayerSetter[] = [
+const ddtm64Setters: LayerSetter[] = [
   {
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_forte"][
@@ -211,16 +203,13 @@ const ddt64Setters: LayerSetter[] = [
 
 const ddt67Setters: LayerSetter[] = [
   {
-    layerName:
-      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"][
-        "inondata:ZIP_hauteur"
-      ],
+    layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"]["inondata:ZIP_hauteur"],
     label: "Holtzheim (4m76)",
     defaultVisibility: true,
   },
 ];
 
-const ddt83Setters: LayerSetter[] = [
+const ddtm83Setters: LayerSetter[] = [
   {
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:hauteur_eau"],
@@ -249,35 +238,41 @@ const ddt84Setters: LayerSetter[] = [
 ];
 
 export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, ColorLayer[]> = {
-  DDT64: ddt64Layers,
+  DDTM64: ddtm64Layers,
   DDT67: ddt67Layers,
-  DDT83: ddt83Layers,
+  DDTM83: ddtm83Layers,
   DDT84: ddt84Layers,
 };
 
 export const TERRITORY_TO_LAYER_SETTERS: Record<AvailableTerritory, LayerSetter[]> = {
-  DDT64: ddt64Setters,
+  DDTM64: ddtm64Setters,
   DDT67: ddt67Setters,
-  DDT83: ddt83Setters,
+  DDTM83: ddtm83Setters,
   DDT84: ddt84Setters,
 };
 
 //TODO enhance with values from TERRITORY_TO_STYLES
 export const TERRITORY_TO_LEGEND_ITEMS: Record<AvailableTerritory, AvailableStyle[]> = {
-  DDT64: ["inondata:hauteur_eau_4_classes"],
+  DDTM64: ["inondata:hauteur_eau_4_classes"],
   DDT67: ["inondata:ZIP_hauteur"],
-  DDT83: ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"],
+  DDTM83: ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"],
   DDT84: ["inondata:aleas_ddt84"],
 };
 
 export const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Placement> = {
-  DDT64: {
+  DDTM64: {
     coord: new Coordinates("EPSG:4326", -0.50089, 43.3455),
     range: 75000,
     heading: 0,
     tilt: 0,
   },
-  DDT83: {
+  DDT67: {
+    coord: new Coordinates("EPSG:4326", 7.75202, 48.58853),
+    range: 75000,
+    heading: 0,
+    tilt: 0,
+  },
+  DDTM83: {
     coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
     range: 150000,
     tilt: 0,

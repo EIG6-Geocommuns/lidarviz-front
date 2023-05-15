@@ -105,19 +105,21 @@ export const Viewer = () => {
   const { classes } = useStyles({ windowHeight: window.innerHeight });
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
-  const [placement, setPlacement] = useState<Placement | undefined>(DEFAULT_PLACEMENT);
+  const [placement, setPlacement] = useState<Placement | undefined>(undefined);
 
   useEffect(() => {
     if (
       territoryId &&
-      (territoryId === "ddt83" ||
-        territoryId === "ddt64" ||
-        territoryId === "ddt84" ||
-        territoryId === "ddt67")
+      (territoryId === "ddtm64" ||
+        territoryId === "ddt67" ||
+        territoryId === "ddtm83" ||
+        territoryId === "ddt84")
     ) {
       const newTerritory = TERRITORY_ID_TO_TERRITORY[territoryId];
       setTerritory(newTerritory);
       setPlacement(TERRITORY_ID_TO_PLACEMENT[newTerritory]);
+    } else {
+      setPlacement(DEFAULT_PLACEMENT);
     }
   }, [territoryId]);
 

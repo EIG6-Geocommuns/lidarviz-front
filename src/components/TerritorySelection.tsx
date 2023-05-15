@@ -4,6 +4,7 @@ import { fr } from "@codegouvfr/react-dsfr";
 import { Select } from "@codegouvfr/react-dsfr/SelectNext";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import { ROUTES } from "..";
+import { AvailableTerritoryId } from "../utils/waterLayers";
 
 const useStyles = makeStyles()(() => ({
   title: {
@@ -14,20 +15,19 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-const VALUES = [
-  { value: "ddtm13", label: "DDTM 13" },
+const VALUES: { value: AvailableTerritoryId; label: string }[] = [
   { value: "ddtm64", label: "DDTM 64" },
-  { value: "ddt67", label: "DDT 67" },
   { value: "ddtm83", label: "DDTM 83" },
   { value: "ddt84", label: "DDT 84" },
-  { value: "dreal-reunion", label: "DEAL Réunion" },
 ];
 
 export const TerritorySelection = () => {
   const { classes } = useStyles();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<AvailableTerritoryId | undefined>(undefined);
 
-  const viewerHref = useMemo(() => ROUTES.Viewer.replace(":territoryId", value), [value]);
+  const viewerHref = useMemo(() => {
+    if (value) return ROUTES.Viewer.replace(":territoryId", value);
+  }, [value]);
 
   return (
     <div className={classes.container}>
@@ -42,7 +42,7 @@ export const TerritorySelection = () => {
       />
 
       <a href={viewerHref}>
-        <Button disabled={value === ""}>Lancer la Visualisation</Button>
+        <Button disabled={value === undefined}>Lancer la Visualisation</Button>
       </a>
     </div>
   );
