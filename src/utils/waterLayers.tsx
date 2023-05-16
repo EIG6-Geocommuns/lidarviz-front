@@ -1,5 +1,7 @@
 import { WMTSSource, ColorLayer, Coordinates } from "itowns";
 import { Placement } from "../components/View";
+import { WaterLayerToLabel, water3DLayer } from "./water3DLayers";
+import { WaterLayer } from "inondata-itowns";
 
 export type AvailableTerritoryId = "ddtm64" | "ddt67" | "ddtm83" | "ddt84";
 export type AvailableTerritory = "DDTM64" | "DDT67" | "DDTM83" | "DDT84";
@@ -169,7 +171,7 @@ const ddt67HoltzheimLayer = get2DWaterLayer(
   "inondata:ZIP_hauteur"
 );
 
-const ddt67Layers = [ddt67HoltzheimLayer];
+const ddt67Layers = [ddt67HoltzheimLayer, water3DLayer];
 
 export type LayerSetter = { layerName: string; label: string; defaultVisibility: boolean };
 
@@ -204,8 +206,13 @@ const ddtm64Setters: LayerSetter[] = [
 const ddt67Setters: LayerSetter[] = [
   {
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"]["inondata:ZIP_hauteur"],
-    label: "Holtzheim (4m76)",
+    label: "Hauteurs d'eau (2D)",
     defaultVisibility: true,
+  },
+  {
+    layerName: WaterLayerToLabel.WATER,
+    label: "Hauteurs d'eau (3D)",
+    defaultVisibility: false,
   },
 ];
 
@@ -237,7 +244,7 @@ const ddt84Setters: LayerSetter[] = [
   },
 ];
 
-export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, ColorLayer[]> = {
+export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, (ColorLayer | WaterLayer)[]> = {
   DDTM64: ddtm64Layers,
   DDT67: ddt67Layers,
   DDTM83: ddtm83Layers,
@@ -274,7 +281,7 @@ export const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Placement> = 
   },
   DDTM83: {
     coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
-    range: 150000,
+    range: 35000,
     tilt: 0,
     heading: 0,
   },

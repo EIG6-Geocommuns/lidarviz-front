@@ -7,8 +7,6 @@ import {
   ElevationLayerToItownsLayer,
   FeatureLayerToItownsLayer,
   FeatureLayerToLabel,
-  WaterLayerToItownsLayer,
-  WaterLayerToLabel,
 } from "../utils/layers";
 import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 import { fr } from "@codegouvfr/react-dsfr";
@@ -78,7 +76,7 @@ const BELOW_LAYERS = [
   ElevationLayerToItownsLayer.WORLD,
 ];
 
-const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING, WaterLayerToItownsLayer.WATER];
+const ABOVE_LAYERS = [FeatureLayerToItownsLayer.BUILDING];
 
 const LAYER_SETTERS = [
   { layerName: ColorLayerToLabel.ORTHO, label: ColorLayerToLabel.ORTHO, defaultVisibility: false },
@@ -91,12 +89,6 @@ const LAYER_SETTERS = [
     layerName: FeatureLayerToLabel.BUILDING,
     label: FeatureLayerToLabel.BUILDING,
     defaultVisibility: true,
-  },
-  // TODO: Move to water3Dlayers (same as waterLayers for 2D water layers)
-  {
-    layerName: WaterLayerToLabel.WATER,
-    label: WaterLayerToLabel.WATER,
-    defaultVisibility: false,
   },
 ];
 
