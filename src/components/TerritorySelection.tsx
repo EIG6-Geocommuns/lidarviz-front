@@ -16,6 +16,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 const VALUES: { value: AvailableTerritoryId; label: string }[] = [
+  { value: "ddtm14", label: "DDTM 14" },
   { value: "ddtm64", label: "DDTM 64" },
   { value: "ddt67", label: "DDT 67" },
   { value: "ddtm83", label: "DDTM 83" },

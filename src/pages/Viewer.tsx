@@ -102,7 +102,8 @@ export const Viewer = () => {
   useEffect(() => {
     if (
       territoryId &&
-      (territoryId === "ddtm64" ||
+      (territoryId === "ddtm14" ||
+        territoryId === "ddtm64" ||
         territoryId === "ddt67" ||
         territoryId === "ddtm83" ||
         territoryId === "ddt84")
