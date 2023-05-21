@@ -25,18 +25,20 @@ export const getLegend = <T extends AvailableLayer>(
     style,
   };
 
-  type RuleFromApi = { title: string; symbolizers: { Polygon: { fill: string } }[] };
+  type RuleFromApi = { title: string; name: string; symbolizers: { Polygon: { fill: string } }[] };
 
   return gesoserverAxiosInstance.get("", { params }).then((res) => {
     const rules: RuleFromApi[] = res.data.Legend[0].rules;
     const legendInfo: LegendInfo = rules.map((rule) => {
-      return { name: rule.title, color: rule.symbolizers[0].Polygon.fill };
+      const title = rule.title || rule.name;
+      return { name: title, color: rule.symbolizers[0].Polygon.fill };
     });
     return legendInfo;
   });
 };
 
 const LegendFetchLayer: Record<AvailableTerritory, AvailableLayer> = {
+  DDTM14: "inondata:DDTM14",
   DDTM64: "inondata:DDT64_Pau_isocote_probabilite_faible",
   DDTM83: "inondata:DDT83_BESSE_SUR_ISSOLE",
   DDT84: "inondata:DDT84_Orange_Aleas",
