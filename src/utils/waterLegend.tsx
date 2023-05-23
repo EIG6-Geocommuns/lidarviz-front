@@ -39,6 +39,8 @@ export const getLegend = <T extends AvailableLayer>(
 
 const LegendFetchLayer: Record<AvailableTerritory, AvailableLayer> = {
   DDTM14: "inondata:DDTM14",
+  DDT19: "inondata:DDT19_isocote_probabilite_faible",
+  DDT45: "inondata:DDT45_isocote_probabilite_faible",
   DDTM64: "inondata:DDT64_Pau_isocote_probabilite_faible",
   DDTM83: "inondata:DDT83_BESSE_SUR_ISSOLE",
   DDT84: "inondata:DDT84_Orange_Aleas",

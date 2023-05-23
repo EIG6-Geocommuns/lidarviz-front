@@ -103,6 +103,8 @@ export const Viewer = () => {
     if (
       territoryId &&
       (territoryId === "ddtm14" ||
+        territoryId === "ddt19" ||
+        territoryId === "ddt45" ||
         territoryId === "ddtm64" ||
         territoryId === "ddt67" ||
         territoryId === "ddtm83" ||

@@ -3,10 +3,30 @@ import { Placement } from "../components/View";
 import { WaterLayerToLabel, water3DLayer } from "./water3DLayers";
 import { WaterLayer } from "inondata-itowns";
 
-export type AvailableTerritoryId = "ddtm14" | "ddtm64" | "ddt67" | "ddtm83" | "ddt84";
-export type AvailableTerritory = "DDTM14" | "DDTM64" | "DDT67" | "DDTM83" | "DDT84";
+export type AvailableTerritoryId =
+  | "ddtm14"
+  | "ddt19"
+  | "ddt45"
+  | "ddtm64"
+  | "ddt67"
+  | "ddtm83"
+  | "ddt84";
+export type AvailableTerritory =
+  | "DDTM14"
+  | "DDT19"
+  | "DDT45"
+  | "DDTM64"
+  | "DDT67"
+  | "DDTM83"
+  | "DDT84";
 export type AvailableLayer =
   | "inondata:DDTM14"
+  | "inondata:DDT19_isocote_probabilite_faible"
+  | "inondata:DDT19_isocote_probabilite_moyenne"
+  | "inondata:DDT19_isocote_probabilite_forte"
+  | "inondata:DDT45_isocote_probabilite_faible"
+  | "inondata:DDT45_isocote_probabilite_moyenne"
+  | "inondata:DDT45_isocote_probabilite_forte"
   | "inondata:DDT64_Pau_isocote_probabilite_faible"
   | "inondata:DDT64_Pau_isocote_probabilite_moyenne"
   | "inondata:DDT64_Pau_isocote_probabilite_forte"
@@ -19,13 +39,15 @@ export type AvailableStyle =
   | "inondata:aleas"
   | "inondata:vitesse_eau"
   | "inondata:hauteur_eau_4_classes"
+  | "inondata:hauteur_eau_4_classes_ddt45"
   | "inondata:aleas_ddt84"
   | "inondata:ZIP_hauteur" // TODO: Seems to be ZIP data, we should generalize later
-  | "inondata:l_zone_alea_pprl"
-;
+  | "inondata:l_zone_alea_pprl";
 
 export const TERRITORY_ID_TO_TERRITORY: Record<AvailableTerritoryId, AvailableTerritory> = {
   ddtm14: "DDTM14",
+  ddt19: "DDT19",
+  ddt45: "DDT45",
   ddtm64: "DDTM64",
   ddt67: "DDT67",
   ddtm83: "DDTM83",
@@ -34,6 +56,16 @@ export const TERRITORY_ID_TO_TERRITORY: Record<AvailableTerritoryId, AvailableTe
 
 export const TERRIRORY_TO_LAYERS: Record<AvailableTerritory, AvailableLayer[]> = {
   DDTM14: ["inondata:DDTM14"],
+  DDT19: [
+    "inondata:DDT19_isocote_probabilite_faible",
+    "inondata:DDT19_isocote_probabilite_moyenne",
+    "inondata:DDT19_isocote_probabilite_forte",
+  ],
+  DDT45: [
+    "inondata:DDT45_isocote_probabilite_faible",
+    "inondata:DDT45_isocote_probabilite_moyenne",
+    "inondata:DDT45_isocote_probabilite_forte",
+  ],
   DDTM64: [
     "inondata:DDT64_Pau_isocote_probabilite_faible",
     "inondata:DDT64_Pau_isocote_probabilite_moyenne",
@@ -46,6 +78,12 @@ export const TERRIRORY_TO_LAYERS: Record<AvailableTerritory, AvailableLayer[]> =
 
 export const LAYER_TO_STYLES: Record<AvailableLayer, AvailableStyle[]> = {
   "inondata:DDTM14": ["inondata:l_zone_alea_pprl"],
+  "inondata:DDT19_isocote_probabilite_faible": ["inondata:hauteur_eau_4_classes"],
+  "inondata:DDT19_isocote_probabilite_moyenne": ["inondata:hauteur_eau_4_classes"],
+  "inondata:DDT19_isocote_probabilite_forte": ["inondata:hauteur_eau_4_classes"],
+  "inondata:DDT45_isocote_probabilite_faible": ["inondata:hauteur_eau_4_classes_ddt45"],
+  "inondata:DDT45_isocote_probabilite_moyenne": ["inondata:hauteur_eau_4_classes_ddt45"],
+  "inondata:DDT45_isocote_probabilite_forte": ["inondata:hauteur_eau_4_classes_ddt45"],
   "inondata:DDT64_Pau_isocote_probabilite_faible": ["inondata:hauteur_eau_4_classes"],
   "inondata:DDT64_Pau_isocote_probabilite_moyenne": ["inondata:hauteur_eau_4_classes"],
   "inondata:DDT64_Pau_isocote_probabilite_forte": ["inondata:hauteur_eau_4_classes"],
@@ -61,6 +99,24 @@ export const LAYER_TO_STYLES: Record<AvailableLayer, AvailableStyle[]> = {
 const LAYER_AND_STYLE_TO_LAYER_NAME = {
   "inondata:DDTM14": {
     "inondata:l_zone_alea_pprl": "inondata:DDTM14",
+  },
+  "inondata:DDT19_isocote_probabilite_faible": {
+    "inondata:hauteur_eau_4_classes": "inondata:DDT19_isocote_probabilite_faible",
+  },
+  "inondata:DDT19_isocote_probabilite_moyenne": {
+    "inondata:hauteur_eau_4_classes": "inondata:DDT19_isocote_probabilite_moyenne",
+  },
+  "inondata:DDT19_isocote_probabilite_forte": {
+    "inondata:hauteur_eau_4_classes": "inondata:DDT19_isocote_probabilite_forte",
+  },
+  "inondata:DDT45_isocote_probabilite_faible": {
+    "inondata:hauteur_eau_4_classes_ddt45": "inondata:DDT45_isocote_probabilite_faible",
+  },
+  "inondata:DDT45_isocote_probabilite_moyenne": {
+    "inondata:hauteur_eau_4_classes_ddt45": "inondata:DDT45_isocote_probabilite_moyenne",
+  },
+  "inondata:DDT45_isocote_probabilite_forte": {
+    "inondata:hauteur_eau_4_classes_ddt45": "inondata:DDT45_isocote_probabilite_forte",
   },
   "inondata:DDT64_Pau_isocote_probabilite_faible": {
     "inondata:hauteur_eau_4_classes": "inondata:DDT64_Pau_isocote_probabilite_faible",
@@ -87,6 +143,7 @@ export const StyleToLegendLabel: Record<AvailableStyle, string> = {
   "inondata:vitesse_eau": "Vitesse d'eau",
   "inondata:aleas": "Aléas",
   "inondata:hauteur_eau_4_classes": "Hauteur d'eau",
+  "inondata:hauteur_eau_4_classes_ddt45": "Hauteur d'eau",
   "inondata:aleas_ddt84": "Aléas",
   "inondata:ZIP_hauteur": "Hauteur d'eau",
   "inondata:l_zone_alea_pprl": "Aléas",
@@ -117,15 +174,71 @@ const get2DWaterLayer = <T extends AvailableLayer>(
 
 // DDTM14
 const ddtm14AleasLayer = get2DWaterLayer(
-  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDTM14"][
-    "inondata:l_zone_alea_pprl"
-  ],
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDTM14"]["inondata:l_zone_alea_pprl"],
   "inondata:DDTM14",
-  "inondata:l_zone_alea_pprl",
+  "inondata:l_zone_alea_pprl"
 );
 
-const ddtm14Layers = [
-  ddtm14AleasLayer,
+const ddtm14Layers = [ddtm14AleasLayer];
+
+// DDT 19
+
+const ddt19HauteurEauProbaFaibleLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_faible"][
+    "inondata:hauteur_eau_4_classes"
+  ],
+  "inondata:DDT19_isocote_probabilite_faible",
+  "inondata:hauteur_eau_4_classes"
+);
+const ddt19HauteurEauProbaMoyenneLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_moyenne"][
+    "inondata:hauteur_eau_4_classes"
+  ],
+  "inondata:DDT19_isocote_probabilite_moyenne",
+  "inondata:hauteur_eau_4_classes"
+);
+const ddt19HauteurEauProbaForteLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_forte"][
+    "inondata:hauteur_eau_4_classes"
+  ],
+  "inondata:DDT19_isocote_probabilite_forte",
+  "inondata:hauteur_eau_4_classes"
+);
+
+const ddt19Layers = [
+  ddt19HauteurEauProbaFaibleLayer,
+  ddt19HauteurEauProbaMoyenneLayer,
+  ddt19HauteurEauProbaForteLayer,
+];
+
+// DDT 19
+
+const ddt45HauteurEauProbaFaibleLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_faible"][
+    "inondata:hauteur_eau_4_classes_ddt45"
+  ],
+  "inondata:DDT45_isocote_probabilite_faible",
+  "inondata:hauteur_eau_4_classes_ddt45"
+);
+const ddt45HauteurEauProbaMoyenneLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_moyenne"][
+    "inondata:hauteur_eau_4_classes_ddt45"
+  ],
+  "inondata:DDT45_isocote_probabilite_moyenne",
+  "inondata:hauteur_eau_4_classes_ddt45"
+);
+const ddt45HauteurEauProbaForteLayer = get2DWaterLayer(
+  LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_forte"][
+    "inondata:hauteur_eau_4_classes_ddt45"
+  ],
+  "inondata:DDT45_isocote_probabilite_forte",
+  "inondata:hauteur_eau_4_classes_ddt45"
+);
+
+const ddt45Layers = [
+  ddt45HauteurEauProbaFaibleLayer,
+  ddt45HauteurEauProbaMoyenneLayer,
+  ddt45HauteurEauProbaForteLayer,
 ];
 
 // DDTM 64
@@ -200,13 +313,66 @@ export type LayerSetter = { layerName: string; label: string; defaultVisibility:
 
 const ddtm14Setters: LayerSetter[] = [
   {
-    layerName:
-      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDTM14"][
-        "inondata:l_zone_alea_pprl"
-      ],
+    layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDTM14"]["inondata:l_zone_alea_pprl"],
     label: StyleToLegendLabel["inondata:l_zone_alea_pprl"],
     defaultVisibility: true,
-  }
+  },
+];
+
+const ddt19Setters: LayerSetter[] = [
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_forte"][
+        "inondata:hauteur_eau_4_classes"
+      ],
+    label: "Crue décennale",
+    defaultVisibility: true,
+  },
+
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_moyenne"][
+        "inondata:hauteur_eau_4_classes"
+      ],
+    label: "Crue centennale",
+    defaultVisibility: false,
+  },
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_faible"][
+        "inondata:hauteur_eau_4_classes"
+      ],
+    label: "Crue millénale",
+    defaultVisibility: false,
+  },
+];
+
+const ddt45Setters: LayerSetter[] = [
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_forte"][
+        "inondata:hauteur_eau_4_classes_ddt45"
+      ],
+    label: "Crue décennale",
+    defaultVisibility: true,
+  },
+
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_moyenne"][
+        "inondata:hauteur_eau_4_classes_ddt45"
+      ],
+    label: "Crue centennale",
+    defaultVisibility: false,
+  },
+  {
+    layerName:
+      LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_faible"][
+        "inondata:hauteur_eau_4_classes_ddt45"
+      ],
+    label: "Crue millénale",
+    defaultVisibility: false,
+  },
 ];
 
 const ddtm64Setters: LayerSetter[] = [
@@ -280,6 +446,8 @@ const ddt84Setters: LayerSetter[] = [
 
 export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, (ColorLayer | WaterLayer)[]> = {
   DDTM14: ddtm14Layers,
+  DDT19: ddt19Layers,
+  DDT45: ddt45Layers,
   DDTM64: ddtm64Layers,
   DDT67: ddt67Layers,
   DDTM83: ddtm83Layers,
@@ -288,6 +456,8 @@ export const TERRITORY_TO_LAYERS: Record<AvailableTerritory, (ColorLayer | Water
 
 export const TERRITORY_TO_LAYER_SETTERS: Record<AvailableTerritory, LayerSetter[]> = {
   DDTM14: ddtm14Setters,
+  DDT19: ddt19Setters,
+  DDT45: ddt45Setters,
   DDTM64: ddtm64Setters,
   DDT67: ddt67Setters,
   DDTM83: ddtm83Setters,
@@ -297,6 +467,8 @@ export const TERRITORY_TO_LAYER_SETTERS: Record<AvailableTerritory, LayerSetter[
 //TODO enhance with values from TERRITORY_TO_STYLES
 export const TERRITORY_TO_LEGEND_ITEMS: Record<AvailableTerritory, AvailableStyle[]> = {
   DDTM14: ["inondata:l_zone_alea_pprl"],
+  DDT19: ["inondata:hauteur_eau_4_classes"],
+  DDT45: ["inondata:hauteur_eau_4_classes_ddt45"],
   DDTM64: ["inondata:hauteur_eau_4_classes"],
   DDT67: ["inondata:ZIP_hauteur"],
   DDTM83: ["inondata:hauteur_eau", "inondata:vitesse_eau", "inondata:aleas"],
@@ -305,8 +477,20 @@ export const TERRITORY_TO_LEGEND_ITEMS: Record<AvailableTerritory, AvailableStyl
 
 export const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Placement> = {
   DDTM14: {
-    coord: new Coordinates('EPSG:4326', -0.11465, 49.25848),
+    coord: new Coordinates("EPSG:4326", -0.11465, 49.25848),
     range: 7500,
+    heading: 0,
+    tilt: 0,
+  },
+  DDT19: {
+    coord: new Coordinates("EPSG:4326", 1.7, 45.192),
+    range: 60000,
+    heading: 0,
+    tilt: 0,
+  },
+  DDT45: {
+    coord: new Coordinates("EPSG:4326", 2.032, 47.845),
+    range: 60000,
     heading: 0,
     tilt: 0,
   },
