@@ -1,6 +1,6 @@
 import { WMTSSource, ColorLayer, Coordinates } from "itowns";
 import { Placement } from "../components/View";
-import { WaterLayerToLabel, water3DLayer } from "./water3DLayers";
+import { WaterLayerToLabel, water3DLayer45, water3DLayer67 } from "./water3DLayers";
 import { WaterLayer } from "inondata-itowns";
 
 const ALL_AVAILABLE_TERRITORY_IDS = [
@@ -250,6 +250,7 @@ const ddt45Layers = [
   ddt45HauteurEauProbaFaibleLayer,
   ddt45HauteurEauProbaMoyenneLayer,
   ddt45HauteurEauProbaForteLayer,
+  water3DLayer45,
 ];
 
 // DDTM 64
@@ -318,7 +319,7 @@ const ddt67HoltzheimLayer = get2DWaterLayer(
   "inondata:ZIP_hauteur"
 );
 
-const ddt67Layers = [ddt67HoltzheimLayer, water3DLayer];
+const ddt67Layers = [ddt67HoltzheimLayer, water3DLayer67];
 
 export type LayerSetter = { layerName: string; label: string; defaultVisibility: boolean };
 
@@ -384,6 +385,11 @@ const ddt45Setters: LayerSetter[] = [
     label: "Crue millénale",
     defaultVisibility: false,
   },
+  {
+    layerName: WaterLayerToLabel.DDT45,
+    label: "Crue millénale (3D)",
+    defaultVisibility: false,
+  },
 ];
 
 const ddtm64Setters: LayerSetter[] = [
@@ -421,7 +427,7 @@ const ddt67Setters: LayerSetter[] = [
     defaultVisibility: true,
   },
   {
-    layerName: WaterLayerToLabel.WATER,
+    layerName: WaterLayerToLabel.DDT67,
     label: "Hauteurs d'eau (3D)",
     defaultVisibility: false,
   },
