@@ -24,6 +24,8 @@ import {
   TERRITORY_TO_LEGEND_ITEMS,
 } from "../utils/waterLayers";
 import { useParams } from "react-router-dom";
+import Button from "@codegouvfr/react-dsfr/Button";
+import { useConstCallback } from "powerhooks";
 
 const DEFAULT_PLACEMENT: Placement = {
   coord: new Coordinates("EPSG:4326", 1.50089, 45.3455),
@@ -50,7 +52,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     top: fr.spacing("29v"),
     zIndex: 2,
     maxHeight: windowHeight,
-    paddingTop: fr.spacing("2w"),
+    paddingTop: 2,
     backgroundColor: theme.decisions.background.default.grey.default,
     width: 300,
   },
@@ -66,6 +68,14 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     margin: fr.spacing("2w"),
     right: 0,
     zIndex: 2,
+  },
+  displayButton: {
+    position: "absolute",
+    right: 0,
+    zIndex: 2,
+  },
+  hiddenPanel: {
+    display: "none",
   },
 }));
 
@@ -98,6 +108,8 @@ export const Viewer = () => {
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
   const [placement, setPlacement] = useState<Placement | undefined>(undefined);
+  const [isDisplayed, setIsDisplayed] = useState(true);
+  const [selectedTabId, setSelectedTabId] = useState("layers");
 
   useEffect(() => {
     if (
@@ -162,18 +174,52 @@ export const Viewer = () => {
     );
   }, [viewRef, territory]);
 
+  const displayIcon = useMemo(
+    () => (isDisplayed ? "fr-icon-arrow-down-s-line" : "fr-icon-arrow-up-s-line"),
+    [isDisplayed]
+  );
+
+  const displayTitle = useMemo(
+    () => (isDisplayed ? "Cacher la barre latérale" : "Afficher la barre latérale"),
+    [isDisplayed]
+  );
+
+  const panelClassName = useMemo(
+    () => (isDisplayed ? undefined : classes.hiddenPanel),
+    [isDisplayed]
+  );
+
+  const onTabChange = useConstCallback((tabId: string) => {
+    setSelectedTabId(tabId);
+    if (!isDisplayed) setIsDisplayed(true);
+  });
+
   return (
     <div className={classes.container}>
       {placement && <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />}
 
       <div className={classes.sideBar}>
         {legend ? (
-          <Tabs
-            tabs={[
-              { label: "Couches", content: layersSetters },
-              { label: "Légende", content: legend },
-            ]}
-          />
+          <>
+            <Button
+              className={classes.displayButton}
+              iconId={displayIcon}
+              title={displayTitle}
+              priority="tertiary"
+              onClick={() => setIsDisplayed(!isDisplayed)}
+            />
+            <Tabs
+              selectedTabId={selectedTabId}
+              tabs={[
+                { tabId: "layers", label: "Couches" },
+                { tabId: "legend", label: "Légende" },
+              ]}
+              classes={{ panel: panelClassName }}
+              onTabChange={onTabChange}
+            >
+              {selectedTabId === "layers" ? layersSetters : legend}
+            </Tabs>
+          </>
         ) : (
           <div className={classes.containerWithoutTabs}>{layersSetters}</div>
         )}
