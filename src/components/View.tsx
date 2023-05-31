@@ -1,5 +1,5 @@
-import { useEffect, useRef, MutableRefObject } from "react";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { useEffect, useRef, MutableRefObject, useCallback } from "react";
+import { makeStyles } from "tss-react/dsfr";
 import {
   CAMERA_TYPE,
   Coordinates,
@@ -19,13 +19,16 @@ export type Placement = {
   range: number;
 };
 
+type Camera = "perspective" | "orthographic" | THREE.Camera;
+type ItownsLayer = ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer;
+
 type Props = {
   id: string;
   viewRef: MutableRefObject<GlobeView | null>;
   placement: Placement | Extent;
-  layers?: (ColorLayer | ElevationLayer | FeatureGeometryLayer | Layer)[];
+  layers?: ItownsLayer[];
   // TODO: controls at init
-  camera?: "perspective" | "orthographic" | THREE.Camera;
+  camera?: Camera;
   renderer?: {
     antialias?: boolean;
     alpha?: boolean;
@@ -41,6 +44,12 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
+const getCameraOption = (camera?: Camera) => {
+  if (camera === "perspective") return { type: CAMERA_TYPE.PERSPECTIVE };
+  if (camera === "orthographic") return { type: CAMERA_TYPE.ORTHOGRAPHIC };
+  return { cameraThree: camera };
+};
+
 export const View = (props: Props) => {
   const { viewRef, camera, renderer, enableFocusOnStart, placement, layers } = props;
   const { classes } = useStyles();
@@ -52,14 +61,9 @@ export const View = (props: Props) => {
     if (!domElt || viewRef.current) return;
 
     const options = {
-      camera:
-        camera === "perspective"
-          ? { type: CAMERA_TYPE.PERSPECTIVE }
-          : camera === "orthographic"
-          ? { type: CAMERA_TYPE.ORTHOGRAPHIC }
-          : { cameraThree: camera },
-      renderer: renderer,
-      enableFocusOnStart: enableFocusOnStart,
+      camera: getCameraOption(camera),
+      renderer,
+      enableFocusOnStart,
     };
     viewRef.current = new GlobeView(domElt, placement, options);
     viewRef.current?.controls?.states?.setFromOptions(demoLidarOptions);
@@ -72,35 +76,38 @@ export const View = (props: Props) => {
     };
   }, []);
 
-  // Layers add/remove effect
-  useEffect(() => {
-    const view = viewRef.current;
-    if (!view) return;
-
+  const updateLayers = useCallback((view: GlobeView, layers?: ItownsLayer[]) => {
     const newLayers = new Set(layers);
     const oldLayers = new Set(
-      view.getLayers((l, a) => {
+      view.getLayers((currentLayer, currentLayerGeometry) => {
         // Don't remove root layers (GlobeLayer, PointCloudLayer, ...)
-        if (a === undefined) return false;
+        if (currentLayerGeometry === undefined) return false;
         // Don't remove layers initialized by GlobeLayer
-        if (l.id === "atmosphere") return false;
+        if (currentLayer.id === "atmosphere") return false;
         return true;
       })
     );
 
     // Remove old layers from the view
-    oldLayers.forEach((l) => {
-      if (!newLayers.has(l)) {
-        view.removeLayer(l.id);
+    oldLayers.forEach((layer) => {
+      if (!newLayers.has(layer)) {
+        view.removeLayer(layer.id);
       }
     });
 
     // Add new layers to the view
-    newLayers.forEach((l) => {
-      if (!oldLayers.has(l)) {
-        view.addLayer(l);
+    newLayers.forEach((layer) => {
+      if (!oldLayers.has(layer)) {
+        view.addLayer(layer);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    updateLayers(view, layers);
 
     // TODO: Move imagery layers position (à la geoportail)
   }, [layers]);
