@@ -5,6 +5,13 @@ import { Button } from "@codegouvfr/react-dsfr/Button";
 import { useConstCallback } from "powerhooks";
 
 const useStyles = makeStyles()({
+  tabs: {
+    maxHeight: "inherit",
+  },
+  pannel: {
+    overflowY: "auto",
+    maxHeight: "inherit",
+  },
   displayButton: {
     position: "absolute",
     right: 0,
@@ -36,7 +43,7 @@ const TabsSystem = ({ layersSetters, legend }: Props) => {
   );
 
   const panelClassName = useMemo(
-    () => (isDisplayed ? undefined : classes.hiddenPanel),
+    () => (isDisplayed ? classes.pannel : classes.hiddenPanel),
     [isDisplayed]
   );
 
@@ -60,6 +67,7 @@ const TabsSystem = ({ layersSetters, legend }: Props) => {
           { tabId: "layers", label: "Couches" },
           { tabId: "legend", label: "Légende" },
         ]}
+        className={classes.tabs}
         classes={{ panel: panelClassName }}
         onTabChange={onTabChange}
       >
