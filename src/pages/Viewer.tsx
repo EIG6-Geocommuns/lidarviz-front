@@ -1,5 +1,8 @@
+import { fr } from "@codegouvfr/react-dsfr";
+import { Coordinates, GlobeView } from "itowns";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { GlobeView, Coordinates } from "itowns";
+import { useParams } from "react-router-dom";
+import { makeStyles } from "tss-react/dsfr";
 import { Placement, View } from "../components/View";
 import {
   ColorLayerToItownsLayer,
@@ -8,24 +11,19 @@ import {
   FeatureLayerToItownsLayer,
   FeatureLayerToLabel,
 } from "../utils/layers";
-import { makeStyles } from "tss-react/dsfr";
-import { fr } from "@codegouvfr/react-dsfr";
-import { Tabs } from "@codegouvfr/react-dsfr/Tabs";
 
-import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
-import { MemoizedLegend as Legend } from "../components/Legend";
 import { LayerSetters } from "../components/LayerSetters";
+import { MemoizedLegend as Legend } from "../components/Legend";
+import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
+import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import {
-  TERRITORY_ID_TO_TERRITORY,
-  TERRITORY_ID_TO_PLACEMENT,
   AvailableTerritory,
+  TERRITORY_ID_TO_PLACEMENT,
+  TERRITORY_ID_TO_TERRITORY,
   TERRITORY_TO_LAYERS,
   TERRITORY_TO_LAYER_SETTERS,
   TERRITORY_TO_LEGEND_ITEMS,
 } from "../utils/waterLayers";
-import { useParams } from "react-router-dom";
-import Button from "@codegouvfr/react-dsfr/Button";
-import { useConstCallback } from "powerhooks";
 
 const DEFAULT_PLACEMENT: Placement = {
   coord: new Coordinates("EPSG:4326", 1.50089, 45.3455),
@@ -69,14 +67,6 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     right: 0,
     zIndex: 2,
   },
-  displayButton: {
-    position: "absolute",
-    right: 0,
-    zIndex: 2,
-  },
-  hiddenPanel: {
-    display: "none",
-  },
 }));
 
 const BELOW_LAYERS = [
@@ -108,8 +98,6 @@ export const Viewer = () => {
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
   const [placement, setPlacement] = useState<Placement | undefined>(undefined);
-  const [isDisplayed, setIsDisplayed] = useState(true);
-  const [selectedTabId, setSelectedTabId] = useState("layers");
 
   useEffect(() => {
     if (
@@ -174,55 +162,12 @@ export const Viewer = () => {
     );
   }, [viewRef, territory]);
 
-  const displayIcon = useMemo(
-    () => (isDisplayed ? "fr-icon-arrow-down-s-line" : "fr-icon-arrow-up-s-line"),
-    [isDisplayed]
-  );
-
-  const displayTitle = useMemo(
-    () => (isDisplayed ? "Cacher la barre latérale" : "Afficher la barre latérale"),
-    [isDisplayed]
-  );
-
-  const panelClassName = useMemo(
-    () => (isDisplayed ? undefined : classes.hiddenPanel),
-    [isDisplayed]
-  );
-
-  const onTabChange = useConstCallback((tabId: string) => {
-    setSelectedTabId(tabId);
-    if (!isDisplayed) setIsDisplayed(true);
-  });
-
   return (
     <div className={classes.container}>
       {placement && <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />}
 
       <div className={classes.sideBar}>
-        {legend ? (
-          <>
-            <Button
-              className={classes.displayButton}
-              iconId={displayIcon}
-              title={displayTitle}
-              priority="tertiary"
-              onClick={() => setIsDisplayed(!isDisplayed)}
-            />
-            <Tabs
-              selectedTabId={selectedTabId}
-              tabs={[
-                { tabId: "layers", label: "Couches" },
-                { tabId: "legend", label: "Légende" },
-              ]}
-              classes={{ panel: panelClassName }}
-              onTabChange={onTabChange}
-            >
-              {selectedTabId === "layers" ? layersSetters : legend}
-            </Tabs>
-          </>
-        ) : (
-          <div className={classes.containerWithoutTabs}>{layersSetters}</div>
-        )}
+        <TabsSystem layersSetters={layersSetters} legend={legend} />
       </div>
 
       <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
