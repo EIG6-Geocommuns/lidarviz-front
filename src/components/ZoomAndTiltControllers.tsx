@@ -1,6 +1,6 @@
 import { useConstCallback } from "powerhooks";
 import { GlobeView } from "itowns";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import { MutableRefObject, useEffect, useState } from "react";

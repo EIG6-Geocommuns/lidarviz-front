@@ -1,6 +1,6 @@
 import { fr } from "@codegouvfr/react-dsfr";
 import { CircularProgress, List, ListItem } from "@mui/material";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from "tss-react/dsfr";
 import { StyleToLegendLabel, AvailableTerritory, AvailableStyle } from "../utils/waterLayers";
 import { getLegend, LegendInfo } from "../utils/waterLegend";
 import { useState, useEffect, useMemo, memo } from "react";

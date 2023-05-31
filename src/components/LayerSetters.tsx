@@ -1,7 +1,7 @@
 import { MutableRefObject } from "react";
 import { useConstCallback } from "powerhooks";
 import { Layer, GlobeView } from "itowns";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { OpacitySlider } from "geocommuns-core";
 import { LayerSetter } from "../utils/waterLayers";
