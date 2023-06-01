@@ -62,7 +62,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   zoom: {
     position: "absolute",
-    bottom: `-${fr.spacing("29v")}`,
+    top: `${fr.spacing("29v")}`,
     margin: fr.spacing("2w"),
     right: 0,
     zIndex: 2,
@@ -93,7 +93,7 @@ const LAYER_SETTERS = [
 ];
 
 export const Viewer = () => {
-  const viewRef = useRef<GlobeView | null>(null);
+  const viewRef = useRef<GlobeView>(null);
   const { classes } = useStyles({ windowHeight: window.innerHeight });
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
@@ -170,7 +170,7 @@ export const Viewer = () => {
         <TabsSystem layersSetters={layersSetters} legend={legend} />
       </div>
 
-      <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+      {placement && <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />}
     </div>
   );
 };
