@@ -3,14 +3,24 @@ import { Placement } from "../components/View";
 import { WaterLayerToLabel, water3DLayer } from "./water3DLayers";
 import { WaterLayer } from "inondata-itowns";
 
-export type AvailableTerritoryId =
-  | "ddtm14"
-  | "ddt19"
-  | "ddt45"
-  | "ddtm64"
-  | "ddt67"
-  | "ddtm83"
-  | "ddt84";
+const ALL_AVAILABLE_TERRITORY_IDS = [
+  "ddtm14",
+  "ddt19",
+  "ddt45",
+  "ddtm64",
+  "ddt67",
+  "ddtm83",
+  "ddt84",
+] as const;
+
+export type AvailableTerritoryId = (typeof ALL_AVAILABLE_TERRITORY_IDS)[number];
+
+// TODO candidate for first test :-)
+export const isAvailableTerritoryId = (id: string | undefined): id is AvailableTerritoryId => {
+  return Boolean(id) && ALL_AVAILABLE_TERRITORY_IDS.includes(id as AvailableTerritoryId);
+};
+
+// TODO kill AvailableTerritory. Replace by AvailableTerritoryId
 export type AvailableTerritory =
   | "DDTM14"
   | "DDT19"
@@ -19,6 +29,7 @@ export type AvailableTerritory =
   | "DDT67"
   | "DDTM83"
   | "DDT84";
+
 export type AvailableLayer =
   | "inondata:DDTM14"
   | "inondata:DDT19_isocote_probabilite_faible"

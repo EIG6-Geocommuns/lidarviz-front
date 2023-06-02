@@ -12,7 +12,7 @@ import {
   FeatureLayerToLabel,
 } from "../utils/layers";
 
-import { LayerSetters } from "../components/LayerSetters";
+import { MemoizedLayerSetters as LayerSetters } from "../components/LayerSetters";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
@@ -23,6 +23,7 @@ import {
   TERRITORY_TO_LAYERS,
   TERRITORY_TO_LAYER_SETTERS,
   TERRITORY_TO_LEGEND_ITEMS,
+  isAvailableTerritoryId,
 } from "../utils/waterLayers";
 
 const DEFAULT_PLACEMENT: Placement = {
@@ -100,16 +101,7 @@ export const Viewer = () => {
   const [placement, setPlacement] = useState<Placement | undefined>(undefined);
 
   useEffect(() => {
-    if (
-      territoryId &&
-      (territoryId === "ddtm14" ||
-        territoryId === "ddt19" ||
-        territoryId === "ddt45" ||
-        territoryId === "ddtm64" ||
-        territoryId === "ddt67" ||
-        territoryId === "ddtm83" ||
-        territoryId === "ddt84")
-    ) {
+    if (isAvailableTerritoryId(territoryId)) {
       const newTerritory = TERRITORY_ID_TO_TERRITORY[territoryId];
       setTerritory(newTerritory);
       setPlacement(TERRITORY_ID_TO_PLACEMENT[newTerritory]);
@@ -164,13 +156,16 @@ export const Viewer = () => {
 
   return (
     <div className={classes.container}>
-      {placement && <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />}
+      {placement && (
+        <>
+          <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />
+          <div className={classes.sideBar}>
+            <TabsSystem layersSetters={layersSetters} legend={legend} />
+          </div>
 
-      <div className={classes.sideBar}>
-        <TabsSystem layersSetters={layersSetters} legend={legend} />
-      </div>
-
-      {placement && <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />}
+          <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+        </>
+      )}
     </div>
   );
 };
