@@ -87,13 +87,22 @@ export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) =
       <Button
         className={cx(classes.controllerButton, classes.zoomButton, classes.zoomInButton)}
         onClick={zoomIn}
+        title="Zoom avant"
       >
         +
       </Button>
-      <Button className={cx(classes.controllerButton, classes.zoomButton)} onClick={zoomOut}>
+      <Button
+        className={cx(classes.controllerButton, classes.zoomButton)}
+        onClick={zoomOut}
+        title="Zoom arrière"
+      >
         -
       </Button>
-      <Button className={cx(classes.controllerButton, classes.tiltButton)} onClick={toggleTilt}>
+      <Button
+        className={cx(classes.controllerButton, classes.tiltButton)}
+        onClick={toggleTilt}
+        title={is2D ? "Passer en 3D" : "Passer en 2D"}
+      >
         {is2D ? "3D" : "2D"}
       </Button>
     </div>
