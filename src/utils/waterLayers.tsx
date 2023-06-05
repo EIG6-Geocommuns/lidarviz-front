@@ -486,47 +486,41 @@ export const TERRITORY_TO_LEGEND_ITEMS: Record<AvailableTerritory, AvailableStyl
   DDT84: ["inondata:aleas_ddt84"],
 };
 
-export const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Placement> = {
+const TERRITORY_ID_TO_PLACEMENT: Record<AvailableTerritory, Pick<Placement, "coord" | "range">> = {
   DDTM14: {
     coord: new Coordinates("EPSG:4326", -0.11465, 49.25848),
     range: 7500,
-    heading: 0,
-    tilt: 0,
   },
   DDT19: {
     coord: new Coordinates("EPSG:4326", 1.7, 45.192),
     range: 60000,
-    heading: 0,
-    tilt: 0,
   },
   DDT45: {
     coord: new Coordinates("EPSG:4326", 2.032, 47.845),
     range: 60000,
-    heading: 0,
-    tilt: 0,
   },
   DDTM64: {
     coord: new Coordinates("EPSG:4326", -0.50089, 43.3455),
     range: 75000,
-    heading: 0,
-    tilt: 0,
   },
   DDT67: {
     coord: new Coordinates("EPSG:4326", 7.75202, 48.58853),
     range: 75000,
-    heading: 0,
-    tilt: 0,
   },
   DDTM83: {
     coord: new Coordinates("EPSG:4326", 6.1839, 43.339),
     range: 35000,
-    tilt: 0,
-    heading: 0,
   },
   DDT84: {
     coord: new Coordinates("EPSG:4326", 4.954455061392031, 44.037664109933104),
     range: 150000,
-    tilt: 0,
-    heading: 0,
   },
+};
+
+export const getPlacement = (territoryId: AvailableTerritory): Placement => {
+  return {
+    ...TERRITORY_ID_TO_PLACEMENT[territoryId],
+    heading: 0,
+    tilt: 0,
+  };
 };

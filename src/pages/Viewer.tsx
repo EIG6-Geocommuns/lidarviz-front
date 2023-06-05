@@ -18,7 +18,7 @@ import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import {
   AvailableTerritory,
-  TERRITORY_ID_TO_PLACEMENT,
+  getPlacement,
   TERRITORY_ID_TO_TERRITORY,
   TERRITORY_TO_LAYERS,
   TERRITORY_TO_LAYER_SETTERS,
@@ -104,7 +104,7 @@ export const Viewer = () => {
     if (isAvailableTerritoryId(territoryId)) {
       const newTerritory = TERRITORY_ID_TO_TERRITORY[territoryId];
       setTerritory(newTerritory);
-      setPlacement(TERRITORY_ID_TO_PLACEMENT[newTerritory]);
+      setPlacement(getPlacement(newTerritory));
     } else {
       setPlacement(DEFAULT_PLACEMENT);
     }
