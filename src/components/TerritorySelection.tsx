@@ -10,7 +10,12 @@ const useStyles = makeStyles()(() => ({
   title: {
     marginBottom: fr.spacing("4w"),
   },
-  container: {
+  visualization: {
+    maxWidth: 600,
+    marginBottom: fr.spacing("3w"),
+  },
+  container: {},
+  askForAddingData: {
     maxWidth: 600,
   },
 }));
@@ -35,19 +40,30 @@ export const TerritorySelection = () => {
 
   return (
     <div className={classes.container}>
-      <h4 className={classes.title}>Visualisation d'un territoire</h4>
-      <Select
-        label="Territoires disponibles"
-        nativeSelectProps={{
-          onChange: (event) => setValue(event.target.value),
-          value,
-        }}
-        options={VALUES}
-      />
+      <div className={classes.visualization}>
+        <h4 className={classes.title}>Visualisation d'un territoire</h4>
+        <Select
+          label="Territoires disponibles"
+          nativeSelectProps={{
+            onChange: (event) => setValue(event.target.value),
+            value,
+          }}
+          options={VALUES}
+        />
 
-      <a href={viewerHref}>
-        <Button disabled={value === undefined}>Lancer la Visualisation</Button>
-      </a>
+        <a href={viewerHref}>
+          <Button disabled={value === undefined}>Lancer la Visualisation</Button>
+        </a>
+      </div>
+
+      <hr />
+
+      <div className={classes.askForAddingData}>
+        <p>Votre territoire n’est pas encore disponible ?</p>
+        <a href="mailto:inondata@ign.fr">
+          <Button>Faire une demande</Button>
+        </a>
+      </div>
     </div>
   );
 };
