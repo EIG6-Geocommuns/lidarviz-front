@@ -6,7 +6,7 @@ import { Button } from "@codegouvfr/react-dsfr/Button";
 import { MutableRefObject, useEffect, useState } from "react";
 import { Event } from "three";
 
-const useStyles = makeStyles()((theme) => ({
+const useStyles = makeStyles<{ transform: string }>()((theme, { transform }) => ({
   controllerButton: {
     height: fr.spacing("5w"),
     width: fr.spacing("5w"),
@@ -22,6 +22,10 @@ const useStyles = makeStyles()((theme) => ({
   tiltButton: {
     fontSize: "large",
     marginTop: fr.spacing("1w"),
+  },
+  compass: {
+    width: 25,
+    transform: transform,
   },
   zoomButton: {
     fontSize: "x-large",
@@ -41,8 +45,9 @@ const THREE_D_TILT = 30;
 const TWO_D_TILT = 90;
 
 export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) => {
-  const { classes, cx } = useStyles();
   const [is2D, setIs2D] = useState(true);
+  const [heading, setHeading] = useState(0);
+  const { classes, cx } = useStyles({ transform: `rotate(${heading}deg)` });
 
   const toggleTilt = useConstCallback(() => {
     const viewControls = viewRef.current?.controls;
@@ -54,6 +59,7 @@ export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) =
   });
 
   const updateIs2DWhenTiltChange = useConstCallback((event: Event) => {
+    setHeading(event.heading);
     if (is2D) {
       if (event.tilt < 89) setIs2D(false);
     } else {
@@ -82,6 +88,13 @@ export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) =
   const zoomIn = useConstCallback(() => zoom(true));
   const zoomOut = useConstCallback(() => zoom(false));
 
+  const moveHeadingToNorth = useConstCallback(() => {
+    const viewControls = viewRef.current?.controls;
+    if (!viewControls) return;
+
+    viewControls.setHeading(0, false);
+  });
+
   return (
     <div className={containerClassName}>
       <Button
@@ -97,6 +110,13 @@ export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) =
         title="Zoom arrière"
       >
         -
+      </Button>
+      <Button
+        className={cx(classes.controllerButton, classes.tiltButton)}
+        onClick={moveHeadingToNorth}
+        title="Rétablir vers le nord"
+      >
+        <img src={require("../assets/icons/compass.png")} className={classes.compass} />
       </Button>
       <Button
         className={cx(classes.controllerButton, classes.tiltButton)}
