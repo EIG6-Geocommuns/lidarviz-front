@@ -15,7 +15,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@codegouvfr/react-dsfr": "^0.58.9",
+    "@codegouvfr/react-dsfr": "^0.60.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
