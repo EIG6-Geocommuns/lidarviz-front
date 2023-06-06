@@ -19,7 +19,7 @@ const VALUES: { value: AvailableTerritoryId; label: string }[] = [
   { value: "ddtm14", label: "14 - Calvados" },
   { value: "ddt19", label: "19 - Corrèze" },
   { value: "ddt45", label: "45 - Loiret" },
-  { value: "ddtm64", label: "64 -  Pyrénées-Atlantiques" },
+  { value: "ddtm64", label: "64 - Pyrénées-Atlantiques" },
   { value: "ddt67", label: "67 - Bas-Rhin" },
   { value: "ddtm83", label: "83 - Var" },
   { value: "ddt84", label: "84 - Vaucluse" },

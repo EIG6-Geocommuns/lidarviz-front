@@ -14,13 +14,14 @@ const useStyles = makeStyles()({
 const description = [
   <p>
     Inondata est un visualisateur 3D disponible en ligne qui offre la possibilité d’importer puis de
-    visualiser les hauteurs et vitesses d’eau d’une inondation potentielle par rapport à la
-    description d’un territoire fournie par les données LiDAR HD.
+    visualiser les hauteurs et vitesses d’eau d’une inondation potentielle. La description du
+    territoire est fournie par les données géographiques de l’Institut National de l’Information
+    Géographique et Forestière.
   </p>,
   <p>
     Ce prototype est un outil de travail à destination des unités de prévention des risques des
     Direction Départementale des Territoires (DDT), pour aider à la conception de l’outil. Nous
-    testons grâce à plusieurs prototypes les accès, les visuels et les usages liés.
+    testons les accès, les visuels et les usages liés.
   </p>,
   <p>
     En tant que testeur, nous vous invitons à naviguer dans cette première version et à nous faire
