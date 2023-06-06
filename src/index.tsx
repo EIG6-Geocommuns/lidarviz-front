@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         title="Inondata"
         feedbackLink="https://framaforms.org/inondata-test-utilisateurice-1681734006"
         contactMail="inondata@ign.fr"
-        contentDescription="Inondata est un visualisateur 3D disponible en ligne qui offre la possibilité d’importer puis de visualiser les hauteurs et vitesses d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par les données LiDAR HD."
+        contentDescription="Inondata est un visualisateur 3D disponible en ligne qui permet de visualiser les hauteurs d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par l’IGN."
       />
     ),
     errorElement: <ErrorPage />,

@@ -48,8 +48,14 @@ export const DataInfo = () => {
     switch (tabId) {
       case "visualisation":
         return <TerritorySelection />;
-      default:
+      case "info":
         return <p key={selectedTabId}>🚧 Page en cours de construction</p>;
+      case "github":
+        return <p key={selectedTabId}>🚧 Page en cours de construction</p>;
+      case "actualites":
+        return <p key={selectedTabId}>🚧 Page en cours de construction</p>;
+      default:
+        return <TerritorySelection />;
     }
   });
 
