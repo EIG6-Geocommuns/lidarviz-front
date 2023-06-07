@@ -16,13 +16,13 @@ const useStyles = makeStyles()(() => ({
 }));
 
 const VALUES: { value: AvailableTerritoryId; label: string }[] = [
-  { value: "ddtm14", label: "DDTM 14" },
-  { value: "ddt19", label: "DDT 19" },
-  { value: "ddt45", label: "DDT 45" },
-  { value: "ddtm64", label: "DDTM 64" },
-  { value: "ddt67", label: "DDT 67" },
-  { value: "ddtm83", label: "DDTM 83" },
-  { value: "ddt84", label: "DDT 84" },
+  { value: "ddtm14", label: "14 - Calvados" },
+  { value: "ddt19", label: "19 - Corrèze" },
+  { value: "ddt45", label: "45 - Loiret" },
+  { value: "ddtm64", label: "64 - Pyrénées-Atlantiques" },
+  { value: "ddt67", label: "67 - Bas-Rhin" },
+  { value: "ddtm83", label: "83 - Var" },
+  { value: "ddt84", label: "84 - Vaucluse" },
 ];
 
 export const TerritorySelection = () => {

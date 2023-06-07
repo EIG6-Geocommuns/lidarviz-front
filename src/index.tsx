@@ -3,7 +3,14 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
 import { MuiDsfrThemeProvider } from "@codegouvfr/react-dsfr/mui";
-import { Root, ErrorPage } from "geocommuns-core";
+import {
+  Root,
+  ErrorPage,
+  Page,
+  PersonalData,
+  LegalTerms,
+  CookiesManagement,
+} from "geocommuns-core";
 
 import MapExtentSelector from "./pages/MapExtentSelector";
 import { Home } from "./pages/Home";
@@ -17,6 +24,9 @@ export enum ROUTES {
   DataInfo = "/info",
   MapExtentSelector = "/definition-emprise",
   Viewer = "/viewer/:territoryId",
+  PersonalData = "/donnees-personnelles",
+  LegalTerms = "/mentions-legales",
+  CookiesManagement = "/gestion-des-cookies",
 }
 
 declare module "@codegouvfr/react-dsfr/spa" {
@@ -24,6 +34,23 @@ declare module "@codegouvfr/react-dsfr/spa" {
     Link: typeof Link;
   }
 }
+
+const generatePageWithDocumentTitle = ({
+  element,
+  pageTitle,
+  scrollRestoration = false,
+}: {
+  element: JSX.Element;
+  pageTitle?: string;
+  scrollRestoration?: boolean;
+}) => {
+  const title = pageTitle ? `Inondata - ${pageTitle}` : "Inondata";
+  return (
+    <Page title={title} scrollRestoration={scrollRestoration}>
+      {element}
+    </Page>
+  );
+};
 
 const router = createBrowserRouter([
   {
@@ -33,16 +60,55 @@ const router = createBrowserRouter([
         title="Inondata"
         feedbackLink="https://framaforms.org/inondata-test-utilisateurice-1681734006"
         contactMail="inondata@ign.fr"
-        contentDescription="Inondata est un visualisateur 3D disponible en ligne qui offre la possibilité d’importer puis de visualiser les hauteurs et vitesses d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par les données LiDAR HD."
+        contentDescription="Inondata est un visualisateur 3D disponible en ligne qui permet de visualiser les hauteurs d’eau d’une inondation potentielle par rapport à la description d’un territoire fournie par l’IGN."
+        personalDataLinkProps={{ to: ROUTES.PersonalData }}
+        termsLinkProps={{ to: ROUTES.LegalTerms }}
+        cookiesManagementLinkProps={{ to: ROUTES.CookiesManagement }}
         isFooterThinable
       />
     ),
     errorElement: <ErrorPage />,
     children: [
       { path: ROUTES.Home, element: <Home /> },
-      { path: ROUTES.DataInfo, element: <DataInfo /> },
+      {
+        path: ROUTES.DataInfo,
+        element: generatePageWithDocumentTitle({
+          element: <DataInfo />,
+          scrollRestoration: true,
+        }),
+      },
       { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
       { path: ROUTES.Viewer, element: <Viewer /> },
+      {
+        path: ROUTES.PersonalData,
+        element: generatePageWithDocumentTitle({
+          element: <PersonalData />,
+          pageTitle: "Données personnelles",
+          scrollRestoration: true,
+        }),
+      },
+      {
+        path: ROUTES.LegalTerms,
+        element: generatePageWithDocumentTitle({
+          element: (
+            <LegalTerms
+              teamName="Géocommuns"
+              teamUrl="https://eig.etalab.gouv.fr/defis/geocommuns/"
+              teamEmail="inondata@ign.fr"
+            />
+          ),
+          pageTitle: "Mentions Légales",
+          scrollRestoration: true,
+        }),
+      },
+      {
+        path: ROUTES.CookiesManagement,
+        element: generatePageWithDocumentTitle({
+          element: <CookiesManagement />,
+          pageTitle: "Gestion des cookies",
+          scrollRestoration: true,
+        }),
+      },
     ],
   },
 ]);
