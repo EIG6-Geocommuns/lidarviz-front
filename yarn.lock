@@ -5688,10 +5688,10 @@ ini@^1.3.5:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
-inondata-itowns@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/inondata-itowns/-/inondata-itowns-0.0.2.tgz#91dabbcfe6389681fae781cb1dfa48f93f7d8b5a"
-  integrity sha512-0crMW6aGeFtiQc8mj8GxwTi2lPvnWZ/eTBN/Nwpn3AmRJte5SwcdwwN7zpslBdD05LVclwQvKkiuhO9AkQhhww==
+inondata-itowns@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/inondata-itowns/-/inondata-itowns-0.0.3.tgz#4b46f4acf1727449b70810515ee3223738e482f1"
+  integrity sha512-DgDayKI4FEQTUyeQHnMOJt5m4q8Nkr9S/48vEpW+zfSVSINXNpe0SJ8KS5j0KOI3MGnEdXEjmmlnqnQMDdczYA==
   dependencies:
     dat.gui "^0.7.9"
 
