@@ -64,6 +64,7 @@ const router = createBrowserRouter([
         personalDataLinkProps={{ to: ROUTES.PersonalData }}
         termsLinkProps={{ to: ROUTES.LegalTerms }}
         cookiesManagementLinkProps={{ to: ROUTES.CookiesManagement }}
+        isFooterThinable
       />
     ),
     errorElement: <ErrorPage />,

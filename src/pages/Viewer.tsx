@@ -1,5 +1,8 @@
+import { fr } from "@codegouvfr/react-dsfr";
+import { Coordinates, GlobeView } from "itowns";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { GlobeView, Coordinates } from "itowns";
+import { useParams } from "react-router-dom";
+import { makeStyles } from "tss-react/dsfr";
 import { Placement, View } from "../components/View";
 import {
   ColorLayerToItownsLayer,
@@ -8,22 +11,20 @@ import {
   FeatureLayerToItownsLayer,
   FeatureLayerToLabel,
 } from "../utils/layers";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
-import { fr } from "@codegouvfr/react-dsfr";
-import { Tabs } from "@codegouvfr/react-dsfr/Tabs";
 
-import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
+import { MemoizedLayerSetters as LayerSetters } from "../components/LayerSetters";
 import { MemoizedLegend as Legend } from "../components/Legend";
-import { LayerSetters } from "../components/LayerSetters";
+import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
+import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
 import {
-  TERRITORY_ID_TO_TERRITORY,
-  TERRITORY_ID_TO_PLACEMENT,
   AvailableTerritory,
+  getPlacement,
+  TERRITORY_ID_TO_TERRITORY,
   TERRITORY_TO_LAYERS,
   TERRITORY_TO_LAYER_SETTERS,
   TERRITORY_TO_LEGEND_ITEMS,
+  isAvailableTerritoryId,
 } from "../utils/waterLayers";
-import { useParams } from "react-router-dom";
 
 const DEFAULT_PLACEMENT: Placement = {
   coord: new Coordinates("EPSG:4326", 1.50089, 45.3455),
@@ -50,7 +51,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     top: fr.spacing("29v"),
     zIndex: 2,
     maxHeight: windowHeight,
-    paddingTop: fr.spacing("2w"),
+    paddingTop: 2,
     backgroundColor: theme.decisions.background.default.grey.default,
     width: 300,
   },
@@ -62,7 +63,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   zoom: {
     position: "absolute",
-    bottom: `-${fr.spacing("29v")}`,
+    top: `${fr.spacing("29v")}`,
     margin: fr.spacing("2w"),
     right: 0,
     zIndex: 2,
@@ -93,26 +94,17 @@ const LAYER_SETTERS = [
 ];
 
 export const Viewer = () => {
-  const viewRef = useRef<GlobeView | null>(null);
+  const viewRef = useRef<GlobeView>(null);
   const { classes } = useStyles({ windowHeight: window.innerHeight });
   const { territoryId } = useParams();
   const [territory, setTerritory] = useState<AvailableTerritory | undefined>(undefined);
   const [placement, setPlacement] = useState<Placement | undefined>(undefined);
 
   useEffect(() => {
-    if (
-      territoryId &&
-      (territoryId === "ddtm14" ||
-        territoryId === "ddt19" ||
-        territoryId === "ddt45" ||
-        territoryId === "ddtm64" ||
-        territoryId === "ddt67" ||
-        territoryId === "ddtm83" ||
-        territoryId === "ddt84")
-    ) {
+    if (isAvailableTerritoryId(territoryId)) {
       const newTerritory = TERRITORY_ID_TO_TERRITORY[territoryId];
       setTerritory(newTerritory);
-      setPlacement(TERRITORY_ID_TO_PLACEMENT[newTerritory]);
+      setPlacement(getPlacement(newTerritory));
     } else {
       setPlacement(DEFAULT_PLACEMENT);
     }
@@ -164,22 +156,16 @@ export const Viewer = () => {
 
   return (
     <div className={classes.container}>
-      {placement && <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />}
+      {placement && (
+        <>
+          <View id="viewer" placement={placement} layers={layers} viewRef={viewRef} />
+          <div className={classes.sideBar}>
+            <TabsSystem layersSetters={layersSetters} legend={legend} />
+          </div>
 
-      <div className={classes.sideBar}>
-        {legend ? (
-          <Tabs
-            tabs={[
-              { label: "Couches", content: layersSetters },
-              { label: "Légende", content: legend },
-            ]}
-          />
-        ) : (
-          <div className={classes.containerWithoutTabs}>{layersSetters}</div>
-        )}
-      </div>
-
-      <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+          <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+        </>
+      )}
     </div>
   );
 };

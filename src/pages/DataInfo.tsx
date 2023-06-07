@@ -1,4 +1,4 @@
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { MemoizedDataDescriptionCard as DataDescriptionCard, useTabs } from "geocommuns-core";
 import { useConstCallback } from "powerhooks";

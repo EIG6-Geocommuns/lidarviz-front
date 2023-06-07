@@ -1,9 +1,9 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, memo } from "react";
 import { useConstCallback } from "powerhooks";
 import { Layer, GlobeView } from "itowns";
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
-import { OpacitySlider } from "geocommuns-core";
+import { MemoizedOpacitySlider as OpacitySlider } from "geocommuns-core";
 import { LayerSetter } from "../utils/waterLayers";
 
 const useStyles = makeStyles()(() => ({
@@ -57,5 +57,8 @@ export const LayerSetters = ({ viewRef, layerSetters }: Props) => {
       />
     );
   });
+
   return <> {layerSetters.map((ls: LayerSetter) => generateOpacitySlider(ls))}</>;
 };
+
+export const MemoizedLayerSetters = memo(LayerSetters);
