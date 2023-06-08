@@ -59,11 +59,11 @@ const waterDisplacementSource67: any = new WMTSSource({
 // TODO: Change unsound WMTSSource type in itowns.
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const waterHeigtMapSource67: any = new WMTSSource({
-  url: "https://geoserver.bogato.fr/geoserver/test/gwc/service/wmts",
+  url: "https://geoserver.bogato.fr/geoserver/inondata/gwc/service/wmts",
   crs: "EPSG:4326",
   format: "image/png",
-  name: "test:EMS_q100_hauteur_raster",
-  style: "test:raster_greyscale",
+  name: "inondata:strasbourg",
+  style: "inondata:DDT67_degrade_gris",
   tileMatrixSet: "EPSG:4326",
   tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
   fetcher: Fetcher.texture,
@@ -91,5 +91,5 @@ export const water3DLayer67 = new WaterLayer(WaterLayerToLabel.DDT67, {
   source: water3DSource67,
   zoom: { min: 11, max: 19 },
   heightBias: 0,
-  heightScale: 10,
+  heightScale: 1,
 });
