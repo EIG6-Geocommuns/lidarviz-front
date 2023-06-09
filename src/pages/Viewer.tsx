@@ -13,6 +13,7 @@ import {
 } from "../utils/layers";
 
 import { MemoizedLayerSetters as LayerSetters } from "../components/LayerSetters";
+import { MemoizedWaterLayerSetters as WaterLayerSetters } from "../components/WaterLayerSetters";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
 import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
@@ -132,7 +133,7 @@ export const Viewer = () => {
         {territorySetters.length !== 0 && (
           <>
             <b>Inondation</b>
-            <LayerSetters viewRef={viewRef} layerSetters={territorySetters} />
+            <WaterLayerSetters viewRef={viewRef} layerSetters={territorySetters} />
           </>
         )}
       </>

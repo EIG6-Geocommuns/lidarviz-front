@@ -5,7 +5,7 @@ import { MemoizedOpacitySlider as OpacitySlider } from "geocommuns-core";
 
 import type { MutableRefObject } from "react";
 import type { Layer, GlobeView } from "itowns";
-import type { LayerSetter as Setter } from "../utils/waterLayers";
+import type { LayerSetter as Setter } from "../types/Layers";
 
 type ViewRef = MutableRefObject<GlobeView | null>;
 type Props = {

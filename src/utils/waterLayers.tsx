@@ -1,7 +1,11 @@
 import { WMTSSource, ColorLayer, Coordinates } from "itowns";
-import { Placement } from "../components/View";
 import { WaterLayerToLabel, water3DLayer45, water3DLayer67 } from "./water3DLayers";
 import { WaterLayer } from "inondata-itowns";
+
+import type { WaterLayerSetter, WaterLayerKind } from "../types/Layers";
+import type { Placement } from "../components/View";
+
+type LayerSetter = WaterLayerSetter<WaterLayerKind>;
 
 const ALL_AVAILABLE_TERRITORY_IDS = [
   "ddtm14",
@@ -160,10 +164,10 @@ export const StyleToLegendLabel: Record<AvailableStyle, string> = {
   "inondata:l_zone_alea_pprl": "Aléas",
 };
 
-const get2DWaterSource = <T extends AvailableLayer>(
+function get2DWaterSource<T extends AvailableLayer>(
   layer: T,
   style: (typeof LAYER_TO_STYLES)[T][number]
-) => {
+) {
   return new WMTSSource({
     url: "https://geoserver.bogato.fr/geoserver/inondata/gwc/service/wmts",
     crs: "EPSG:4326",
@@ -173,15 +177,15 @@ const get2DWaterSource = <T extends AvailableLayer>(
     tileMatrixSet: "EPSG:4326",
     tileMatrixCallback: (level: number) => `EPSG:4326:${level}`,
   });
-};
+}
 
-const get2DWaterLayer = <T extends AvailableLayer>(
+function get2DWaterLayer<T extends AvailableLayer>(
   layerName: string,
   layer: T,
   style: (typeof LAYER_TO_STYLES)[T][number]
-) => {
+) {
   return new ColorLayer(layerName, { source: get2DWaterSource(layer, style) });
-};
+}
 
 // DDTM14
 const ddtm14AleasLayer = get2DWaterLayer(
@@ -321,10 +325,9 @@ const ddt67HoltzheimLayer = get2DWaterLayer(
 
 const ddt67Layers = [ddt67HoltzheimLayer, water3DLayer67];
 
-export type LayerSetter = { layerName: string; label: string; defaultVisibility: boolean };
-
 const ddtm14Setters: LayerSetter[] = [
   {
+    kind: "alea",
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDTM14"]["inondata:l_zone_alea_pprl"],
     label: StyleToLegendLabel["inondata:l_zone_alea_pprl"],
     defaultVisibility: true,
@@ -333,6 +336,7 @@ const ddtm14Setters: LayerSetter[] = [
 
 const ddt19Setters: LayerSetter[] = [
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_forte"][
         "inondata:hauteur_eau_4_classes"
@@ -342,6 +346,7 @@ const ddt19Setters: LayerSetter[] = [
   },
 
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_moyenne"][
         "inondata:hauteur_eau_4_classes"
@@ -350,6 +355,7 @@ const ddt19Setters: LayerSetter[] = [
     defaultVisibility: false,
   },
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT19_isocote_probabilite_faible"][
         "inondata:hauteur_eau_4_classes"
@@ -361,6 +367,7 @@ const ddt19Setters: LayerSetter[] = [
 
 const ddt45Setters: LayerSetter[] = [
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_forte"][
         "inondata:hauteur_eau_4_classes_ddt45"
@@ -370,6 +377,7 @@ const ddt45Setters: LayerSetter[] = [
   },
 
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_moyenne"][
         "inondata:hauteur_eau_4_classes_ddt45"
@@ -378,6 +386,7 @@ const ddt45Setters: LayerSetter[] = [
     defaultVisibility: false,
   },
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_faible"][
         "inondata:hauteur_eau_4_classes_ddt45"
@@ -386,6 +395,7 @@ const ddt45Setters: LayerSetter[] = [
     defaultVisibility: false,
   },
   {
+    kind: "hauteur",
     layerName: WaterLayerToLabel.DDT45,
     label: "Crue millénale (3D)",
     defaultVisibility: false,
@@ -394,6 +404,7 @@ const ddt45Setters: LayerSetter[] = [
 
 const ddtm64Setters: LayerSetter[] = [
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_forte"][
         "inondata:hauteur_eau_4_classes"
@@ -403,6 +414,7 @@ const ddtm64Setters: LayerSetter[] = [
   },
 
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_moyenne"][
         "inondata:hauteur_eau_4_classes"
@@ -411,6 +423,7 @@ const ddtm64Setters: LayerSetter[] = [
     defaultVisibility: false,
   },
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT64_Pau_isocote_probabilite_faible"][
         "inondata:hauteur_eau_4_classes"
@@ -422,11 +435,13 @@ const ddtm64Setters: LayerSetter[] = [
 
 const ddt67Setters: LayerSetter[] = [
   {
+    kind: "hauteur",
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"]["inondata:ZIP_hauteur"],
     label: "Hauteurs d'eau (2D)",
     defaultVisibility: true,
   },
   {
+    kind: "hauteur",
     layerName: WaterLayerToLabel.DDT67,
     label: "Hauteurs d'eau (3D)",
     defaultVisibility: false,
@@ -435,18 +450,21 @@ const ddt67Setters: LayerSetter[] = [
 
 const ddtm83Setters: LayerSetter[] = [
   {
+    kind: "hauteur",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:hauteur_eau"],
     label: StyleToLegendLabel["inondata:hauteur_eau"],
     defaultVisibility: true,
   },
   {
+    kind: "vitesse",
     layerName:
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:vitesse_eau"],
     label: StyleToLegendLabel["inondata:vitesse_eau"],
     defaultVisibility: false,
   },
   {
+    kind: "alea",
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT83_BESSE_SUR_ISSOLE"]["inondata:aleas"],
     label: StyleToLegendLabel["inondata:aleas"],
     defaultVisibility: false,
@@ -455,6 +473,7 @@ const ddtm83Setters: LayerSetter[] = [
 
 const ddt84Setters: LayerSetter[] = [
   {
+    kind: "alea",
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT84_Orange_Aleas"]["inondata:aleas_ddt84"],
     label: StyleToLegendLabel["inondata:aleas_ddt84"],
     defaultVisibility: true,
