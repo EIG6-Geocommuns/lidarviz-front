@@ -3,6 +3,7 @@ import { fr } from "@codegouvfr/react-dsfr";
 import { MemoizedDataDescriptionCard as DataDescriptionCard, useTabs } from "geocommuns-core";
 import { useConstCallback } from "powerhooks";
 import { TerritorySelection } from "../components/TerritorySelection";
+import { MemoizedGenericInfo as GenericInfo } from "../components/GenericInfo";
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -49,7 +50,7 @@ export const DataInfo = () => {
       case "visualisation":
         return <TerritorySelection />;
       case "info":
-        return <p key={selectedTabId}>🚧 Page en cours de construction</p>;
+        return <GenericInfo />;
       case "github":
         return <p key={selectedTabId}>🚧 Page en cours de construction</p>;
       case "actualites":
@@ -67,7 +68,7 @@ export const DataInfo = () => {
           subtitle="Visualisation en trois dimensions du risque inondation"
           creationDate={new Date("2023-04-04")}
           updateDate={new Date("2023-04-25")}
-          image={require("../assets/img/lidar_hd_marseille_petit.png")}
+          image={require("../assets/img/picto-inondata.png")}
           altImage="Vignette donnant un aperçu des données LiDAR HD"
         />
       </div>
