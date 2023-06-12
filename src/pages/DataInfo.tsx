@@ -67,7 +67,7 @@ export const DataInfo = () => {
           title="Inondata"
           subtitle="Visualisation en trois dimensions du risque inondation"
           creationDate={new Date("2023-04-04")}
-          updateDate={new Date("2023-04-25")}
+          updateDate={new Date("2023-06-01")}
           image={require("../assets/img/picto-inondata.png")}
           altImage="Vignette donnant un aperçu des données LiDAR HD"
         />
