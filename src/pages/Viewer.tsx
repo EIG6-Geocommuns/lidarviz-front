@@ -15,7 +15,7 @@ import {
 import { MemoizedLayerSetters as LayerSetters } from "../components/LayerSetters";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
-import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
+import { Controllers } from "../components/Controllers";
 import {
   AvailableTerritory,
   getPlacement,
@@ -163,7 +163,7 @@ export const Viewer = () => {
             <TabsSystem layersSetters={layersSetters} legend={legend} />
           </div>
 
-          <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+          <Controllers viewRef={viewRef} containerClassName={classes.zoom} />
         </>
       )}
     </div>

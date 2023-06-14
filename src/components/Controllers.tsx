@@ -1,12 +1,24 @@
 import { useConstCallback } from "powerhooks";
-import { GlobeView, VIEW_EVENTS } from "itowns";
+import { Coordinates, GlobeView, VIEW_EVENTS } from "itowns";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import { MutableRefObject, useEffect, useState } from "react";
 import { Event } from "three";
+import { SearchBis } from "./SearchBis";
 
 const useStyles = makeStyles<{ transform: string }>()((theme, { transform }) => ({
+  container: {
+    display: "flex",
+    gap: fr.spacing("4w"),
+  },
+  searchContainer: {
+    minWidth: 250,
+  },
+  otherControllers: {
+    display: "flex",
+    flexDirection: "column",
+  },
   controllerButton: {
     height: fr.spacing("5w"),
     width: fr.spacing("5w"),
@@ -44,10 +56,18 @@ type Props = {
 const THREE_D_TILT = 30;
 const TWO_D_TILT = 90;
 
-export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) => {
+export const Controllers = ({ viewRef, containerClassName }: Props) => {
   const [is2D, setIs2D] = useState(true);
   const [heading, setHeading] = useState(0);
   const { classes, cx } = useStyles({ transform: `rotate(${heading}deg)` });
+
+  const moveToLocalisation = (x: number, y: number) => {
+    const view = viewRef.current;
+    if (!view) return;
+
+    const coord = new Coordinates("EPSG:4326", x, y);
+    view.controls?.lookAtCoordinate({ coord: coord });
+  };
 
   const toggleTilt = useConstCallback(() => {
     const viewControls = viewRef.current?.controls;
@@ -96,35 +116,41 @@ export const ZoomAndTiltControllers = ({ viewRef, containerClassName }: Props) =
   });
 
   return (
-    <div className={containerClassName}>
-      <Button
-        className={cx(classes.controllerButton, classes.zoomButton, classes.zoomInButton)}
-        onClick={zoomIn}
-        title="Zoom avant"
-      >
-        +
-      </Button>
-      <Button
-        className={cx(classes.controllerButton, classes.zoomButton)}
-        onClick={zoomOut}
-        title="Zoom arrière"
-      >
-        -
-      </Button>
-      <Button
-        className={cx(classes.controllerButton, classes.tiltButton)}
-        onClick={moveHeadingToNorth}
-        title="Rétablir vers le nord"
-      >
-        <img src={require("../assets/icons/compass.png")} className={classes.compass} />
-      </Button>
-      <Button
-        className={cx(classes.controllerButton, classes.tiltButton)}
-        onClick={toggleTilt}
-        title={is2D ? "Passer en 3D" : "Passer en 2D"}
-      >
-        {is2D ? "3D" : "2D"}
-      </Button>
+    <div className={cx(classes.container, containerClassName)}>
+      <div className={classes.searchContainer}>
+        <SearchBis moveToLocalisation={moveToLocalisation} />
+      </div>
+
+      <div className={classes.otherControllers}>
+        <Button
+          className={cx(classes.controllerButton, classes.zoomButton, classes.zoomInButton)}
+          onClick={zoomIn}
+          title="Zoom avant"
+        >
+          +
+        </Button>
+        <Button
+          className={cx(classes.controllerButton, classes.zoomButton)}
+          onClick={zoomOut}
+          title="Zoom arrière"
+        >
+          -
+        </Button>
+        <Button
+          className={cx(classes.controllerButton, classes.tiltButton)}
+          onClick={moveHeadingToNorth}
+          title="Rétablir vers le nord"
+        >
+          <img src={require("../assets/icons/compass.png")} className={classes.compass} />
+        </Button>
+        <Button
+          className={cx(classes.controllerButton, classes.tiltButton)}
+          onClick={toggleTilt}
+          title={is2D ? "Passer en 3D" : "Passer en 2D"}
+        >
+          {is2D ? "3D" : "2D"}
+        </Button>
+      </div>
     </div>
   );
 };
