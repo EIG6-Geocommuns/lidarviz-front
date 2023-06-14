@@ -25,6 +25,7 @@ const TextFieldWithOptions = <T extends { nom: string; code: string }>({
 }: Props<T>) => {
   return (
     <Autocomplete
+      classes={{ root: "fr-search-bar" }}
       value={value}
       onChange={(event: SyntheticEvent, newValue: T | null) => {
         setValue(newValue);

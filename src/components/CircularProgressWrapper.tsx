@@ -8,7 +8,7 @@ export type Props = {
   renderChildren: (params: { style: CSSProperties }) => ReactNode;
 };
 
-export function CircularProgressWrapper(props: Props) {
+export const CircularProgressWrapper = (props: Props) => {
   const { className, style, isInProgress, renderChildren } = props;
 
   return (
@@ -16,7 +16,6 @@ export function CircularProgressWrapper(props: Props) {
       className={className}
       style={{
         ...style,
-        position: "relative",
       }}
     >
       {renderChildren({
@@ -37,4 +36,4 @@ export function CircularProgressWrapper(props: Props) {
       )}
     </div>
   );
-}
+};

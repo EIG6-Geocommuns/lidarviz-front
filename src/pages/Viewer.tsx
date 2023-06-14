@@ -36,6 +36,7 @@ const DEFAULT_PLACEMENT: Placement = {
 const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight }) => ({
   container: {
     minHeight: windowHeight,
+    position: "relative",
   },
   containerWithoutTabs: {
     margin: fr.spacing("2w"),
@@ -48,7 +49,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   sideBar: {
     position: "absolute",
-    top: fr.spacing("29v"),
+    top: 0,
     zIndex: 2,
     maxHeight: windowHeight,
     paddingTop: 2,
@@ -63,7 +64,7 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   zoom: {
     position: "absolute",
-    top: `${fr.spacing("29v")}`,
+    top: 0,
     margin: fr.spacing("2w"),
     right: 0,
     zIndex: 2,

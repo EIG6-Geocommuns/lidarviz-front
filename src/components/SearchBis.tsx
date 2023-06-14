@@ -1,10 +1,10 @@
 import { memo, useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { City, getCities } from "../api/geoApiGouv";
 import { SearchInput } from "./SearchInput";
 import { useConstCallback } from "powerhooks/useConstCallback";
 
-// TODO : debounce à mettre en place
 type Props = {
   moveToLocalisation(x: number, y: number): void;
 };
@@ -40,12 +40,19 @@ export const SearchBis = ({ moveToLocalisation }: Props) => {
       getOptionLabel={(option: City) => {
         const label = option.nom;
         if (option.codesPostaux.length === 1) return label + ", " + option.codesPostaux[0];
-        return label;
+        if (option.codesPostaux.length < 1) return label;
+        return label + ", " + option.codesPostaux[0].substring(0, 2) + "000";
       }}
       debounceDelay={1000}
       noOptionText="Pas de résultat"
-      loadingText="Chargement..."
-      dsfrInputProps={{ label: "Adresse" }}
+      loadingText={
+        <div
+          style={{ alignItems: "center", width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <CircularProgress color="inherit" size={20} />
+        </div>
+      }
+      dsfrSearchBarProps={{ label: "Rechercher une commune" }}
     />
   );
 };

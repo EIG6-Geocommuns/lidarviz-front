@@ -1,6 +1,6 @@
 import { useState, useMemo, type ReactNode, type HTMLAttributes } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
-import { Input, type InputProps } from "@codegouvfr/react-dsfr/Input";
+import { SearchBar, type SearchBarProps } from "@codegouvfr/react-dsfr/SearchBar";
 import { createUseDebounce } from "powerhooks/useDebounce";
 import { same } from "evt/tools/inDepth/same";
 import { useRerenderOnChange } from "powerhooks/tools/StatefulObservable/hooks/useRerenderOnChange";
@@ -16,7 +16,7 @@ export type SearchInputProps<T extends string | Record<string, unknown>> = {
   renderOption?: (liProps: HTMLAttributes<HTMLLIElement>, option: T) => ReactNode;
   noOptionText: ReactNode;
   loadingText: ReactNode;
-  dsfrInputProps: InputProps.RegularInput;
+  dsfrSearchBarProps?: SearchBarProps;
 };
 
 export const SearchInput = <T extends string | Record<string, unknown>>(
@@ -32,7 +32,7 @@ export const SearchInput = <T extends string | Record<string, unknown>>(
     renderOption,
     noOptionText,
     loadingText,
-    dsfrInputProps,
+    dsfrSearchBarProps,
   } = props;
 
   const { useDebounce, obsIsDebouncing } = useMemo(
@@ -114,43 +114,17 @@ export const SearchInput = <T extends string | Record<string, unknown>>(
         <CircularProgressWrapper
           isInProgress={isLoading && isOpen}
           renderChildren={({ style }) => (
-            <Input
-              {...dsfrInputProps}
+            <SearchBar
+              {...dsfrSearchBarProps}
               style={{
                 ...style,
                 width: params.size,
-                ...dsfrInputProps.style,
+                ...dsfrSearchBarProps?.style,
               }}
               ref={params.InputProps.ref}
               nativeInputProps={{
                 ...params.inputProps,
-                ...dsfrInputProps.nativeInputProps,
-                ref: (element) =>
-                  [(params.inputProps as any).ref, dsfrInputProps.nativeInputProps?.ref].forEach(
-                    (ref) => {
-                      if (ref === undefined || ref === null) {
-                        return;
-                      }
-
-                      if (typeof ref === "function") {
-                        ref(element);
-                      } else {
-                        (ref as any).current = element;
-                      }
-                    }
-                  ),
-                onBlur: (...args) =>
-                  params.inputProps.onBlur?.(...args) ??
-                  dsfrInputProps.nativeInputProps?.onBlur?.(...args),
-                onChange: (...args) =>
-                  params.inputProps.onChange?.(...args) ??
-                  dsfrInputProps.nativeInputProps?.onChange?.(...args),
-                onFocus: (...args) =>
-                  params.inputProps.onFocus?.(...args) ??
-                  dsfrInputProps.nativeInputProps?.onFocus?.(...args),
-                onMouseDown: (...args) =>
-                  params.inputProps.onMouseDown?.(...args) ??
-                  dsfrInputProps.nativeInputProps?.onMouseDown?.(...args),
+                ...dsfrSearchBarProps?.nativeInputProps,
               }}
             />
           )}
