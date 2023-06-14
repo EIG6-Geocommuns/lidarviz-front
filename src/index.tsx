@@ -12,7 +12,6 @@ import {
   CookiesManagement,
 } from "geocommuns-core";
 
-import MapExtentSelector from "./pages/MapExtentSelector";
 import { Home } from "./pages/Home";
 import { Viewer } from "./pages/Viewer";
 import { DataInfo } from "./pages/DataInfo";
@@ -22,7 +21,6 @@ startReactDsfr({ defaultColorScheme: "system", Link });
 export enum ROUTES {
   Home = "/",
   DataInfo = "/info",
-  MapExtentSelector = "/definition-emprise",
   Viewer = "/viewer/:territoryId",
   PersonalData = "/donnees-personnelles",
   LegalTerms = "/mentions-legales",
@@ -77,7 +75,6 @@ const router = createBrowserRouter([
           scrollRestoration: true,
         }),
       },
-      { path: ROUTES.MapExtentSelector, element: <MapExtentSelector /> },
       { path: ROUTES.Viewer, element: <Viewer /> },
       {
         path: ROUTES.PersonalData,

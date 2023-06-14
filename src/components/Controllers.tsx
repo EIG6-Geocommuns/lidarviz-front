@@ -5,7 +5,7 @@ import { fr } from "@codegouvfr/react-dsfr";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import { MutableRefObject, useEffect, useState } from "react";
 import { Event } from "three";
-import { SearchBis } from "./SearchBis";
+import { Search } from "./Search";
 
 const useStyles = makeStyles<{ transform: string }>()((theme, { transform }) => ({
   container: {
@@ -118,7 +118,7 @@ export const Controllers = ({ viewRef, containerClassName }: Props) => {
   return (
     <div className={cx(classes.container, containerClassName)}>
       <div className={classes.searchContainer}>
-        <SearchBis moveToLocalisation={moveToLocalisation} />
+        <Search moveToLocalisation={moveToLocalisation} />
       </div>
 
       <div className={classes.otherControllers}>
