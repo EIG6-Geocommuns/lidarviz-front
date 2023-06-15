@@ -391,13 +391,8 @@ const ddt45Setters: LayerSetter[] = [
       LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT45_isocote_probabilite_faible"][
         "inondata:hauteur_eau_4_classes_ddt45"
       ],
+    layer3DName: WaterLayerToLabel.DDT45,
     label: "Crue millénale",
-    defaultVisibility: false,
-  },
-  {
-    kind: "hauteur",
-    layerName: WaterLayerToLabel.DDT45,
-    label: "Crue millénale (3D)",
     defaultVisibility: false,
   },
 ];
@@ -437,14 +432,9 @@ const ddt67Setters: LayerSetter[] = [
   {
     kind: "hauteur",
     layerName: LAYER_AND_STYLE_TO_LAYER_NAME["inondata:DDT67_Holtzheim"]["inondata:ZIP_hauteur"],
-    label: "Hauteurs d'eau (2D)",
+    layer3DName: WaterLayerToLabel.DDT67,
+    label: "Hauteurs d'eau",
     defaultVisibility: true,
-  },
-  {
-    kind: "hauteur",
-    layerName: WaterLayerToLabel.DDT67,
-    label: "Hauteurs d'eau (3D)",
-    defaultVisibility: false,
   },
 ];
 

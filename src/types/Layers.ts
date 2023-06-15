@@ -19,7 +19,8 @@ export type AleaLayerSetter = WaterLayerBaseSetter<'alea'> & {
 };
 
 export type HauteurLayerSetter = WaterLayerBaseSetter<'hauteur'> & {
-  layerName: string; // TODO: For compatibility with current code, change on future commits
+  layerName: string;
+  layer3DName?: string;
 };
 
 export type VitesseLayerSetter = WaterLayerBaseSetter<'vitesse'> & {
