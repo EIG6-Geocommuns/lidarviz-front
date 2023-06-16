@@ -25,7 +25,8 @@ const geoApiAxiosInstance = axios.create({
 
 export const getCities = (
   searchedText: string,
-  centerInsteadOfBoudaries?: boolean
+  centerInsteadOfBoudaries?: boolean,
+  codeDepartement?: number
 ): Promise<{ data: City[] }> => {
   let fields = "nom,code,codesPostaux,codeEpci,codeDepartement,codeRegion,";
   fields = centerInsteadOfBoudaries ? fields + "centre" : fields + "contour";
@@ -35,6 +36,7 @@ export const getCities = (
       nom: searchedText,
       fields,
       format: "json",
+      codeDepartement: codeDepartement || 29,
     },
   });
 };
