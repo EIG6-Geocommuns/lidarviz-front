@@ -1084,10 +1084,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@codegouvfr/react-dsfr@^0.60.0":
-  version "0.60.0"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.60.0.tgz#6b59e13b2fc1558a1fa2aee609b6c723b943b364"
-  integrity sha512-6BNkpjCft6qy1egc63h/hiyb/C0Juus1LPll31Ut6Fq+K9k6pqE/sIVe5UrPfkuHM4t0w7fPr6hXz92uUHEbHQ==
+"@codegouvfr/react-dsfr@^0.63.1":
+  version "0.63.1"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.63.1.tgz#1d2211da97e9656933e7bdbb472a4f3a8d0be366"
+  integrity sha512-1N3bLaH5L4afWo3pS6gtYKDtzHH+pLG+kwapmZO4PPf8/kgB2W03fxTSYGja5YycTgqstto91Fdo6oa9xSQ8og==
   dependencies:
     tsafe "^1.6.3"
 
@@ -5177,10 +5177,10 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geocommuns-core@~0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.14.0.tgz#08aad2f89aa2bfb6653d90dd16e6ef27e780f1fc"
-  integrity sha512-5uBnEbXwMiHlsjp6HRauLj2hEi1RNCu2lp7wyvJw9u69HvcN2xy41s/pAqj+ukWdCufHh94S/Behi2Jf4PubHg==
+geocommuns-core@~0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.14.2.tgz#bd3899e0c57083c33bbe70b21bcd4139fe4dcbf3"
+  integrity sha512-3Bs81v3WsVEKL/VB1NlEil8ADVo6z9OGkho70ZApXln43VGt93mFwTIQq0kk5hjSWrQs0WN0CvKbGEVJs2lE/w==
   dependencies:
     powerhooks "^0.26.2"
     react-device-detect "^2.2.3"

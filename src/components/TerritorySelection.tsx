@@ -3,7 +3,7 @@ import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Select } from "@codegouvfr/react-dsfr/SelectNext";
 import { Button } from "@codegouvfr/react-dsfr/Button";
-import { createModal } from "@codegouvfr/react-dsfr/Modal";
+import { createModal } from "@codegouvfr/react-dsfr/Modal/Modal";
 
 import { ROUTES } from "..";
 import { AvailableTerritoryId } from "../utils/waterLayers";
