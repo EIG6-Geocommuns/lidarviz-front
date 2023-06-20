@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Select } from "@codegouvfr/react-dsfr/SelectNext";
@@ -41,8 +42,8 @@ export const TerritorySelection = () => {
   const { classes } = useStyles();
   const [value, setValue] = useState<AvailableTerritoryId | undefined>(undefined);
 
-  const viewerHref = useMemo(() => {
-    if (value) return ROUTES.Viewer.replace(":territoryId", value);
+  const viewerRoute = useMemo(() => {
+    return ROUTES.Viewer.replace(":territoryId", value || "");
   }, [value]);
 
   return (
@@ -58,9 +59,9 @@ export const TerritorySelection = () => {
           options={VALUES}
         />
 
-        <a href={viewerHref}>
+        <Link to={viewerRoute}>
           <Button disabled={value === undefined}>Lancer la Visualisation</Button>
-        </a>
+        </Link>
       </div>
 
       <hr />

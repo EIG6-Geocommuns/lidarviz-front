@@ -1,6 +1,8 @@
 import { makeStyles } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 import { Home as CommonHome } from "geocommuns-core";
+import { Link } from "react-router-dom";
+import { ROUTES } from "..";
 
 const useStyles = makeStyles()({
   inondataTitleBlock: {
@@ -39,13 +41,13 @@ export const Home = () => {
   const { classes, cx } = useStyles();
 
   const CTA = (
-    <a className={fr.cx("fr-btn")} href="./info">
+    <Link className={fr.cx("fr-btn")} to={ROUTES.DataInfo}>
       Accéder au Prototype
       <span
         className={cx(fr.cx("fr-icon-arrow-right-line"), classes.iconButton)}
         aria-hidden="true"
       ></span>
-    </a>
+    </Link>
   );
 
   return (
