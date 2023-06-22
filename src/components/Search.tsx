@@ -7,14 +7,15 @@ import { useConstCallback } from "powerhooks/useConstCallback";
 
 type Props = {
   moveToLocalisation(x: number, y: number): void;
+  territoryNumber?: number;
 };
 
-export const Search = ({ moveToLocalisation }: Props) => {
+export const Search = ({ moveToLocalisation, territoryNumber }: Props) => {
   const [selectedCity, setSelectedCity] = useState<City | undefined>(undefined);
 
   const getOptions = useConstCallback(
     (inputText: string): Promise<City[]> =>
-      getCities(inputText, true)
+      getCities(inputText, true, territoryNumber)
         .then((res) => {
           return res.data.slice(0, 5);
         })

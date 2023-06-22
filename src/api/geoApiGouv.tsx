@@ -36,7 +36,7 @@ export const getCities = (
       nom: searchedText,
       fields,
       format: "json",
-      codeDepartement: codeDepartement || 29,
+      codeDepartement,
     },
   });
 };

@@ -24,6 +24,7 @@ import {
   TERRITORY_TO_LAYER_SETTERS,
   TERRITORY_TO_LEGEND_ITEMS,
   isAvailableTerritoryId,
+  TERRITORY_ID_TERRITORY_NUMBER,
 } from "../utils/waterLayers";
 
 const DEFAULT_PLACEMENT: Placement = {
@@ -116,10 +117,15 @@ export const Viewer = () => {
     return [...BELOW_LAYERS, ...ABOVE_LAYERS];
   }, [territory]);
 
-  const territorySetters = useMemo(() => {
-    if (territory) return TERRITORY_TO_LAYER_SETTERS[territory];
-    return [];
-  }, [territory]);
+  const territorySetters = useMemo(
+    () => (territory ? TERRITORY_TO_LAYER_SETTERS[territory] : []),
+    [territory]
+  );
+
+  const territoryNumber = useMemo(
+    () => (territory ? TERRITORY_ID_TERRITORY_NUMBER[territory] : undefined),
+    [territory]
+  );
 
   //TODO resize window with view.resize(heigth, width)
 
@@ -164,7 +170,11 @@ export const Viewer = () => {
             <TabsSystem layersSetters={layersSetters} legend={legend} />
           </div>
 
-          <Controllers viewRef={viewRef} containerClassName={classes.zoom} />
+          <Controllers
+            viewRef={viewRef}
+            containerClassName={classes.CONTROLLERS}
+            territoryNumber={territoryNumber}
+          />
         </>
       )}
     </div>

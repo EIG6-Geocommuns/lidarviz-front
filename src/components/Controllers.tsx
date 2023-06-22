@@ -51,12 +51,13 @@ const useStyles = makeStyles<{ transform: string }>()((theme, { transform }) => 
 type Props = {
   viewRef: MutableRefObject<GlobeView | null>;
   containerClassName?: string;
+  territoryNumber?: number;
 };
 
 const THREE_D_TILT = 30;
 const TWO_D_TILT = 90;
 
-export const Controllers = ({ viewRef, containerClassName }: Props) => {
+export const Controllers = ({ viewRef, containerClassName, territoryNumber }: Props) => {
   const [is2D, setIs2D] = useState(true);
   const [heading, setHeading] = useState(0);
   const { classes, cx } = useStyles({ transform: `rotate(${heading}deg)` });
@@ -118,7 +119,7 @@ export const Controllers = ({ viewRef, containerClassName }: Props) => {
   return (
     <div className={cx(classes.container, containerClassName)}>
       <div className={classes.searchContainer}>
-        <Search moveToLocalisation={moveToLocalisation} />
+        <Search moveToLocalisation={moveToLocalisation} territoryNumber={territoryNumber} />
       </div>
 
       <div className={classes.otherControllers}>

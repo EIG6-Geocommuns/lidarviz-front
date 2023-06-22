@@ -4,7 +4,6 @@ import { SearchBar, type SearchBarProps } from "@codegouvfr/react-dsfr/SearchBar
 import { createUseDebounce } from "powerhooks/useDebounce";
 import { same } from "evt/tools/inDepth/same";
 import { useRerenderOnChange } from "powerhooks/tools/StatefulObservable/hooks/useRerenderOnChange";
-import { CircularProgressWrapper } from "./CircularProgressWrapper";
 
 export type SearchInputProps<T extends string | Record<string, unknown>> = {
   className?: string;
@@ -111,23 +110,17 @@ export const SearchInput = <T extends string | Record<string, unknown>>(
       handleHomeEndKeys
       isOptionEqualToValue={(option: T, value: T) => same(option, value)}
       renderInput={(params) => (
-        <CircularProgressWrapper
-          isInProgress={isLoading && isOpen}
-          renderChildren={({ style }) => (
-            <SearchBar
-              {...dsfrSearchBarProps}
-              style={{
-                ...style,
-                width: params.size,
-                ...dsfrSearchBarProps?.style,
-              }}
-              ref={params.InputProps.ref}
-              nativeInputProps={{
-                ...params.inputProps,
-                ...dsfrSearchBarProps?.nativeInputProps,
-              }}
-            />
-          )}
+        <SearchBar
+          {...dsfrSearchBarProps}
+          style={{
+            width: params.size,
+            ...dsfrSearchBarProps?.style,
+          }}
+          ref={params.InputProps.ref}
+          nativeInputProps={{
+            ...params.inputProps,
+            ...dsfrSearchBarProps?.nativeInputProps,
+          }}
         />
       )}
     />
