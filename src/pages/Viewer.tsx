@@ -57,18 +57,15 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
     backgroundColor: theme.decisions.background.default.grey.default,
     width: 300,
   },
-  controllers: {
-    width: 300,
-  },
   legendTitle: {
     marginBottom: fr.spacing("1w"),
   },
-  zoom: {
+  controllers: {
     position: "absolute",
     top: 0,
     margin: fr.spacing("2w"),
     right: 0,
-    zIndex: 2,
+    width: "40%",
   },
 }));
 
@@ -172,7 +169,7 @@ export const Viewer = () => {
 
           <Controllers
             viewRef={viewRef}
-            containerClassName={classes.CONTROLLERS}
+            containerClassName={classes.controllers}
             territoryNumber={territoryNumber}
           />
         </>

@@ -14,10 +14,14 @@ const useStyles = makeStyles<{ transform: string }>()((theme, { transform }) => 
   },
   searchContainer: {
     minWidth: 250,
+    width: "100%",
+    zIndex: 2,
+    height: "fit-content",
   },
   otherControllers: {
     display: "flex",
     flexDirection: "column",
+    zIndex: 2,
   },
   controllerButton: {
     height: fr.spacing("5w"),
