@@ -36,7 +36,7 @@ const GenericInfo = () => {
       </ul>
       <p>
         La visualisation en 3D est développée avec{" "}
-        <a href="https://itowns" target="_blank">
+        <a href=" https://www.itowns-project.org/" target="_blank">
           iTowns
         </a>
         , une librairie de développement open source développée par l’IGN. Elle est basée sur le
