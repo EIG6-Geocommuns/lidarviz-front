@@ -15,7 +15,7 @@ import {
 import { MemoizedLayerSetters as LayerSetters } from "../components/LayerSetters";
 import { MemoizedLegend as Legend } from "../components/Legend";
 import { MemoizedTabsSystem as TabsSystem } from "../components/TabsSystem";
-import { ZoomAndTiltControllers } from "../components/ZoomAndTiltControllers";
+import { Controllers } from "../components/Controllers";
 import {
   AvailableTerritory,
   getPlacement,
@@ -24,6 +24,7 @@ import {
   TERRITORY_TO_LAYER_SETTERS,
   TERRITORY_TO_LEGEND_ITEMS,
   isAvailableTerritoryId,
+  TERRITORY_ID_TERRITORY_NUMBER,
 } from "../utils/waterLayers";
 
 const DEFAULT_PLACEMENT: Placement = {
@@ -36,6 +37,7 @@ const DEFAULT_PLACEMENT: Placement = {
 const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight }) => ({
   container: {
     minHeight: windowHeight,
+    position: "relative",
   },
   containerWithoutTabs: {
     margin: fr.spacing("2w"),
@@ -48,25 +50,22 @@ const useStyles = makeStyles<{ windowHeight: number }>()((theme, { windowHeight 
   },
   sideBar: {
     position: "absolute",
-    top: fr.spacing("29v"),
+    top: 0,
     zIndex: 2,
     maxHeight: windowHeight,
     paddingTop: 2,
     backgroundColor: theme.decisions.background.default.grey.default,
     width: 300,
   },
-  controllers: {
-    width: 300,
-  },
   legendTitle: {
     marginBottom: fr.spacing("1w"),
   },
-  zoom: {
+  controllers: {
     position: "absolute",
-    top: `${fr.spacing("29v")}`,
+    top: 0,
     margin: fr.spacing("2w"),
     right: 0,
-    zIndex: 2,
+    width: "40%",
   },
 }));
 
@@ -115,10 +114,15 @@ export const Viewer = () => {
     return [...BELOW_LAYERS, ...ABOVE_LAYERS];
   }, [territory]);
 
-  const territorySetters = useMemo(() => {
-    if (territory) return TERRITORY_TO_LAYER_SETTERS[territory];
-    return [];
-  }, [territory]);
+  const territorySetters = useMemo(
+    () => (territory ? TERRITORY_TO_LAYER_SETTERS[territory] : []),
+    [territory]
+  );
+
+  const territoryNumber = useMemo(
+    () => (territory ? TERRITORY_ID_TERRITORY_NUMBER[territory] : undefined),
+    [territory]
+  );
 
   //TODO resize window with view.resize(heigth, width)
 
@@ -163,7 +167,11 @@ export const Viewer = () => {
             <TabsSystem layersSetters={layersSetters} legend={legend} />
           </div>
 
-          <ZoomAndTiltControllers viewRef={viewRef} containerClassName={classes.zoom} />
+          <Controllers
+            viewRef={viewRef}
+            containerClassName={classes.controllers}
+            territoryNumber={territoryNumber}
+          />
         </>
       )}
     </div>

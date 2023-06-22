@@ -1,33 +1,32 @@
 import { memo, useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { City, getCities } from "../api/geoApiGouv";
-import TextFieldWithOptions from "../components/TextFieldWithOptions";
+import { SearchInput } from "./SearchInput";
+import { useConstCallback } from "powerhooks/useConstCallback";
 
-// TODO : debounce à mettre en place
 type Props = {
   moveToLocalisation(x: number, y: number): void;
+  territoryNumber?: number;
 };
 
-export const Search = ({ moveToLocalisation }: Props) => {
-  const [inputText, setInputText] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
-  const [cityPropositions, setCityPropositions] = useState<City[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+export const Search = ({ moveToLocalisation, territoryNumber }: Props) => {
+  const [selectedCity, setSelectedCity] = useState<City | undefined>(undefined);
+
+  const getOptions = useConstCallback(
+    (inputText: string): Promise<City[]> =>
+      getCities(inputText, true, territoryNumber)
+        .then((res) => {
+          return res.data.slice(0, 5);
+        })
+        .catch((e) => {
+          console.warn("error " + e);
+          return [];
+        })
+  );
 
   useEffect(() => {
-    if (inputText.length <= 3) return;
-
-    setIsLoading(true);
-    getCities(inputText, true)
-      .then((res) => {
-        setCityPropositions(res.data.slice(0, 5));
-      })
-      .catch((e) => console.warn("error " + e))
-      .finally(() => setIsLoading(false));
-  }, [inputText, selectedCity]);
-
-  useEffect(() => {
-    if (selectedCity === null) {
+    if (selectedCity === undefined) {
       return;
     }
 
@@ -35,18 +34,26 @@ export const Search = ({ moveToLocalisation }: Props) => {
   }, [selectedCity]);
 
   return (
-    <TextFieldWithOptions<City>
+    <SearchInput<City>
       value={selectedCity}
-      setValue={setSelectedCity}
-      inputValue={inputText}
-      setInputValue={setInputText}
-      options={cityPropositions}
-      isLoading={isLoading}
+      onValueChange={setSelectedCity}
+      getOptions={getOptions}
       getOptionLabel={(option: City) => {
         const label = option.nom;
         if (option.codesPostaux.length === 1) return label + ", " + option.codesPostaux[0];
-        return label;
+        if (option.codesPostaux.length < 1) return label;
+        return label + ", " + option.codesPostaux[0].substring(0, 2) + "000";
       }}
+      debounceDelay={1000}
+      noOptionText="Pas de résultat"
+      loadingText={
+        <div
+          style={{ alignItems: "center", width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <CircularProgress color="inherit" size={20} />
+        </div>
+      }
+      dsfrSearchBarProps={{ label: "Rechercher une commune" }}
     />
   );
 };

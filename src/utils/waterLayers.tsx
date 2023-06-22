@@ -65,6 +65,16 @@ export const TERRITORY_ID_TO_TERRITORY: Record<AvailableTerritoryId, AvailableTe
   ddt84: "DDT84",
 };
 
+export const TERRITORY_ID_TERRITORY_NUMBER: Record<AvailableTerritory, number> = {
+  DDTM14: 14,
+  DDT19: 19,
+  DDT45: 45,
+  DDTM64: 64,
+  DDT67: 67,
+  DDTM83: 83,
+  DDT84: 84,
+};
+
 export const TERRIRORY_TO_LAYERS: Record<AvailableTerritory, AvailableLayer[]> = {
   DDTM14: ["inondata:DDTM14"],
   DDT19: [
