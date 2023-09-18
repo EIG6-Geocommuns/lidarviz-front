@@ -1,6 +1,6 @@
 {
   "name": "lidarviz-front",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "private": true,
   "scripts": {
     "start": "BROWSER=none react-scripts start",
@@ -25,7 +25,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
     "buffer": "^6.0.3",
-    "geocommuns-core": "~0.16.2",
+    "geocommuns-core": "~0.16.3",
     "inondata-itowns": "^0.0.4",
     "itowns": "npm:itowns-geocommuns@^2.39.0-rev5",
     "ol": "^7.1.0",
