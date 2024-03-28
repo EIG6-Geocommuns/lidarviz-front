@@ -5177,10 +5177,10 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geocommuns-core@~0.16.6:
-  version "0.16.6"
-  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.16.6.tgz#3f06f5de82cf61e52ad0171d71311a23eaa147b6"
-  integrity sha512-8n98N6avTTCmBzeDWC288nHdDuVhKfrt2n0P7pzpAw2ohhkWCJvY4+Wls+IH09fSQHBL5U92M8gG00NTqbcoKg==
+geocommuns-core@~0.16.7:
+  version "0.16.7"
+  resolved "https://registry.yarnpkg.com/geocommuns-core/-/geocommuns-core-0.16.7.tgz#d9dba1834b42327c4be8c8a42eb8e4f0d3ed01e5"
+  integrity sha512-uT+iR67ztywMJXvV+xenov6KAqXMSkZ2T6OExSn9jNKXTvf+C51GCsuVpdspBt/oUtufY9RzAxCby+FAr1TDrA==
   dependencies:
     powerhooks "^0.26.2"
     react-device-detect "^2.2.3"
